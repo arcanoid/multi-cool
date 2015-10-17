@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Hash generator</h1>
+  </div>
+</div>
+
+<%= form_tag hash_generator_tools_url do %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="file">Text to convert</label>
+          <%= text_area_tag :initial_text, @initial_text, :rows => 5, :class => 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= label_tag(:type, 'Select algorithm') %>
+          <%= select_tag(:type, options_for_select([ 'SHA1', 'SHA256', 'SHA384', 'SHA512', 'RMD160', 'MD5' ], params[:type])) %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Generate', :class => 'btn btn-primary' %>
+        </div>
+
+        <div class="form-group">
+          <label for="file">Hash</label>
+          <%= text_area_tag :digested_text, @digested_text, :rows => 5, :class => 'form-control' %>
+        </div>
+      </div>
+    </div>
+<% end %>

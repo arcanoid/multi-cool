@@ -38,6 +38,20 @@ class ToolsController < ApplicationController
     @images = Dir.glob("app/assets/images/screens/*/*.png")
   end
 
+  def hash_generator
+    @initial_text = params[:initial_text].present? ? params[:initial_text] : 'Hello world'
+    @digested_text = case params[:type]
+                       when 'SHA1' then Digest::SHA1.hexdigest(@initial_text)
+                       when 'SHA256' then Digest::SHA256.hexdigest(@initial_text)
+                       when 'SHA384' then Digest::SHA384.hexdigest(@initial_text)
+                       when 'SHA384' then Digest::SHA384.hexdigest(@initial_text)
+                       when 'MD5' then Digest::MD5.hexdigest(@initial_text)
+                       when 'RMD160' then Digest::RMD160.hexdigest(@initial_text)
+                       else ''
+                     end
+
+  end
+
   def base64_encoder
     @final_text = case params[:type]
                     when 'encode' then Base64.encode64(params[:full_text])
