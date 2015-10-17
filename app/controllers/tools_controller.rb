@@ -10,4 +10,31 @@ class ToolsController < ApplicationController
                     end
     end
   end
+
+  def screenshot_snapper
+    require 'selenium-webdriver'
+
+    if params[:full_text].present?
+      driver = Selenium::WebDriver.for :firefox
+
+      urls = params[:full_text].split(/\r\n/)
+
+      urls.each do |url|
+
+        if url.present?
+          directory_name = "#{Rails.root}/app/assets/images/screens/#{DateTime.now.strftime('%Y_%m_%d')}"
+          FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
+
+          full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub('#', '').gsub(':', '')}.png"
+
+          driver.get url
+          driver.save_screenshot full_file_name
+        end
+      end
+
+      driver.quit
+    end
+
+    @images = Dir.glob("app/assets/images/screens/*/*.png")
+  end
 end
