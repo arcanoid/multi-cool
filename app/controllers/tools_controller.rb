@@ -37,4 +37,13 @@ class ToolsController < ApplicationController
 
     @images = Dir.glob("app/assets/images/screens/*/*.png")
   end
+
+  def base64_encoder
+    @final_text = case params[:type]
+                    when 'encode' then Base64.encode64(params[:full_text])
+                    when 'decode' then Base64.decode64(params[:full_text])
+                    else ''
+                  end
+
+  end
 end

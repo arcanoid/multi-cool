@@ -6,5 +6,7 @@ Rails.application.routes.draw do
     post :url_decoding_tool
     get :screenshot_snapper
     post :screenshot_snapper
+    get :base64_encoder
+    post :base64_encoder
   end
 end
