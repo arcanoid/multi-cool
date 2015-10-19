@@ -25,7 +25,7 @@ class ToolsController < ApplicationController
           directory_name = "#{Rails.root}/app/assets/images/screens/#{DateTime.now.strftime('%Y_%m_%d')}"
           FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
 
-          full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub('#', '').gsub(':', '')}.png"
+          full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '')}.png"
 
           driver.get url
           driver.save_screenshot full_file_name
