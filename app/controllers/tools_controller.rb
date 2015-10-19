@@ -43,7 +43,7 @@ class ToolsController < ApplicationController
     @digested_text = case params[:type]
                        when 'SHA1' then Digest::SHA1.hexdigest(@initial_text)
                        when 'SHA256' then Digest::SHA256.hexdigest(@initial_text)
-                       when 'SHA384' then Digest::SHA384.hexdigest(@initial_text)
+                       when 'SHA512' then Digest::SHA512.hexdigest(@initial_text)
                        when 'SHA384' then Digest::SHA384.hexdigest(@initial_text)
                        when 'MD5' then Digest::MD5.hexdigest(@initial_text)
                        when 'RMD160' then Digest::RMD160.hexdigest(@initial_text)
