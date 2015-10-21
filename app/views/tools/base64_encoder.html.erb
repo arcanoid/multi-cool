@@ -11,10 +11,10 @@
         </div>
 
         <div class="form-group">
-          <%= radio_button_tag(:type, 'decode', (params[:type] == 'decode')) %>
-          <%= label_tag(:type_decode, "Decode") %>
-          <%= radio_button_tag(:type, 'encode', (!params[:type].present? || params[:type] == 'encode')) %>
-          <%= label_tag(:type_encode, 'Encode') %>
+          <%= radio_button_tag :type, 'decode', (params[:type] == 'decode') %>
+          <%= label_tag :type_decode, "Decode" %>
+          <%= radio_button_tag :type, 'encode', (!params[:type].present? || params[:type] == 'encode') %>
+          <%= label_tag :type_encode, 'Encode' %>
         </div>
 
         <div class="form-group">
