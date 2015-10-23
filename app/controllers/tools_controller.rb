@@ -52,6 +52,18 @@ class ToolsController < ApplicationController
 
   end
 
+  def json_beautifier
+    text = params[:initial_text].present? ? params[:initial_text] : '{"desc": {"someKey": "someValue", "anotherKey" : "value"}, "main_item": {"stats": {"a": 8, "b": 12, "c": 10}}}'
+
+    begin
+      @initial_text = text
+      @final_text = JSON.pretty_generate(JSON.parse(text))
+    rescue JSON::ParserError => e
+      flash[:error] = 'Wrong format'
+      redirect_to json_beautifier_tools_url
+    end
+  end
+
   def base64_encoder
     @final_text = case params[:type]
                     when 'encode' then Base64.encode64(params[:full_text])

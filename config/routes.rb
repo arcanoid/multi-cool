@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     post :hash_generator
     get :base64_encoder
     post :base64_encoder
+    get :json_beautifier
+    post :json_beautifier
   end
 end
