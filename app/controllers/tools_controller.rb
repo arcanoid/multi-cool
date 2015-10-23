@@ -12,8 +12,6 @@ class ToolsController < ApplicationController
   end
 
   def screenshot_snapper
-    require 'selenium-webdriver'
-
     if params[:full_text].present?
       driver = Selenium::WebDriver.for :firefox
 
@@ -61,6 +59,33 @@ class ToolsController < ApplicationController
     rescue JSON::ParserError => e
       flash[:error] = 'Wrong format'
       redirect_to json_beautifier_tools_url
+    end
+  end
+
+  def xml_beautifier
+    xml_text = params[:initial_text].present? ?
+        params[:initial_text] :
+        "<note><to>Tove</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>"
+
+    xsl = <<XSL
+          <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+            <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
+            <xsl:strip-space elements="*"/>
+            <xsl:template match="/">
+              <xsl:copy-of select="."/>
+            </xsl:template>
+          </xsl:stylesheet>
+XSL
+
+    begin
+      @initial_text = xml_text
+      doc  = Nokogiri::XML(xml_text)
+      xslt = Nokogiri::XSLT(xsl)
+      out  = xslt.transform(doc)
+      @final_text = out
+    rescue Nokogiri::XML::SyntaxError => e
+      flash[:error] = 'Wrong format'
+      redirect_to xml_beautifier_tools_url
     end
   end
 

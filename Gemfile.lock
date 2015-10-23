@@ -125,6 +125,7 @@ PLATFORMS
 
 DEPENDENCIES
   better_errors
+  nokogiri
   rails (= 4.2.4)
   sass-rails (~> 5.0)
   selenium-webdriver

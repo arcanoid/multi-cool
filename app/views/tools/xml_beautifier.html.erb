@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h1>XML beautifier</h1>
+</div>
+
+<%= form_tag xml_beautifier_tools_url do %>
+
+    <% if flash[:error] %>
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <p class="bg-danger text-danger" style="padding: 15px;"><%= flash[:error] %></p>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group <%= 'has-error' if flash[:error] %>">
+          <label for="file">Text to convert</label>
+          <%= text_area_tag :initial_text, @initial_text, :rows => 15, :class => "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Generate', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="file">Result</label>
+          <pre><%= @final_text %></pre>
+        </div>
+      </div>
+    </div>
+<% end %>
