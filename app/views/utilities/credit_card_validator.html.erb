@@ -1,0 +1,32 @@
+<div class="page-header">
+  <h1>Credit card validator</h1>
+</div>
+
+<%= form_tag credit_card_validator_utilities_url do %>
+
+    <% unless @verdict.nil? %>
+        <div class="row">
+          <div class="col-xs-12">
+
+            <% if @verdict %>
+                <p class="bg-success text-success" style="padding: 15px;">Valid number</p>
+            <% else %>
+                <p class="bg-danger text-danger" style="padding: 15px;">Invalid number</p>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group <%= 'has-error' if flash[:error] %>">
+          <label for="file">Number of credit card</label>
+          <%= text_field_tag :cc_number, params[:cc_number], :rows => 15, :class => "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Check', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+<% end %>

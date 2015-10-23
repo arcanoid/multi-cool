@@ -11,31 +11,6 @@ class ToolsController < ApplicationController
     end
   end
 
-  def screenshot_snapper
-    if params[:full_text].present?
-      driver = Selenium::WebDriver.for :firefox
-
-      urls = params[:full_text].split(/\r\n/)
-
-      urls.each do |url|
-
-        if url.present?
-          directory_name = "#{Rails.root}/app/assets/images/screens/#{DateTime.now.strftime('%Y_%m_%d')}"
-          FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
-
-          full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '')}.png"
-
-          driver.get url
-          driver.save_screenshot full_file_name
-        end
-      end
-
-      driver.quit
-    end
-
-    @images = Dir.glob("app/assets/images/screens/*/*.png")
-  end
-
   def hash_generator
     @initial_text = params[:initial_text].present? ? params[:initial_text] : 'Hello world'
     @digested_text = case params[:type]
