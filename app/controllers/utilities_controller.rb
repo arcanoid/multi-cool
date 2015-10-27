@@ -61,23 +61,27 @@ class UtilitiesController < ApplicationController
 
   def qr_code_producer
     if params[:full_text].present?
-      directory_name = "#{Rails.root}/app/assets/images/qr_codes/#{DateTime.now.strftime('%Y_%m_%d')}"
-      FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
+      urls = params[:full_text].split(/\r\n/)
 
-      full_file_name = "#{directory_name}/#{params[:full_text].gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '')}.png"
+      urls.each do |url|
+        directory_name = "#{Rails.root}/app/assets/images/qr_codes/#{DateTime.now.strftime('%Y_%m_%d')}"
+        FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
 
-      qrcode = RQRCode::QRCode.new(params[:full_text])
+        full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '')}.png"
 
-      qrcode.as_png(
-          resize_gte_to: false,
-          resize_exactly_to: false,
-          fill: 'white',
-          color: 'black',
-          size: (params[:size].present? ? params[:size].to_i : 200),
-          border_modules: 4,
-          module_px_size: 6,
-          file: full_file_name
-      )
+        qrcode = RQRCode::QRCode.new(url)
+
+        qrcode.as_png(
+            resize_gte_to: false,
+            resize_exactly_to: false,
+            fill: 'white',
+            color: 'black',
+            size: (params[:size].present? ? params[:size].to_i : 200),
+            border_modules: 4,
+            module_px_size: 6,
+            file: full_file_name
+        )
+      end
     end
 
     @images = Dir.glob("app/assets/images/qr_codes/*/*.png")
