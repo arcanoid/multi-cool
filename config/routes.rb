@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     post :json_beautifier
     get :xml_beautifier
     post :xml_beautifier
+    get :sql_beautifier
+    post :sql_beautifier
   end
 
   resource :utilities, :only => [] do

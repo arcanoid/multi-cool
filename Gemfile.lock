@@ -36,6 +36,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    anbt-sql-formatter (0.0.3)
     arel (6.0.3)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -127,6 +128,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  anbt-sql-formatter
   better_errors
   credit_card_validations
   nokogiri

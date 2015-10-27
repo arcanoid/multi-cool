@@ -37,6 +37,22 @@ class ToolsController < ApplicationController
     end
   end
 
+  def sql_beautifier
+    require "anbt-sql-formatter/formatter"
+
+    text = params[:initial_text].present? ? params[:initial_text] : "select `col1`, `col2` FROM `table` WHERE ((`col1` = 1) AND (`col2` = 5))"
+
+    rule = AnbtSql::Rule.new
+    %w(count sum substr date coalesce).each{|func_name|
+      rule.function_names << func_name.upcase
+    }
+
+    formatter = AnbtSql::Formatter.new(rule)
+
+    @initial_text = "" << text
+    @final_text = formatter.format(text)
+  end
+
   def xml_beautifier
     xml_text = params[:initial_text].present? ?
         params[:initial_text] :
