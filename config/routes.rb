@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resource :utilities, :only => [] do
     get :screenshot_snapper
     post :screenshot_snapper
+    get :qr_code_producer
+    post :qr_code_producer
     get :credit_card_validator
     post :credit_card_validator
   end

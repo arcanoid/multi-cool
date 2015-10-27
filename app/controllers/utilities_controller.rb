@@ -58,4 +58,28 @@ class UtilitiesController < ApplicationController
 
     @images = Dir.glob("app/assets/images/screens/*/*.png")
   end
+
+  def qr_code_producer
+    if params[:full_text].present?
+      directory_name = "#{Rails.root}/app/assets/images/qr_codes/#{DateTime.now.strftime('%Y_%m_%d')}"
+      FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
+
+      full_file_name = "#{directory_name}/#{params[:full_text].gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '')}.png"
+
+      qrcode = RQRCode::QRCode.new(params[:full_text])
+
+      qrcode.as_png(
+          resize_gte_to: false,
+          resize_exactly_to: false,
+          fill: 'white',
+          color: 'black',
+          size: (params[:size].presence || 200),
+          border_modules: 4,
+          module_px_size: 6,
+          file: full_file_name
+      )
+    end
+
+    @images = Dir.glob("app/assets/images/qr_codes/*/*.png")
+  end
 end
