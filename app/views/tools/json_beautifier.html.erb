@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="form-group <%= 'has-error' if flash[:error] %>">
-          <label for="file">Text to convert</label>
+          <label for="file">Text to beautify</label>
           <%= text_area_tag :initial_text, @initial_text, :rows => 15, :class => "form-control" %>
         </div>
 
@@ -26,7 +26,7 @@
 
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
-          <label for="file">Hash</label>
+          <label for="file">Formatted result</label>
           <pre><%= @final_text %></pre>
         </div>
       </div>
