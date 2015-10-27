@@ -9,7 +9,7 @@
           <div class="col-xs-12">
 
             <% if @verdict %>
-                <p class="bg-success text-success" style="padding: 15px;">Valid number</p>
+                <p class="bg-success text-success" style="padding: 15px;">Valid number. Card type <%= @brand_name %></p>
             <% else %>
                 <p class="bg-danger text-danger" style="padding: 15px;">Invalid number</p>
             <% end %>
@@ -28,5 +28,30 @@
           <%= submit_tag 'Check', :class => 'btn btn-primary' %>
         </div>
       </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Fake credit card numbers for all major brands</h3>
+        <p>
+          <strong>
+            The following list contains samples of values per each one of the major brands.
+            They are not actual credit card numbers and are not to be consider as such.
+            These values are generated randomly each time you refresh the page.
+            For more info on how this is conducted please check <a href="https://github.com/Fivell/credit_card_validations" target="_blank">this gem</a> out.
+          </strong>
+        </p>
+      </div>
+
+      <% @samples.each do |sample| %>
+          <div class="col-xs-12 col-md-6 col-lg-3">
+            <div><strong><%= sample[:type] %></strong></div>
+            <ul>
+              <% sample[:values].each do |value| %>
+                  <li><%= value %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
     </div>
 <% end %>

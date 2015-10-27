@@ -8,6 +8,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'selenium-webdriver'
 gem 'nokogiri'
+gem 'credit_card_validations'
 
 group :development do
   gem "better_errors"
