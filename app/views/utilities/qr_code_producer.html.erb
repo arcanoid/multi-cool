@@ -4,10 +4,15 @@
 
 <%= form_tag qr_code_producer_utilities_url do %>
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label for="file">Text to include in qr image</label>
           <%= text_area_tag :full_text, @final_text, :rows => 5, :class => 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <label for="file">Image size (in pixels for both height and width)</label>
+          <%= text_field_tag :size, (params[:size].presence || 200), :class => 'form-control' %>
         </div>
 
         <div class="form-group">

@@ -73,7 +73,7 @@ class UtilitiesController < ApplicationController
           resize_exactly_to: false,
           fill: 'white',
           color: 'black',
-          size: (params[:size].presence || 200),
+          size: (params[:size].present? ? params[:size].to_i : 200),
           border_modules: 4,
           module_px_size: 6,
           file: full_file_name
