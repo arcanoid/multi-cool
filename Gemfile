@@ -11,6 +11,7 @@ gem 'nokogiri'
 gem 'credit_card_validations'
 gem 'anbt-sql-formatter'
 gem 'rqrcode'
+gem 'forgery'
 
 group :development do
   gem "better_errors"

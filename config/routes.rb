@@ -24,4 +24,8 @@ Rails.application.routes.draw do
     get :credit_card_validator
     post :credit_card_validator
   end
+
+  resource :data_generation, :only => [] do
+    get :sample_data
+  end
 end

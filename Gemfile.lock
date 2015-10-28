@@ -53,6 +53,7 @@ GEM
     erubis (2.7.0)
     execjs (2.6.0)
     ffi (1.9.10)
+    forgery (0.6.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -134,6 +135,7 @@ DEPENDENCIES
   anbt-sql-formatter
   better_errors
   credit_card_validations
+  forgery
   nokogiri
   rails (= 4.2.4)
   rqrcode
