@@ -17,3 +17,13 @@
 .thumbnail .caption {
     word-break: break-all;
 }
+
+.footer {
+    margin-top: 30px;
+    padding: 20px 0;
+    background-color: #f5f5f5;
+}
+
+.footer .footer-section {
+    margin-bottom: 20px;
+}
