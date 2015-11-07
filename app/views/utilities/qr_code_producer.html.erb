@@ -6,12 +6,12 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
-          <label for="file">URL to include in qr image (for more than one split into lines)</label>
+          <label for="full_text">URL to include in qr image (for more than one split into lines)</label>
           <%= text_area_tag :full_text, @final_text, :rows => 5, :class => 'form-control' %>
         </div>
 
         <div class="form-group">
-          <label for="file">Image size (in pixels for both height and width)</label>
+          <label for="size">Image size (in pixels for both height and width)</label>
           <%= text_field_tag :size, (params[:size].presence || 200), :class => 'form-control' %>
         </div>
 
