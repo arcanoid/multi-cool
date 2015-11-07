@@ -32,5 +32,7 @@ Rails.application.routes.draw do
   resource :conversions, :only => [] do
     get :length_conversion
     post :length_conversion
+    get :weight_conversion
+    post :weight_conversion
   end
 end

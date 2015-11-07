@@ -14,4 +14,18 @@ module UnitsHelper
         ['furlong (fur)', 'fur']
     ]
   end
+
+  def weight_units_for_select
+    [
+        ['kilograms (kg)', 'kg'],
+        ['centigrams (cg)', 'cg'],
+        ['decigrams (dg)', 'dg'],
+        ['grams (g)', 'g'],
+        ['milligrams (mg)', 'mg'],
+        ['hectogram (hg)', 'hg'],
+        ['dekagrams (dag)', 'dag'],
+        ['pound (lb)', 'lb'],
+        ['ounce (oz)', 'oz']
+    ]
+  end
 end
