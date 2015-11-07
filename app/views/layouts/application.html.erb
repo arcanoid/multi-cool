@@ -56,6 +56,14 @@
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Converters <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Length converter', length_conversion_conversions_url %></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             Data generators <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
@@ -88,12 +96,33 @@
       </p>
 
       <p>
+          <div><strong>Converters</strong></div>
+          <div><%= link_to 'Length converter', length_conversion_conversions_url %></div>
+      </p>
+
+      <p>
           <div><strong>Date generator</strong></div>
           <div><%= link_to 'Sample data generator', sample_data_data_generation_url %></div>
       </p>
     </div>
 
     <div class="col-cs-12 col-md-10">
+      <% if flash[:error].present? %>
+          <div class="row">
+            <div class="col-cs-12">
+              <p class="bg-danger text-danger" style="padding: 15px;"><%= flash[:error] %></p>
+            </div>
+          </div>
+      <% end %>
+
+      <% if flash[:success].present? %>
+          <div class="row">
+            <div class="col-cs-12">
+              <p class="bg-success text-danger" style="padding: 15px;"><%= flash[:success] %></p>
+            </div>
+          </div>
+      <% end %>
+
       <%= yield %>
     </div>
   </div>

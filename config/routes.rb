@@ -28,4 +28,9 @@ Rails.application.routes.draw do
   resource :data_generation, :only => [] do
     get :sample_data
   end
+
+  resource :conversions, :only => [] do
+    get :length_conversion
+    post :length_conversion
+  end
 end

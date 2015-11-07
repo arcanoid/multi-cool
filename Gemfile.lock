@@ -98,6 +98,7 @@ GEM
     rake (10.4.2)
     rqrcode (0.7.0)
       chunky_png
+    ruby-units (1.4.5)
     rubyzip (1.1.7)
     sass (3.4.18)
     sass-rails (5.0.4)
@@ -139,6 +140,7 @@ DEPENDENCIES
   nokogiri
   rails (= 4.2.4)
   rqrcode
+  ruby-units
   sass-rails (~> 5.0)
   selenium-webdriver
   sqlite3
