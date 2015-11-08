@@ -59,7 +59,14 @@ module UnitsHelper
 
   def area_units_for_select
     [
-        ['hectare', 'hectare'], 
+        ['square meter (m^2)', 'm^2'],
+        ['square decimeter (dm^2)', 'dm^2'],
+        ['square centimeter (cm^2)', 'cm^2'],
+        ['square millimeter (mm^2)', 'mm^2'],
+        ['square hectometer (hm^2)', 'hm^2'],
+        ['square dekameter (dam^2)', 'dam^2'],
+        ['square nanometer (nm^2)', 'nm^2'],
+        ['hectare', 'hectare'],
         ['acres', 'acre'],
         ['square feet', 'sqft'],
         ['square inches', 'sqin']
