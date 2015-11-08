@@ -56,4 +56,13 @@ module UnitsHelper
         ['ounce (oz)', 'oz']
     ]
   end
+
+  def area_units_for_select
+    [
+        ['hectare', 'hectare'], 
+        ['acres', 'acre'],
+        ['square feet', 'sqft'],
+        ['square inches', 'sqin']
+    ]
+  end
 end

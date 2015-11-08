@@ -36,5 +36,7 @@ Rails.application.routes.draw do
     post :weight_conversion
     get :time_conversion
     post :time_conversion
+    get :area_conversion
+    post :area_conversion
   end
 end
