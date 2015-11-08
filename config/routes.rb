@@ -38,5 +38,11 @@ Rails.application.routes.draw do
     post :time_conversion
     get :area_conversion
     post :area_conversion
+    get :volume_conversion
+    post :volume_conversion
+    get :speed_conversion
+    post :speed_conversion
+    get :temperature_conversion
+    post :temperature_conversion
   end
 end

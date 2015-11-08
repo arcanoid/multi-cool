@@ -72,4 +72,39 @@ module UnitsHelper
         ['square inches', 'sqin']
     ]
   end
+
+  def volume_units_for_select
+    [
+        ['liters', 'liter'],
+        ['gallons', 'gallon'],
+        ['quarts', 'quart'],
+        ['pints', 'pint'],
+        ['cups', 'cup'],
+        ['fluid-ounce', 'fluid-ounces'],
+        ['teaspoons', 'teaspoons'],
+        ['tablespoons', 'tablespoon']
+    ]
+  end
+
+  def speed_units_for_select
+    [
+        ['kilometer/hour', 'kph'],
+        ['mile/hour', 'mph'],
+        ['foot/second', 'fps'],
+        ['nmi/hour', 'knot'],
+        ['standard gravitation', 'gee']
+    ]
+  end
+
+  def temperature_units_for_select
+    [
+        ['newton', 'newton'],
+        ['dyne', 'dyne'],
+        ['pound-force', 'pound-force'],
+        ['poundal', 'poundal'],
+        ['fahrenheit', 'fahrenheit'],
+        ['rankine', 'rankine'],
+        ['celsius', 'celsius']
+    ]
+  end
 end
