@@ -20,5 +20,15 @@ class ConversionsController < ApplicationController
     flash[:error] = e
   end
 
+  def time_conversion
+    @initial_text = params[:initial_text].presence || '10'
+    @from = params[:from].presence || 'min'
+    @to = params[:to].presence || 'sec'
+
+    @final_text = Unit("#{@initial_text} #{@from}").convert_to(@to)
+  rescue ArgumentError => e
+    flash[:error] = e
+  end
+
   end
 end

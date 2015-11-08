@@ -24,6 +24,20 @@ module UnitsHelper
     ]
   end
 
+  def time_units_for_select
+    [
+        ['minutes (min)', 'min'],
+        ['hours (h)', 'hrs'],
+        ['seconds (sec)', 'sec'],
+        ['days', 'day'],
+        ['weeks', 'weeks'],
+        ['years', 'years'],
+        ['decades', 'decades'],
+        ['centuries', 'centuries'],
+        ['fortnights', 'fortnight']
+    ]
+  end
+
   def weight_units_for_select
     [
         ['kilograms (kg)', 'kg'],
