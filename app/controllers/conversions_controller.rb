@@ -6,6 +6,8 @@ class ConversionsController < ApplicationController
     @to = params[:to].presence || 'km'
 
     @final_text = Unit("#{@initial_text} #{@from}").convert_to(@to)
+  rescue ArgumentError => e
+    flash[:error] = e
   end
 
   def weight_conversion
@@ -14,5 +16,9 @@ class ConversionsController < ApplicationController
     @to = params[:to].presence || 'g'
 
     @final_text = Unit("#{@initial_text} #{@from}").convert_to(@to)
+  rescue ArgumentError => e
+    flash[:error] = e
+  end
+
   end
 end

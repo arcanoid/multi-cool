@@ -2,6 +2,7 @@ module UnitsHelper
   def length_units_for_select
     [
         ['feet (ft)', 'ft'],
+        ['survey feet (sfoot)', 'sfoot'],
         ['yards (yd)', 'yd'],
         ['kilometer (km)', 'km'],
         ['meter (m)', 'm'],
@@ -10,7 +11,15 @@ module UnitsHelper
         ['millimeter (mm)', 'mm'],
         ['hectometer (hm)', 'hm'],
         ['dekameter (dam)', 'dam'],
+        ['nanometer (nm)', 'nm'],
         ['miles (mi.)', 'mi'],
+        ['naut-miles (nmi.)', 'nmi'],
+        ['leagues', 'leagues'],
+        ['naut-leagues', 'nleagues'],
+        ['rods', 'rd'],
+        ['fathom', 'fathom'],
+        ['mils', 'mil'],
+        ['angstroms', 'angstrom'],
         ['furlong (fur)', 'fur']
     ]
   end
@@ -25,6 +34,11 @@ module UnitsHelper
         ['hectogram (hg)', 'hg'],
         ['dekagrams (dag)', 'dag'],
         ['pound (lb)', 'lb'],
+        ['AMU', 'amu'],
+        ['daltons', 'daltons'],
+        ['tonne', 'tonne'],
+        ['short-ton', 'tons'],
+        ['carats', 'carats'],
         ['ounce (oz)', 'oz']
     ]
   end
