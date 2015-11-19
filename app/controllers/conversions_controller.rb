@@ -69,4 +69,14 @@ class ConversionsController < ApplicationController
   rescue ArgumentError => e
     flash[:error] = e
   end
+
+  def astronomy_conversion
+    @initial_text = params[:initial_text].presence || '10'
+    @from = params[:from].presence || 'light-year'
+    @to = params[:to].presence || 'light-second'
+
+    @final_text = Unit("#{@initial_text} #{@from}").convert_to(@to)
+  rescue ArgumentError => e
+    flash[:error] = e
+  end
 end

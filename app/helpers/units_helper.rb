@@ -107,4 +107,15 @@ module UnitsHelper
         ['celsius', 'celsius']
     ]
   end
+
+  def astronomy_units_for_select
+    [
+        ['light seconds', 'light-second'],
+        ['light minutes', 'light-minute'],
+        ['light years', 'light-year'],
+        ['parsecs', 'parsec'],
+        ['redshift', 'redshift'],
+        ['astronomical unit', 'astronomical-unit']
+    ]
+  end
 end
