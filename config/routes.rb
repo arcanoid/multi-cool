@@ -50,5 +50,7 @@ Rails.application.routes.draw do
     post :energy_conversion
     get :power_conversion
     post :power_conversion
+    get :magnetism_conversion
+    post :magnetism_conversion
   end
 end

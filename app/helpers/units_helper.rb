@@ -144,4 +144,13 @@ module UnitsHelper
         ['calorie', 'calorie']
     ]
   end
+
+  def magnetism_units_for_select
+    [
+        ['webers', 'weber'],
+        ['teslas', 'tesla'],
+        ['gauss', 'gauss'],
+        ['maxwell', 'maxwell']
+    ]
+  end
 end
