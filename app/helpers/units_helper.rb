@@ -114,4 +114,11 @@ module UnitsHelper
     ]
   end
 
+
+  def power_units_for_select
+    [
+        ['watts', 'watt'],
+        ['horsepower', 'horsepower']
+    ]
+  end
 end

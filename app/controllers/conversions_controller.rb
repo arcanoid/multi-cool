@@ -70,4 +70,13 @@ class ConversionsController < ApplicationController
     flash[:error] = e
   end
 
+  def power_conversion
+    @initial_text = params[:initial_text].presence || '10'
+    @from = params[:from].presence || 'horsepower'
+    @to = params[:to].presence || 'watts'
+
+    @final_text = Unit("#{@initial_text} #{@from}").convert_to(@to)
+  rescue ArgumentError => e
+    flash[:error] = e
+  end
 end
