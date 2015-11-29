@@ -55,4 +55,9 @@ Rails.application.routes.draw do
     get :radiation_conversion
     post :radiation_conversion
   end
+
+  resource :format_conversions, :only => [] do
+    get :xml_to_json
+    post :xml_to_json
+  end
 end

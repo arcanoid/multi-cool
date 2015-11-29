@@ -56,7 +56,7 @@
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            Converters <span class="caret"></span>
+            Unit Converters <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li><%= link_to 'Length converter', length_conversion_conversions_url %></li>
@@ -71,6 +71,14 @@
             <li><%= link_to 'Power converter', power_conversion_conversions_url %></li>
             <li><%= link_to 'Magnetism converter', magnetism_conversion_conversions_url %></li>
             <li><%= link_to 'Radiation converter', radiation_conversion_conversions_url %></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Format Converters <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'XML to Json converter', xml_to_json_format_conversions_url %></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -107,7 +115,7 @@
       </p>
 
       <p>
-          <div><strong>Converters</strong></div>
+          <div><strong>Unit Converters</strong></div>
           <div><%= link_to 'Length converter', length_conversion_conversions_url %></div>
           <div><%= link_to 'Weight converter', weight_conversion_conversions_url %></div>
           <div><%= link_to 'Time converter', time_conversion_conversions_url %></div>
@@ -120,6 +128,11 @@
           <div><%= link_to 'Power converter', power_conversion_conversions_url %></div>
           <div><%= link_to 'Magnetism converter', magnetism_conversion_conversions_url %></div>
           <div><%= link_to 'Radiation converter', radiation_conversion_conversions_url %></div>
+      </p>
+
+      <p>
+          <div><strong>Format Converters</strong></div>
+          <div><%= link_to 'XML to Json converter', xml_to_json_format_conversions_url %></div>
       </p>
 
       <p>
