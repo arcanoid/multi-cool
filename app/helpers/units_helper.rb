@@ -153,4 +153,14 @@ module UnitsHelper
         ['maxwell', 'maxwell']
     ]
   end
+
+  def radiation_units_for_select
+    [
+        ['gray', 'gray'],
+        ['sievert', 'sievert'],
+        ['becquerel', 'becquerel'],
+        ['curie', 'curie'],
+        ['count', 'count']
+    ]
+  end
 end
