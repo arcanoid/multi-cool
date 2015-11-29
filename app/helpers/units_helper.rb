@@ -20,7 +20,13 @@ module UnitsHelper
         ['fathom', 'fathom'],
         ['mils', 'mil'],
         ['angstroms', 'angstrom'],
-        ['furlong (fur)', 'fur']
+        ['furlong (fur)', 'fur'],
+        ['light seconds', 'light-second'],
+        ['light minutes', 'light-minute'],
+        ['light years', 'light-year'],
+        ['parsecs', 'parsec'],
+        ['redshift', 'redshift'],
+        ['astronomical unit', 'astronomical-unit']
     ]
   end
 
@@ -108,14 +114,4 @@ module UnitsHelper
     ]
   end
 
-  def astronomy_units_for_select
-    [
-        ['light seconds', 'light-second'],
-        ['light minutes', 'light-minute'],
-        ['light years', 'light-year'],
-        ['parsecs', 'parsec'],
-        ['redshift', 'redshift'],
-        ['astronomical unit', 'astronomical-unit']
-    ]
-  end
 end
