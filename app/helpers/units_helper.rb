@@ -114,6 +114,19 @@ module UnitsHelper
     ]
   end
 
+  def pressure_units_for_select
+    [
+        ['pascals', 'pascal'],
+        ['bars', 'bar'],
+        ['atmospheres', 'atmospheres'],
+        ['millimeter of mercury', 'mmHg'],
+        ['inch of mercury', 'inHg'],
+        ['torr', 'torr'],
+        ['psi', 'psi'],
+        ['centimetre of water', 'cmh2o'],
+        ['inch of water', 'inh2o']
+    ]
+  end
 
   def power_units_for_select
     [
