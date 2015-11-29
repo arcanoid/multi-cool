@@ -121,4 +121,14 @@ module UnitsHelper
         ['horsepower', 'horsepower']
     ]
   end
+
+  def energy_units_for_select
+    [
+        ['joules', 'joule'],
+        ['ergs', 'erg'],
+        ['btu', 'btu'],
+        ['therm', 'therm'],
+        ['calorie', 'calorie']
+    ]
+  end
 end

@@ -44,6 +44,8 @@ Rails.application.routes.draw do
     post :speed_conversion
     get :temperature_conversion
     post :temperature_conversion
+    get :energy_conversion
+    post :energy_conversion
     get :power_conversion
     post :power_conversion
   end
