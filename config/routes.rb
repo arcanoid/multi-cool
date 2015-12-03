@@ -59,5 +59,7 @@ Rails.application.routes.draw do
   resource :format_conversions, :only => [] do
     get :xml_to_json
     post :xml_to_json
+    get :json_to_xml
+    post :json_to_xml
   end
 end
