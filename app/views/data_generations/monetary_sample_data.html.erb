@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1>Monetary sample data</h1>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Credit cards</h3>
+  </div>
+
+  <% @credit_card_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12"><hr /></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Currencies</h3>
+  </div>
+
+  <% @currency_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12"><hr /></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Monetary</h3>
+  </div>
+
+  <% @monetary_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>

@@ -27,6 +27,12 @@ Rails.application.routes.draw do
 
   resource :data_generation, :only => [] do
     get :sample_data
+    get :geographical_sample_data
+    get :monetary_sample_data
+    get :internet_sample_data
+    get :commerce_and_contact_sample_data
+    get :date_and_time_sample_data
+    get :text_sample_data
   end
 
   resource :conversions, :only => [] do

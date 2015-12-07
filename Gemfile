@@ -12,6 +12,7 @@ gem 'credit_card_validations'
 gem 'anbt-sql-formatter'
 gem 'rqrcode'
 gem 'forgery'
+gem 'faker'
 gem 'ruby-units'
 
 group :development do

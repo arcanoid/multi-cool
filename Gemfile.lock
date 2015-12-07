@@ -52,6 +52,8 @@ GEM
       activesupport (>= 3, < 5)
     erubis (2.7.0)
     execjs (2.6.0)
+    faker (1.6.1)
+      i18n (~> 0.5)
     ffi (1.9.10)
     forgery (0.6.0)
     globalid (0.3.6)
@@ -136,6 +138,7 @@ DEPENDENCIES
   anbt-sql-formatter
   better_errors
   credit_card_validations
+  faker
   forgery
   nokogiri
   rails (= 4.2.4)

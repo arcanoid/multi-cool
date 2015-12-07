@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h1>Internet sample data</h1>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Emails</h3>
+  </div>
+
+  <% @email_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12"><hr /></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Internet</h3>
+  </div>
+
+  <% @internet_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>

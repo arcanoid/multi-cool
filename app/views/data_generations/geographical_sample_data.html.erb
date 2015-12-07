@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h1>Geographical sample data</h1>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Address</h3>
+  </div>
+
+  <% @address_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12"><hr /></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Geolocation</h3>
+  </div>
+
+  <% @geo_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>

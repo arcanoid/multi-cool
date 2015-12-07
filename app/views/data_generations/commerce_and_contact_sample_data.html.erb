@@ -1,0 +1,64 @@
+<div class="page-header">
+  <h1>Geographical sample data</h1>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Personal sample data</h3>
+  </div>
+
+  <% @personal_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12"><hr /></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Commerce sample data</h3>
+  </div>
+
+  <% @commerce_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12"><hr /></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Company sample data</h3>
+  </div>
+
+  <% @company_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12"><hr /></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Phone sample data</h3>
+  </div>
+
+  <% @phone_data.each do |sample| %>
+      <div class="col-xs-6">
+        <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+      </div>
+  <% end %>
+</div>
+
