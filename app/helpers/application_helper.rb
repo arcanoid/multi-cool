@@ -20,23 +20,23 @@ module ApplicationHelper
                 { :name => 'Credit Card validator', :path => credit_card_validator_utilities_url, :icon => 'fa-credit-card' }
             ]
         },
-        {
-            :name => 'Unit Converters',
-            :sub_menus => [
-                { :name => 'Length converter', :path => length_conversion_conversions_url },
-                { :name => 'Weight converter', :path => weight_conversion_conversions_url },
-                { :name => 'Time converter', :path => time_conversion_conversions_url },
-                { :name => 'Area converter', :path => area_conversion_conversions_url },
-                { :name => 'Speed converter', :path => speed_conversion_conversions_url },
-                { :name => 'Temperature converter', :path => temperature_conversion_conversions_url },
-                { :name => 'Volume converter', :path => volume_conversion_conversions_url },
-                { :name => 'Energy converter', :path => energy_conversion_conversions_url },
-                { :name => 'Pressure converter', :path => pressure_conversion_conversions_url },
-                { :name => 'Power converter', :path => power_conversion_conversions_url },
-                { :name => 'Magnetism converter', :path => magnetism_conversion_conversions_url },
-                { :name => 'Radiation converter', :path => radiation_conversion_conversions_url }
-            ]
-        },
+        #{
+        #    :name => 'Unit Converters',
+        #    :sub_menus => [
+        #        { :name => 'Length converter', :path => length_conversion_conversions_url },
+        #        { :name => 'Weight converter', :path => weight_conversion_conversions_url },
+        #        { :name => 'Time converter', :path => time_conversion_conversions_url },
+        #        { :name => 'Area converter', :path => area_conversion_conversions_url },
+        #        { :name => 'Speed converter', :path => speed_conversion_conversions_url },
+        #        { :name => 'Temperature converter', :path => temperature_conversion_conversions_url },
+        #        { :name => 'Volume converter', :path => volume_conversion_conversions_url },
+        #        { :name => 'Energy converter', :path => energy_conversion_conversions_url },
+        #        { :name => 'Pressure converter', :path => pressure_conversion_conversions_url },
+        #        { :name => 'Power converter', :path => power_conversion_conversions_url },
+        #        { :name => 'Magnetism converter', :path => magnetism_conversion_conversions_url },
+        #        { :name => 'Radiation converter', :path => radiation_conversion_conversions_url }
+        #    ]
+        #},
         {
             :name => 'Format Converters',
             :sub_menus => [
