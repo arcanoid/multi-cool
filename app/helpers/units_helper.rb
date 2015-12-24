@@ -97,8 +97,7 @@ module UnitsHelper
         ['kilometer/hour', 'kph'],
         ['mile/hour', 'mph'],
         ['foot/second', 'fps'],
-        ['nmi/hour', 'knot'],
-        ['standard gravitation', 'gee']
+        ['nmi/hour', 'knot']
     ]
   end
 
@@ -142,25 +141,6 @@ module UnitsHelper
         ['btu', 'btu'],
         ['therm', 'therm'],
         ['calorie', 'calorie']
-    ]
-  end
-
-  def magnetism_units_for_select
-    [
-        ['webers', 'weber'],
-        ['teslas', 'tesla'],
-        ['gauss', 'gauss'],
-        ['maxwell', 'maxwell']
-    ]
-  end
-
-  def radiation_units_for_select
-    [
-        ['gray', 'gray'],
-        ['sievert', 'sievert'],
-        ['becquerel', 'becquerel'],
-        ['curie', 'curie'],
-        ['count', 'count']
     ]
   end
 end

@@ -56,10 +56,6 @@ Rails.application.routes.draw do
     post :energy_conversion
     get :power_conversion
     post :power_conversion
-    get :magnetism_conversion
-    post :magnetism_conversion
-    get :radiation_conversion
-    post :radiation_conversion
   end
 
   resource :format_conversions, :only => [] do

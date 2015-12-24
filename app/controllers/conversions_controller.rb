@@ -99,24 +99,4 @@ class ConversionsController < ApplicationController
   rescue ArgumentError => e
     flash[:error] = e
   end
-
-  def magnetism_conversion
-    @initial_text = params[:initial_text].presence || '10'
-    @from = params[:from].presence || 'weber'
-    @to = params[:to].presence || 'tesla'
-
-    @final_text = Unit("#{@initial_text} #{@from}").convert_to(@to)
-  rescue ArgumentError => e
-    flash[:error] = e
-  end
-
-  def radiation_conversion
-    @initial_text = params[:initial_text].presence || '10'
-    @from = params[:from].presence || 'curie'
-    @to = params[:to].presence || 'count'
-
-    @final_text = Unit("#{@initial_text} #{@from}").convert_to(@to)
-  rescue ArgumentError => e
-    flash[:error] = e
-  end
 end
