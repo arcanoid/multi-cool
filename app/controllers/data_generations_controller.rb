@@ -163,6 +163,7 @@ class DataGenerationsController < ApplicationController
     @personal_data = []
     @commerce_data = []
     @company_data = []
+    @company_logo = Faker::Company.logo
     @phone_data = []
 
     @personal_data << { :type => 'Company name', :value => Forgery('name').company_name }
