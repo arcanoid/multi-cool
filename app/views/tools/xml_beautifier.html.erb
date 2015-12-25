@@ -3,15 +3,6 @@
 </div>
 
 <%= form_tag xml_beautifier_tools_url do %>
-
-    <% if flash[:error] %>
-        <div class="row">
-          <div class="col-xs-12 col-md-6">
-            <p class="bg-danger text-danger" style="padding: 15px;"><%= flash[:error] %></p>
-          </div>
-        </div>
-    <% end %>
-
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="form-group <%= 'has-error' if flash[:error] %>">
