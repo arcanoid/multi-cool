@@ -16,6 +16,10 @@ gem 'faker'
 gem 'ruby-units'
 
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+group :test do
+  gem 'rspec-rails'
 end
