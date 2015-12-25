@@ -58,6 +58,7 @@ GEM
     execjs (2.6.0)
     faker (1.6.1)
       i18n (~> 0.5)
+    feedvalidator (0.2.0)
     ffi (1.9.10)
     forgery (0.6.0)
     globalid (0.3.6)
@@ -161,6 +162,7 @@ DEPENDENCIES
   binding_of_caller
   credit_card_validations
   faker
+  feedvalidator
   forgery
   nokogiri
   rails (= 4.2.4)

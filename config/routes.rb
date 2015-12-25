@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     post :qr_code_producer
     get :credit_card_validator
     post :credit_card_validator
+    get :rss_feed_validator
+    post :rss_feed_validator
   end
 
   resource :data_generation, :only => [] do

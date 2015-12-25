@@ -36,4 +36,16 @@ describe '/utilities' do
         should route_to( :controller => 'utilities',
                          :action => 'credit_card_validator')
   end
+
+  it 'GET /utilities/rss_feed_validator it should route to utilities#rss_feed_validator' do
+    { :get => '/utilities/rss_feed_validator' }.
+        should route_to( :controller => 'utilities',
+                         :action => 'rss_feed_validator')
+  end
+
+  it 'POST /utilities/rss_feed_validator it should route to utilities#rss_feed_validator' do
+    { :post => '/utilities/rss_feed_validator' }.
+        should route_to( :controller => 'utilities',
+                         :action => 'rss_feed_validator')
+  end
 end

@@ -14,6 +14,7 @@ gem 'rqrcode'
 gem 'forgery'
 gem 'faker'
 gem 'ruby-units'
+gem  'feedvalidator'
 
 group :development do
   gem 'better_errors'

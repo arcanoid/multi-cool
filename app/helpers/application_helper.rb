@@ -17,7 +17,8 @@ module ApplicationHelper
             :sub_menus => [
                 { :name => 'Screenshot Snapper', :path => screenshot_snapper_utilities_url, :icon => 'fa-photo' },
                 { :name => 'QR code producer', :path => qr_code_producer_utilities_url, :icon => 'fa-qrcode' },
-                { :name => 'Credit Card validator', :path => credit_card_validator_utilities_url, :icon => 'fa-credit-card' }
+                { :name => 'Credit Card validator', :path => credit_card_validator_utilities_url, :icon => 'fa-credit-card' },
+                { :name => 'RSS feed validator', :path => rss_feed_validator_utilities_url, :icon => 'fa-rss' }
             ]
         },
         {

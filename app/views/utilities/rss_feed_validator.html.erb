@@ -1,0 +1,120 @@
+<div class="page-header">
+  <h1>RSS feed validator</h1>
+</div>
+
+<%= form_tag rss_feed_validator_utilities_url do %>
+    <% unless @valid.nil? %>
+        <div class="row">
+          <div class="col-xs-12">
+            <% if @valid %>
+                <p class="bg-success text-success" style="padding: 15px;">Valid rss feed url.</p>
+            <% else %>
+                <p class="bg-danger text-danger" style="padding: 15px;">Invalid rss feed url.</p>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group <%= 'has-error' if flash[:error] %>">
+          <label for="cc_number">Rss feed url</label>
+          <%= text_field_tag :url, @site_url, :class => "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Check', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+
+    <% if @errors.present? %>
+        <div class="row">
+          <div class="col-xs-12"><h3><i class="fa fa-times-circle text-danger"></i> Errors Noticed</h3></div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12"><hr /></div>
+        </div>
+
+        <table class="table table-bordered table-hover                                                                                              ">
+          <tr class="danger">
+            <th><strong>Type</strong></th>
+            <th><strong>Line</strong></th>
+            <th><strong>Column</strong></th>
+            <th><strong>Text</strong></th>
+            <th><strong>Element</strong></th>
+          </tr>
+
+          <% @errors.each do |error| %>
+              <tr class="danger">
+                <td><%= error[:type] %></td>
+                <td><%= error[:line] %></td>
+                <td><%= error[:column] %></td>
+                <td><%= error[:text] %></td>
+                <td><%= error[:element] %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    <% if @warnings.present? %>
+        <div class="row">
+          <div class="col-xs-12"><h3><i class="fa fa-exclamation-triangle text-warning"></i> Warnings Noticed</h3></div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12"><hr /></div>
+        </div>
+
+        <table class="table table-bordered table-hover                                                                                              ">
+          <tr class="warning">
+            <th><strong>Type</strong></th>
+            <th><strong>Line</strong></th>
+            <th><strong>Column</strong></th>
+            <th><strong>Text</strong></th>
+            <th><strong>Element</strong></th>
+          </tr>
+
+          <% @warnings.each do |warning| %>
+              <tr class="warning">
+                <td><%= warning[:type] %></td>
+                <td><%= warning[:line] %></td>
+                <td><%= warning[:column] %></td>
+                <td><%= warning[:text] %></td>
+                <td><%= warning[:element] %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    <% if @info.present? %>
+        <div class="row">
+          <div class="col-xs-12"><h3><i class="fa fa-info-circle text-info"></i> Extra information</h3></div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12"><hr /></div>
+        </div>
+
+        <table class="table table-bordered table-hover                                                                                              ">
+          <tr class="info">
+            <th><strong>Type</strong></th>
+            <th><strong>Line</strong></th>
+            <th><strong>Column</strong></th>
+            <th><strong>Text</strong></th>
+            <th><strong>Element</strong></th>
+          </tr>
+
+          <% @info.each do |info| %>
+              <tr class="info">
+                <td><%= info[:type] %></td>
+                <td><%= info[:line] %></td>
+                <td><%= info[:column] %></td>
+                <td><%= info[:text] %></td>
+                <td><%= info[:element] %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+<% end %>

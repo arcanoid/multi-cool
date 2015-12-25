@@ -86,4 +86,27 @@ class UtilitiesController < ApplicationController
 
     @images = Dir.glob("app/assets/images/qr_codes/*/*.png")
   end
+
+  def rss_feed_validator
+    require 'feed_validator'
+
+    if params[:url].present?
+      @valid = false
+      @site_url = params[:url]
+
+      begin
+        v = W3C::FeedValidator.new
+
+        if v.validate_url(@site_url) && v.valid?
+          @valid = true
+        end
+
+        @warnings = v.warnings
+        @errors = v.errors
+        @info = v.informations
+      rescue Exception => e
+        flash[:error] = e
+      end
+    end
+  end
 end
