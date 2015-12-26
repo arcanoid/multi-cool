@@ -36,7 +36,7 @@
 
                 <% image_info_array = image_url.split('/') %>
                 <div><%= image_info_array.last.gsub('.png', '') %></div>
-                <div>Taken at: <%= image_info_array[image_info_array.size - 2] %></div>
+                <div>Taken at: <%= Date.parse(image_info_array[image_info_array.size - 2]).strftime('%a %d %b %Y')  %></div>
               </div>
             </div>
           </div>

@@ -43,7 +43,7 @@ class UtilitiesController < ApplicationController
       urls.each do |url|
 
         if url.present?
-          directory_name = "#{Rails.root}/app/assets/images/screens/#{DateTime.now.strftime('%Y_%m_%d')}"
+          directory_name = "#{Rails.root}/app/assets/images/screens/#{DateTime.now.strftime('%Y-%m-%d')}"
           FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
 
           full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '')}.png"
@@ -64,7 +64,7 @@ class UtilitiesController < ApplicationController
       urls = params[:full_text].split(/\r\n/)
 
       urls.each do |url|
-        directory_name = "#{Rails.root}/app/assets/images/qr_codes/#{DateTime.now.strftime('%Y_%m_%d')}"
+        directory_name = "#{Rails.root}/app/assets/images/qr_codes/#{DateTime.now.strftime('%Y-%m-%d')}"
         FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
 
         full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '')}.png"
