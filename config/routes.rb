@@ -66,4 +66,9 @@ Rails.application.routes.draw do
     get :json_to_xml
     post :json_to_xml
   end
+
+  resource :facts, :only => [] do
+    get :random_facts
+    get :this_day_in_history
+  end
 end

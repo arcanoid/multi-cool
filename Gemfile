@@ -15,6 +15,8 @@ gem 'forgery'
 gem 'faker'
 gem 'ruby-units'
 gem 'feedvalidator'
+gem 'facts_by_date'
+gem 'random_facts'
 
 group :development do
   gem 'better_errors'

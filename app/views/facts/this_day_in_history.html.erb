@@ -1,0 +1,17 @@
+<div class="page-header">
+  <h1>What happened this day in the past</h1>
+</div>
+
+<table class="table table-bordered table-hover">
+  <tr>
+    <th>Year</th>
+    <th>Fact</th>
+  </tr>
+
+  <% @facts.each do |fact| %>
+      <tr>
+        <td><%= fact['year'] %></td>
+        <td><%= fact['text'] %></td>
+      </tr>
+  <% end %>
+</table>

@@ -1,0 +1,9 @@
+<div class="page-header">
+  <h1>Random Facts</h1>
+</div>
+
+<table class="table table-bordered table-hover">
+  <% @facts.each do |fact| %>
+      <tr><td><%= fact %></td></tr>
+  <% end %>
+</table>
