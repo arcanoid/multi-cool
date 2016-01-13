@@ -71,16 +71,8 @@ class UtilitiesController < ApplicationController
 
         qrcode = RQRCode::QRCode.new(url)
 
-        qrcode.as_png(
-            resize_gte_to: false,
-            resize_exactly_to: false,
-            fill: 'white',
-            color: 'black',
-            size: (params[:size].present? ? params[:size].to_i : 200),
-            border_modules: 4,
-            module_px_size: 6,
-            file: full_file_name
-        )
+        qrcode.as_png( { :file => full_file_name,
+                         :size => (params[:size].present? ? params[:size].to_i : 200) })
       end
     end
 
