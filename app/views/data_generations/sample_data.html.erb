@@ -12,3 +12,19 @@
       </div>
   <% end %>
 </div>
+
+<div class="row">
+    <div class="col-xs-12"><hr /></div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3>Random secure data</h3>
+    </div>
+
+    <% @secure_random_data.each do |sample| %>
+        <div class="col-xs-6">
+            <strong><%= sample[:type] %></strong>: <%= sample[:value] %>
+        </div>
+    <% end %>
+</div>

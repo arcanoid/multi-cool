@@ -1,6 +1,7 @@
 class DataGenerationsController < ApplicationController
   def sample_data
     @basic_data = []
+    @secure_random_data = []
 
     @basic_data << { :type => 'Boolean', :value => Forgery('basic').boolean }
     @basic_data << { :type => 'Color', :value => Forgery('basic').color }
@@ -14,6 +15,10 @@ class DataGenerationsController < ApplicationController
     @basic_data << { :type => 'Short HEX color', :value => Forgery('basic').short_hex_color }
     @basic_data << { :type => 'Text', :value => Forgery('basic').text }
 
+    @secure_random_data << { :type => 'HEX', :value => SecureRandom.hex(32)}
+    @secure_random_data << { :type => 'Base64', :value => SecureRandom.base64}
+    @secure_random_data << { :type => 'Random Bytes', :value => SecureRandom.random_bytes}
+    @secure_random_data << { :type => 'UUID', :value => SecureRandom.uuid}
   end
 
   def text_sample_data
