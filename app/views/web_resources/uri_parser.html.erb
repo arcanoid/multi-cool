@@ -1,0 +1,73 @@
+<div class="page-header">
+  <h1>URI parser</h1>
+</div>
+
+<%= form_tag uri_parser_web_resources_url do %>
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="form-group <%= 'has-error' if flash[:error] %>">
+          <label for="cc_number">URI</label>
+          <%= text_field_tag :uri, (@uri.to_s if @uri.present?), :class => "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Analyze', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<% if @uri.present? %>
+    <table class="table table-hover">
+      <tr>
+        <td><strong>URI</strong></td>
+        <td><%= @uri.to_s %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Scheme</strong></td>
+        <td><%= @uri.scheme %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Host</strong></td>
+        <td><%= @uri.host %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Path</strong></td>
+        <td><%= @uri.path %></td>
+      </tr>
+
+      <% if @uri.query %>
+          <tr>
+            <td><strong>Query</strong></td>
+            <td><%= @uri.query %></td>
+          </tr>
+      <% end %>
+
+      <% if @uri.fragment %>
+          <tr>
+            <td><strong>Fragment</strong></td>
+            <td><%= @uri.fragment %></td>
+          </tr>
+      <% end %>
+    </table>
+
+    <% if @uri.query %>
+        <div class="page-header">
+          <h3>Query splitter</h3>
+        </div>
+
+        <table class="table table-hover">
+          <% @uri.query.split('&').each do |query| %>
+              <% query_values = query.split('=') %>
+
+              <tr>
+                <td><strong><%= query_values[0] %></strong></td>
+                <td><%= query_values[1] %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+<% end %>

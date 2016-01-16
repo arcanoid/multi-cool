@@ -71,4 +71,9 @@ Rails.application.routes.draw do
     get :random_facts
     get :this_day_in_history
   end
+
+  resource :web_resources, :only => [] do
+    get :uri_parser
+    post :uri_parser
+  end
 end
