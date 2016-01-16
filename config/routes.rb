@@ -75,5 +75,7 @@ Rails.application.routes.draw do
   resource :web_resources, :only => [] do
     get :uri_parser
     post :uri_parser
+    get :countries
+    post :countries
   end
 end

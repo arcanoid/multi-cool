@@ -16,6 +16,7 @@ module ApplicationHelper
                 :name => 'Web resources and Utilites',
                 :sub_menus => [
                     { :name => 'URI parser', :path => uri_parser_web_resources_url },
+                    { :name => 'Countries info', :path => countries_web_resources_url },
                 ]
             },
             {

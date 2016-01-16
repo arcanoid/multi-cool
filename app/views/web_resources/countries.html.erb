@@ -1,0 +1,222 @@
+<div class="page-header">
+  <h1>Countries data</h1>
+</div>
+
+<p>
+  All data provided here are thanks to <a href="https://github.com/hexorx/countries" target="_blank">this gem</a>.
+  <br><br>
+</p>
+
+<%= form_tag countries_web_resources_url do %>
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="form-group <%= 'has-error' if flash[:error] %>">
+          <label for="cc_number">Countries list</label>
+
+          <%= select_tag :id,
+                         options_for_select(@all_countries.map { |country| [country.name, country.alpha2] }, (@country.alpha2 if @country.present?)),
+                         :class => 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Analyze', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<% if @country.present? %>
+    <table class="table table-hover">
+      <tr>
+        <td><strong>Number</strong></td>
+        <td><%= @country.number %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Alpha2 code</strong></td>
+        <td><%= @country.alpha2 %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Alpha3 code</strong></td>
+        <td><%= @country.alpha3 %></td>
+      </tr>
+
+      <tr>
+        <td><strong>GEC</strong></td>
+        <td><%= @country.gec %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Name</strong></td>
+        <td><%= @country.name %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Local Name</strong></td>
+        <td><%= @country.local_name %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Region</strong></td>
+        <td><%= @country.region %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Subregion</strong></td>
+        <td><%= @country.subregion %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Address format</strong></td>
+        <td><%= @country.address_format %></td>
+      </tr>
+
+      <tr>
+        <td><strong>European Union Membership</strong></td>
+        <td><%= @country.in_eu? %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Currency code</strong></td>
+        <td><%= @country.currency.code %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Currency name</strong></td>
+        <td><%= @country.currency.name %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Currency symbol</strong></td>
+        <td><%= @country.currency.symbol %></td>
+      </tr>
+    </table>
+
+    <div class="page-header">
+      <h3>Location</h3>
+    </div>
+
+    <table class="table table-hover">
+      <tr>
+        <td><strong>Longitude</strong></td>
+        <td><%= @country.longitude %> (<%= @country.longitude_dec %>)</td>
+      </tr>
+
+      <tr>
+        <td><strong>Latitude</strong></td>
+        <td><%= @country.latitude %> (<%= @country.latitude_dec %>)</td>
+      </tr>
+
+      <tr>
+        <td><strong>Minimum longitude</strong></td>
+        <td><%= @country.min_longitude %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Minimum latitude</strong></td>
+        <td><%= @country.min_latitude %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Maximum longitude</strong></td>
+        <td><%= @country.max_longitude %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Maximum latitude</strong></td>
+        <td><%= @country.max_latitude %></td>
+      </tr>
+    </table>
+
+    <div class="page-header">
+      <h3>Telephone Routing (E164)</h3>
+    </div>
+
+    <table class="table table-hover">
+      <tr>
+        <td><strong>Country code</strong></td>
+        <td><%= @country.country_code %></td>
+      </tr>
+
+      <tr>
+        <td><strong>National destination code lengths</strong></td>
+        <td><%= @country.national_destination_code_lengths %></td>
+      </tr>
+
+      <tr>
+        <td><strong>National number lengths</strong></td>
+        <td><%= @country.national_number_lengths %></td>
+      </tr>
+
+      <tr>
+        <td><strong>International prefix</strong></td>
+        <td><%= @country.international_prefix %></td>
+      </tr>
+
+      <tr>
+        <td><strong>National prefix</strong></td>
+        <td><%= @country.national_prefix %></td>
+      </tr>
+    </table>
+
+    <div class="page-header">
+      <h3>Translations for country selected</h3>
+    </div>
+
+    <table class="table table-hover">
+      <% if @country.translations.present? %>
+          <% @country.translations.each do |translation| %>
+              <tr>
+                <td><strong><%= translation[0].upcase %></strong></td>
+                <td><%= translation[1] %></td>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <div class="page-header">
+      <h3>ISO-3366-1: Alpha-2 Codes - HTML select/dropdown snippet</h3>
+    </div>
+
+      <pre>
+        <%= '<select>' %>
+        <% @all_countries.each do |country| %>
+          <%= "<option value='#{ country.alpha2 }'>#{ country.name }</option>" %>
+        <% end %>
+        <%= '</select>' %>
+      </pre>
+  </div>
+
+  <div class="col-xs-12 col-md-6">
+    <div class="page-header">
+      <h3>ISO-3366-1: Alpha-3 Codes - HTML select/dropdown snippet</h3>
+    </div>
+
+      <pre>
+        <%= '<select>' %>
+        <% @all_countries.each do |country| %>
+          <%= "<option value='#{ country.alpha3 }'>#{ country.name }</option>" %>
+        <% end %>
+        <%= '</select>' %>
+      </pre>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+
+    <div class="page-header">
+      <h3>ISO-3366-1: JSON array of countries and codes</h3>
+    </div>
+
+      <pre>
+        <%= JSON.pretty_generate(@all_countries.map { |country| { :name => country.name,
+                                                                  :alpha2_code => country.alpha2,
+                                                                  :alpha3_code => country.alpha3 } }.flatten) %>
+      </pre>
+  </div>
+</div>
