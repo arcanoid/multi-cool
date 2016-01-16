@@ -94,6 +94,21 @@
     </table>
 
     <div class="page-header">
+      <h3>Translations for country selected</h3>
+    </div>
+
+    <table class="table table-hover">
+      <% if @country.translations.present? %>
+          <% @country.translations.each do |translation| %>
+              <tr>
+                <td><strong><%= translation[0].upcase %></strong></td>
+                <td><%= translation[1] %></td>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+
+    <div class="page-header">
       <h3>Location</h3>
     </div>
 
@@ -160,20 +175,39 @@
       </tr>
     </table>
 
-    <div class="page-header">
-      <h3>Translations for country selected</h3>
-    </div>
+    <% if @country.subdivisions.present? %>
+        <div class="page-header">
+          <h3>Subvisions</h3>
+        </div>
 
-    <table class="table table-hover">
-      <% if @country.translations.present? %>
-          <% @country.translations.each do |translation| %>
+        <table class="table table-hover">
+          <tr>
+            <th><strong>Code</strong></th>
+            <th><strong>Name</strong></th>
+            <th><strong>All Names</strong></th>
+            <th><strong>Latitude</strong></th>
+            <th><strong>Longitude</strong></th>
+            <th><strong>Min longitude</strong></th>
+            <th><strong>Min latitude</strong></th>
+            <th><strong>Max longitude</strong></th>
+            <th><strong>Max latitude</strong></th>
+          </tr>
+
+          <% @country.subdivisions.each do |subdivision| %>
               <tr>
-                <td><strong><%= translation[0].upcase %></strong></td>
-                <td><%= translation[1] %></td>
+                <td><strong><%= subdivision[0] %></strong></td>
+                <td><%= subdivision[1]['name'] %></td>
+                <td><%= subdivision[1]['names'] %></td>
+                <td><%= subdivision[1]['latitude'] %></td>
+                <td><%= subdivision[1]['longitude'] %></td>
+                <td><%= subdivision[1]['min_longitude'] %></td>
+                <td><%= subdivision[1]['min_latitude'] %></td>
+                <td><%= subdivision[1]['max_longitude'] %></td>
+                <td><%= subdivision[1]['max_latitude'] %></td>
               </tr>
           <% end %>
-      <% end %>
-    </table>
+        </table>
+    <% end %>
 <% end %>
 
 <div class="row">
