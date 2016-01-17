@@ -187,10 +187,6 @@
             <th><strong>All Names</strong></th>
             <th><strong>Latitude</strong></th>
             <th><strong>Longitude</strong></th>
-            <th><strong>Min longitude</strong></th>
-            <th><strong>Min latitude</strong></th>
-            <th><strong>Max longitude</strong></th>
-            <th><strong>Max latitude</strong></th>
           </tr>
 
           <% @country.subdivisions.each do |subdivision| %>
@@ -198,12 +194,36 @@
                 <td><strong><%= subdivision[0] %></strong></td>
                 <td><%= subdivision[1]['name'] %></td>
                 <td><%= subdivision[1]['names'] %></td>
-                <td><%= subdivision[1]['latitude'] %></td>
-                <td><%= subdivision[1]['longitude'] %></td>
-                <td><%= subdivision[1]['min_longitude'] %></td>
-                <td><%= subdivision[1]['min_latitude'] %></td>
-                <td><%= subdivision[1]['max_longitude'] %></td>
-                <td><%= subdivision[1]['max_latitude'] %></td>
+                <td>
+                  <%= subdivision[1]['latitude'] %>
+
+                  <% if subdivision[1]['min_latitude'] %>
+                      <div>
+                        <strong>Min:</strong> <%= subdivision[1]['min_latitude'] %>
+                      </div>
+                  <% end %>
+
+                  <% if subdivision[1]['max_latitude'] %>
+                      <div>
+                        <strong>Max:</strong> <%= subdivision[1]['max_latitude'] %>
+                      </div>
+                  <% end %>
+                </td>
+                <td>
+                  <%= subdivision[1]['longitude'] %>
+
+                  <% if subdivision[1]['min_longitude'] %>
+                      <div>
+                        <strong>Min:</strong> <%= subdivision[1]['min_longitude'] %>
+                      </div>
+                  <% end %>
+
+                  <% if subdivision[1]['max_longitude'] %>
+                      <div>
+                        <strong>Max:</strong> <%= subdivision[1]['max_longitude'] %>
+                      </div>
+                  <% end %>
+                </td>
               </tr>
           <% end %>
         </table>
