@@ -77,5 +77,7 @@ Rails.application.routes.draw do
     post :uri_parser
     get :countries
     post :countries
+    get :json_comparer
+    post :json_comparer
   end
 end

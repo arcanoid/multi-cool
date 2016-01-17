@@ -24,4 +24,16 @@ describe '/web_resources' do
         should route_to( :controller => 'web_resources',
                          :action => 'countries')
   end
+
+  it 'GET /web_resources/json_comparer it should route to web_resources#json_comparer' do
+    { :get => '/web_resources/json_comparer' }.
+        should route_to( :controller => 'web_resources',
+                         :action => 'json_comparer')
+  end
+
+  it 'POST /web_resources/json_comparer it should route to web_resources#json_comparer' do
+    { :post => '/web_resources/json_comparer' }.
+        should route_to( :controller => 'web_resources',
+                         :action => 'json_comparer')
+  end
 end
