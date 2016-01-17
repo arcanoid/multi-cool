@@ -1,0 +1,94 @@
+<div class="page-header">
+  <h1>Date difference</h1>
+  <p>
+    <strong>
+      All info provided by <a href="https://github.com/tmlee/time_difference" target="_blank">this gem</a>.
+    </strong>
+  </p>
+</div>
+
+<%= form_tag date_diff_web_resources_url do %>
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="initial_text">Day</label>
+          <%= select_tag :day_from,
+                         options_for_select(1..30, @day_from),
+                         :class => 'form-control' %>
+          <label for="initial_text">Month</label>
+          <%= select_tag :month_from,
+                         options_for_select(1..12, @month_from),
+                         :class => 'form-control' %>
+          <label for="initial_text">Year</label>
+          <%= select_tag :year_from,
+                         options_for_select((Date.today.year-100)..(Date.today.year+100), @year_from),
+                         :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="initial_text">Day</label>
+          <%= select_tag :day_to,
+                         options_for_select(1..30, @day_to),
+                         :class => 'form-control' %>
+          <label for="initial_text">Month</label>
+          <%= select_tag :month_to,
+                         options_for_select(1..12, @month_to),
+                         :class => 'form-control' %>
+          <label for="initial_text">Year</label>
+          <%= select_tag :year_to,
+                         options_for_select((Date.today.year-100)..(Date.today.year+100), @year_to),
+                         :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="form-group">
+          <%= submit_tag 'Convert', :class => 'btn btn-primary' %>
+
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <% if @differences.present? %>
+        <table class="table table-hover">
+          <tr>
+            <td><strong>Seconds</strong></td>
+            <td><%= @differences[:seconds] %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Minutes</strong></td>
+            <td><%= @differences[:minutes] %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Hours</strong></td>
+            <td><%= @differences[:hours] %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Days</strong></td>
+            <td><%= @differences[:days] %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Weeks</strong></td>
+            <td><%= @differences[:weeks] %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Months</strong></td>
+            <td><%= @differences[:months] %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Years</strong></td>
+            <td><%= @differences[:years] %></td>
+          </tr>
+      </table>
+    <% end %>
+<% end %>

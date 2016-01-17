@@ -79,5 +79,7 @@ Rails.application.routes.draw do
     post :countries
     get :json_comparer
     post :json_comparer
+    get :date_diff
+    post :date_diff
   end
 end

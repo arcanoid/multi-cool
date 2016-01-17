@@ -18,6 +18,7 @@ module ApplicationHelper
                     { :name => 'URI parser', :path => uri_parser_web_resources_url },
                     { :name => 'Countries info', :path => countries_web_resources_url },
                     { :name => 'JSON comparer', :path => json_comparer_web_resources_url },
+                    { :name => 'Date difference', :path => date_diff_web_resources_url },
                 ]
             },
             {

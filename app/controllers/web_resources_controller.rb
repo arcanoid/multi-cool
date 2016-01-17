@@ -34,4 +34,29 @@ class WebResourcesController < ApplicationController
       @final_text = JSON.pretty_generate(JSON.parse('{"desc": {"someKey": "someOtherValue", "anotherKey" : "WithOthervalue"}, "main_item": {"stats": {"a": 8, "b": 12, "c": 10}}}'))
     end
   end
+
+  def date_diff
+    # begin
+      @day_from = params[:day_from].present? ? params[:day_from] : Date.today.day
+      @month_from = params[:month_from].present? ? params[:month_from] : Date.today.month
+      @year_from = params[:year_from].present? ? params[:year_from] : Date.today.year
+      @day_to = params[:day_to].present? ? params[:day_to] : (Date.today + 7.days).day
+      @month_to = params[:month_to].present? ? params[:month_to] : (Date.today + 7.days).month
+      @year_to = params[:year_to].present? ? params[:year_to] : (Date.today + 7.days).year
+
+      date_from = DateTime.new(@year_from.to_i, @month_from.to_i, @day_from.to_i)
+      date_to = DateTime.new(@year_to.to_i, @month_to.to_i, @day_to.to_i)
+
+      @differences = { :seconds => TimeDifference.between(date_from, date_to).in_seconds.to_i,
+                       :minutes => TimeDifference.between(date_from, date_to).in_minutes.to_i,
+                       :hours => TimeDifference.between(date_from, date_to).in_hours.to_i,
+                       :days => TimeDifference.between(date_from, date_to).in_days.to_i,
+                       :weeks => TimeDifference.between(date_from, date_to).in_weeks,
+                       :months => TimeDifference.between(date_from, date_to).in_months,
+                       :years => TimeDifference.between(date_from, date_to).in_years }
+
+    # rescue Exception => e
+    #   flash[:error] = e
+    # end
+  end
 end
