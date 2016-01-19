@@ -20,6 +20,7 @@ gem 'random_facts'
 gem 'countries'
 gem 'json-compare'
 gem 'time_difference'
+gem 'browser'
 
 group :development do
   gem 'better_errors'

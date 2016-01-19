@@ -81,5 +81,9 @@ Rails.application.routes.draw do
     post :json_comparer
     get :date_diff
     post :date_diff
+    get :user_agent_identifier
+    post :user_agent_identifier
+    get :user_agent_info
+    post :user_agent_info
   end
 end

@@ -1,0 +1,108 @@
+<div class="page-header">
+  <h1>User agent identifier</h1>
+</div>
+
+<p>
+  All data provided here are thanks to <strong><a href="https://github.com/fnando/browser" target="_blank">this gem</a></strong>.
+  <br><br>
+</p>
+
+<%= form_tag user_agent_identifier_web_resources_url do %>
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="form-group <%= 'has-error' if flash[:error] %>">
+          <label for="cc_number">User agents list (line separated)</label>
+          <%= text_area_tag :user_agents, (@user_agents.map { |ua| ua.user_agent }.join("\n") if @user_agents.present?), :rows => 5, :class => 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Analyze', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<% if @user_agents.present? %>
+    <%
+       bot_user_agents = @user_agents.select { |ua| ua.bot? }
+       search_engine_user_agents = @user_agents.select { |ua| ua.search_engine? }
+       mobile_user_agents = @user_agents.select { |ua| ua.mobile? }
+       tablet_user_agents = @user_agents.select { |ua| ua.tablet? }
+       other = @user_agents.reject { |ua| ua.bot? || ua.search_engine? || ua.mobile? || ua.tablet? }
+    %>
+
+    <% if bot_user_agents.size > 0 %>
+        <div class="page-header">
+          <h3>User agents identified as bots</h3>
+        </div>
+
+        <table class="table table-hover">
+          <% bot_user_agents.each_with_index do |ua, index| %>
+              <tr>
+                <td><strong><%= index + 1 %></strong></td>
+                <td><%= ua.user_agent %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    <% if search_engine_user_agents.size > 0 %>
+        <div class="page-header">
+          <h3>User agents identified as search engines</h3>
+        </div>
+
+        <table class="table table-hover">
+          <% search_engine_user_agents.each_with_index do |ua, index| %>
+              <tr>
+                <td><strong><%= index + 1 %></strong></td>
+                <td><%= ua.user_agent %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    <% if mobile_user_agents.size > 0 %>
+        <div class="page-header">
+          <h3>User agents identified as mobile</h3>
+        </div>
+
+        <table class="table table-hover">
+          <% mobile_user_agents.each_with_index do |ua, index| %>
+              <tr>
+                <td><strong><%= index + 1 %></strong></td>
+                <td><%= ua.user_agent %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    <% if tablet_user_agents.size > 0 %>
+        <div class="page-header">
+          <h3>User agents identified as tablets</h3>
+        </div>
+
+        <table class="table table-hover">
+          <% tablet_user_agents.each_with_index do |ua, index| %>
+              <tr>
+                <td><strong><%= index + 1 %></strong></td>
+                <td><%= ua.user_agent %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    <% if other.size > 0 %>
+        <div class="page-header">
+          <h3>Other</h3>
+        </div>
+
+        <table class="table table-hover">
+          <% other.each_with_index do |ua, index| %>
+              <tr>
+                <td><strong><%= index + 1 %></strong></td>
+                <td><%= ua.user_agent %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+<% end %>

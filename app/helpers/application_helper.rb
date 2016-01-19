@@ -19,6 +19,8 @@ module ApplicationHelper
                     { :name => 'Countries info', :path => countries_web_resources_url },
                     { :name => 'JSON comparer', :path => json_comparer_web_resources_url },
                     { :name => 'Date difference', :path => date_diff_web_resources_url },
+                    { :name => 'User agent identifier', :path => user_agent_identifier_web_resources_url },
+                    { :name => 'User agent info', :path => user_agent_info_web_resources_url }
                 ]
             },
             {
@@ -72,5 +74,26 @@ module ApplicationHelper
                 ]
             }
         ]
+    end
+
+    def device_literal(user_agent)
+        literals = []
+
+        literals << 'Safari' if user_agent.safari?
+        literals << 'Opera' if user_agent.opera?
+        literals << 'Chrome' if user_agent.chrome?
+        literals << 'Firefox' if user_agent.firefox?
+        literals << 'IE' if user_agent.ie?
+        literals << 'Edge MS Browser' if user_agent.edge?
+        literals << 'Chrome OS' if user_agent.chrome_os?
+        literals << 'Mobile device' if user_agent.mobile?
+        literals << 'Tablet device' if user_agent.tablet?
+        literals << 'Console' if user_agent.console?
+        literals << 'iOS' if user_agent.ios?
+        literals << 'ios\' app webview' if user_agent.ios_webview?
+        literals << 'Android' if user_agent.android?
+        literals << 'Blackberry' if user_agent.blackberry?
+
+        literals.join(', ')
     end
 end

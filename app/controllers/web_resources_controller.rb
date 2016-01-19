@@ -36,7 +36,7 @@ class WebResourcesController < ApplicationController
   end
 
   def date_diff
-    # begin
+    begin
       @day_from = params[:day_from].present? ? params[:day_from] : Date.today.day
       @month_from = params[:month_from].present? ? params[:month_from] : Date.today.month
       @year_from = params[:year_from].present? ? params[:year_from] : Date.today.year
@@ -55,8 +55,30 @@ class WebResourcesController < ApplicationController
                        :months => TimeDifference.between(date_from, date_to).in_months,
                        :years => TimeDifference.between(date_from, date_to).in_years }
 
-    # rescue Exception => e
-    #   flash[:error] = e
-    # end
+    rescue Exception => e
+      flash[:error] = e
+    end
+  end
+
+  def user_agent_identifier
+    begin
+      user_agents_list = (params[:user_agents].present? ? params[:user_agents].lines.map(&:chomp) : [request.user_agent])
+
+      @user_agents = []
+
+      user_agents_list.each do |ua|
+        @user_agents << Browser.new(:ua => ua, :accept_language => "en-us")
+      end
+    rescue Exception => e
+      flash[:error] = e
+    end
+  end
+
+  def user_agent_info
+    begin
+      @user_agent = Browser.new(:ua => (params[:user_agent].present? ? params[:user_agent] : request.user_agent), :accept_language => "en-us")
+    rescue Exception => e
+      flash[:error] = e
+    end
   end
 end

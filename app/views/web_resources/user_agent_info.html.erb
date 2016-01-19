@@ -1,0 +1,78 @@
+<div class="page-header">
+  <h1>User agent information</h1>
+</div>
+
+<p>
+  All data provided here are thanks to <strong><a href="https://github.com/fnando/browser" target="_blank">this gem</a></strong>.
+  <br><br>
+</p>
+
+<%= form_tag user_agent_info_web_resources_url do %>
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="form-group <%= 'has-error' if flash[:error] %>">
+          <label for="cc_number">User agent</label>
+          <%= text_field_tag :user_agent, (@user_agent.user_agent if @user_agent.present?), :class => "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Analyze', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<% if @user_agent.present? %>
+    <div class="page-header">
+      <h3>User agent analysis</h3>
+    </div>
+
+    <table class="table table-hover">
+      <tr>
+        <td><strong>User Agent</strong></td>
+        <td><%= @user_agent.user_agent %></td>
+      </tr>
+
+      <% if @user_agent.known? %>
+          <tr>
+            <td><strong>Name</strong></td>
+            <td><%= @user_agent.name %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Version</strong></td>
+            <td><%= @user_agent.version %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Full version</strong></td>
+            <td><%= @user_agent.full_version %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Platform</strong></td>
+            <td><%= @user_agent.platform %></td>
+          </tr>
+
+          <tr>
+            <td><strong>Meta attributes</strong></td>
+            <td><%= @user_agent.meta.join(', ') if @user_agent.meta.present? %></td>
+          </tr>
+      <% end %>
+
+      <tr>
+        <td><strong>Extra info</strong></td>
+        <td><%= device_literal @user_agent %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Is it identified as a bot?</strong></td>
+        <td><%= @user_agent.bot? ? "Yup! It's #{@user_agent.bot_name}!!" : "Nope!" %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Is it identified as a search engine?</strong></td>
+        <td><%= @user_agent.search_engine? ? "Yup!" : "Nope!" %></td>
+      </tr>
+    </table>
+<% end %>
