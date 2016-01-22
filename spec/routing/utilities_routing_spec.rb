@@ -48,4 +48,16 @@ describe '/utilities' do
         should route_to( :controller => 'utilities',
                          :action => 'rss_feed_validator')
   end
+
+  it 'GET /utilities/sprint_calculator it should route to utilities#sprint_calculator' do
+    { :get => '/utilities/sprint_calculator' }.
+        should route_to( :controller => 'utilities',
+                         :action => 'sprint_calculator')
+  end
+
+  it 'POST /utilities/sprint_calculator it should route to utilities#sprint_calculator' do
+    { :post => '/utilities/sprint_calculator' }.
+        should route_to( :controller => 'utilities',
+                         :action => 'sprint_calculator')
+  end
 end

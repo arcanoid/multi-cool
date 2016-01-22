@@ -1,0 +1,245 @@
+<div class="page-header">
+  <h1>Sprint calculator</h1>
+</div>
+
+<%= form_tag sprint_calculator_utilities_url, :class => 'form-horizontal' do %>
+    <div class="form-group">
+      <label for="member_names" class="col-sm-3 control-label">What are the names of your team members? (enter them in different lines)</label>
+      <div class="col-sm-8">
+        <%= text_area_tag :member_names, params[:member_names], :rows => 3, :class => 'form-control' %>
+      </div>
+    </div>
+
+    <% if @members.present? %>
+        <div class="form-group">
+          <label for="sprint_title" class="col-sm-3 control-label">What is the title of this sprint?</label>
+          <div class="col-sm-8">
+            <%= text_field_tag :sprint_title, params[:sprint_title], :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sprint_starting_date" class="col-sm-3 control-label">Which is the first day of this sprint? (eg. <%= Date.today.strftime('%d-%m-%Y') %>)</label>
+          <div class="col-sm-8">
+            <%= text_field_tag :sprint_starting_date, params[:sprint_starting_date], :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sprint_ending_date" class="col-sm-3 control-label">Which is the last day of this sprint? (eg. <%= Date.tomorrow.strftime('%d-%m-%Y') %>)</label>
+          <div class="col-sm-8">
+            <%= text_field_tag :sprint_ending_date, params[:sprint_ending_date], :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="holidays" class="col-sm-3 control-label">Are there are any national holidays? (enter them in different lines or leave empty for none)</label>
+          <div class="col-sm-8">
+            <%= text_area_tag :holidays, params[:holidays], :rows => 3, :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="supports" class="col-sm-3 control-label">How many "support" issues in your sprint?</label>
+          <div class="col-sm-2">
+            <%= text_field_tag :supports, params[:supports], :class => 'form-control' %>
+          </div>
+
+          <label for="user_stories" class="col-sm-3 control-label">How many "user stories" issues in your sprint?</label>
+          <div class="col-sm-2">
+            <%= text_field_tag :user_stories, params[:user_stories], :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="requirements" class="col-sm-3 control-label">How many "requirement" issues in your sprint?</label>
+          <div class="col-sm-2">
+            <%= text_field_tag :requirements, params[:requirements], :class => 'form-control' %>
+          </div>
+          <label for="features" class="col-sm-3 control-label">How many "features" issues in your sprint?</label>
+          <div class="col-sm-2">
+            <%= text_field_tag :features, params[:tasks], :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bugs" class="col-sm-3 control-label">How many "bugs" issues in your sprint?</label>
+          <div class="col-sm-2">
+            <%= text_field_tag :bugs, params[:bugs], :class => 'form-control' %>
+          </div>
+          <label for="features" class="col-sm-3 control-label">How many "tasks" issues in your sprint?</label>
+          <div class="col-sm-2">
+            <%= text_field_tag :tasks, params[:tasks], :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="captain_name" class="col-sm-3 control-label">Who is the captain of this sprint?</label>
+          <div class="col-sm-8">
+            <%= text_field_tag :captain_name, params[:captain_name], :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="vice_captain_name" class="col-sm-3 control-label">Who is the vice captain of this sprint? (leave empty if there isn't anyone)</label>
+          <div class="col-sm-8">
+            <%= text_field_tag :vice_captain_name, params[:vice_captain_name], :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sprint_targets" class="col-sm-3 control-label">What are the goals for this sprint? (enter them in different lines)</label>
+          <div class="col-sm-8">
+            <%= text_area_tag :sprint_targets, params[:sprint_targets], :rows => 3, :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="focus_factor" class="col-sm-3 control-label">What is your focus factor? (eg 0.25)</label>
+          <div class="col-sm-8">
+            <%= text_field_tag :focus_factor, (params[:focus_factor] || 0.5),  :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="demo" class="col-sm-3 control-label">When do you have a demo? (leave empty for no demos)</label>
+          <div class="col-sm-8">
+            <%= select_tag :demo,
+                           options_for_select([ ['The last day of the sprint', 0],
+                                                ['One day before the sprint ends', -1],
+                                                ['Two days before the sprint ends', -2]],
+                                              params[:demo]),
+                           :include_blank => true,
+                           :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="code_review" class="col-sm-3 control-label">When do you have a code review? (leave empty for no demos)</label>
+          <div class="col-sm-8">
+            <%= select_tag :code_review,
+                           options_for_select([ ['The last day of the sprint', 0],
+                                                ['One day before the sprint ends', -1],
+                                                ['Two days before the sprint ends', -2],
+                                                ['Three days before the sprint ends', -3]],
+                                              params[:code_review]),
+                           :include_blank => true,
+                           :class => 'form-control' %>
+          </div>
+        </div>
+
+        <% @members.each_with_index do |member,index| %>
+            <% member_key = "member_#{index}" %>
+
+            <div class="form-group">
+              <label for="member_names" class="col-sm-3 control-label">Leaves for "<%= member %>" over this sprint (enter them in different lines or leave empty for no leaves)</label>
+              <div class="col-sm-8">
+                <%= text_area_tag :"#{member_key}", params["#{member_key}"], :rows => 3, :class => 'form-control' %>
+              </div>
+            </div>
+        <% end %>
+
+        <% if @starting_date.present? && @ending_date.present? %>
+            <div class="page-header">
+              <h1>Sprint analysis</h1>
+            </div>
+
+            <h3>Sprint goals</h3>
+            <ul>
+              <% @sprint_targets.each do |goal| %>
+                  <li><%= goal %></li>
+              <% end %>
+            </ul>
+
+            <br>
+
+            <h3>Sprint <%= @sprint_title %> description</h3>
+            <div>
+              <strong>Sprint duration</strong>:
+              <span><%= @starting_date.strftime("%A %d/%m/%Y") %> - <%= @ending_date.strftime("%A %d/%m/%Y") %></span>
+            </div>
+
+            <div>
+              <strong>Demo date</strong>:
+              <span><%= @demo_date.present? ? @demo_date.strftime("%A %d/%m/%Y") : 'No specific date' %></span>
+            </div>
+
+            <div>
+              <strong>Code review</strong>:
+              <span><%= @code_review_date.present? ? @code_review_date.strftime("%A %d/%m/%Y") : 'No specific date' %></span>
+            </div>
+
+            <div>
+              <strong>Release date</strong>:
+              <span><%= @release_date.strftime("%A %d/%m/%Y") %></span>
+            </div>
+
+            <div>
+              <strong>Captain</strong>:
+              <span><%= @captain.present? ? @captain : '-' %></span>
+            </div>
+
+            <div>
+              <strong>Vice Captain</strong>:
+              <span><%= @vice_captain.present? ? @vice_captain : '-' %></span>
+            </div>
+
+            <% if @issues.size == 0 %>
+                <div>
+                  <strong>Issues in sprint</strong>:
+                  <span>No issues specified</span>
+                </div>
+            <% else %>
+                <%
+                   issues_total = @issues.inject(0) { |sum, issue| sum + issue[:count] }
+                   issues_list = @issues.map { |issue| "#{issue[:count]} #{issue[:type]}" }
+                %>
+
+                <div>
+                  <strong>Issues in sprint</strong>:
+                  <span><%= "#{ issues_total.to_s } (#{issues_list.join(', ')})" %></span>
+                </div>
+            <% end %>
+
+            <div>
+              <strong>Total crew on sprint</strong>:
+              <span><%= @total_crew_literals.join(', ') %></span>
+            </div>
+
+            <div>
+              <strong>Total Working Man days</strong>:
+              <span><%= @total_working_man_days %></span>
+            </div>
+
+            <div>
+              <strong>Total Working Man hours</strong>:
+              <span><%= @total_working_man_days * 8 %></span>
+            </div>
+
+            <div>
+              <strong>Estimated velocity</strong>:
+              <span><%= @estimated_velocity %></span>
+            </div>
+
+            <div>
+              <strong>Estimated focus factor</strong>:
+              <span><%= @estimated_focus_factor %></span>
+            </div>
+
+            <div>
+              <strong>Estimated man hours</strong>:
+              <span><%= @total_working_man_days * 8 * @estimated_focus_factor %></span>
+            </div>
+            <div>
+              <strong>Day-offs during sprint</strong>:
+              <span><%= @total_days_off_literals.present? ? @total_days_off_literals.join(', ') : '-' %></span>
+            </div>
+        <% end %>
+
+        <br><br>
+    <% end %>
+
+    <div class="form-group">
+      <%= submit_tag 'Continue', :class => 'btn btn-primary' %>
+    </div>
+<% end %>

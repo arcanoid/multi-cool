@@ -101,4 +101,121 @@ class UtilitiesController < ApplicationController
       end
     end
   end
+
+  def sprint_calculator
+    if params[:member_names].present?
+      @members = params[:member_names].lines.map(&:chomp)
+
+      if params[:sprint_targets].present?
+        @sprint_targets = params[:sprint_targets].lines.map(&:chomp)
+      else
+        @sprint_targets = []
+      end
+
+      if params[:sprint_title].present?
+        @sprint_title = params[:sprint_title].chomp
+      end
+
+      if params[:sprint_starting_date].present? && params[:sprint_ending_date].present?
+        if params[:holidays].present?
+          national_holidays = params[:holidays].lines.map(&:chomp).map { |holiday| Date.parse(holiday) }
+        else
+          national_holidays = []
+        end
+
+        @starting_date = Date.parse(params[:sprint_starting_date])
+
+        while @starting_date.saturday? || @starting_date.sunday? || national_holidays.include?(@starting_date)
+          @starting_date = @starting_date + 1.day
+        end
+
+        @ending_date = Date.parse(params[:sprint_ending_date])
+
+        while @ending_date.saturday? || @ending_date.sunday? || national_holidays.include?(@ending_date)
+          @ending_date = @ending_date + 1.day
+        end
+
+        if params[:demo].present?
+          @demo_date = @ending_date + params[:demo].to_i
+
+          while @demo_date.saturday? || @demo_date.sunday? || national_holidays.include?(@demo_date)
+            @demo_date = @demo_date - 1.day
+          end
+        end
+
+        if params[:code_review].present?
+          @code_review_date = @ending_date + params[:code_review].to_i
+
+          while @code_review_date.saturday? || @code_review_date.sunday? || national_holidays.include?(@code_review_date)
+            @code_review_date = @code_review_date - 1.day
+          end
+        end
+
+        @release_date = @ending_date.tomorrow
+
+        while @release_date.saturday? || @release_date.sunday? || national_holidays.include?(@release_date)
+          @release_date = @release_date + 1.day
+        end
+
+        if params[:captain_name].present?
+          @captain = params[:captain_name].chomp
+        end
+
+        if params[:vice_captain_name].present?
+          @vice_captain = params[:vice_captain_name].chomp
+        end
+
+        @issues = []
+
+        @issues << { :type => 'Supports', :count => params[:supports].to_i } if params[:supports].present?
+        @issues << { :type => 'Requirements', :count => params[:requirements].to_i } if params[:requirements].present?
+        @issues << { :type => 'Features', :count => params[:features].to_i } if params[:features].present?
+        @issues << { :type => 'User stories', :count => params[:user_stories].to_i } if params[:user_stories].present?
+        @issues << { :type => 'Bugs', :count => params[:bugs].to_i } if params[:bugs].present?
+        @issues << { :type => 'Tasks', :count => params[:tasks].to_i } if params[:tasks].present?
+
+        # calculate total working days
+        total_working_days = 1
+        date = @ending_date
+        while date > @starting_date
+          total_working_days = total_working_days + 1 unless date.saturday? || date.sunday? || national_holidays.include?(date)
+          date = date - 1.day
+        end
+
+        days_off_array = []
+        (0...@members.size).each do |value|
+          if params[:"member_#{value}"].present?
+            days = params[:"member_#{value}"].lines.map(&:chomp)
+
+            days.each do |day_off|
+              day_off_date = Date.parse(day_off)
+              days_off_array << { :name => @members[value], :day => day_off_date } unless day_off_date.saturday? || day_off_date.sunday? || national_holidays.include?(day_off_date)
+            end
+          end
+        end
+
+        grouped_days_off_per_day = days_off_array.group_by { |day_off| day_off[:day] }.map { |k,v| { :day => k, :count => v.size } }
+
+        @total_crew_literals = ["#{@members.size}/#{@members.size} for #{total_working_days - grouped_days_off_per_day.size } days"]
+
+        # For each day that someone might be missing note down how many team members will be here ####
+        total_days_off = 0
+        grouped_days_off_per_day.each do |day_off|
+          @total_crew_literals << "#{ @members.size - day_off[:count]}/#{@members.size} on #{day_off[:day].strftime("%A %d/%m/%Y")}"
+          total_days_off = total_days_off + day_off[:count]
+        end
+
+        @total_working_man_days = (total_working_days * @members.size ) - total_days_off
+        @estimated_focus_factor = params[:focus_factor].present? ? params[:focus_factor].to_f : 1
+        @estimated_velocity = (@total_working_man_days * @estimated_focus_factor )
+
+        #### Days off during sprint ####
+        grouped_days_off_per_person = days_off_array.group_by { |day_off| day_off[:name] }.map { |k,v| { :name => k, :count => v.size } }
+        @total_days_off_literals = []
+        grouped_days_off_per_person.each do |day_off|
+          @total_days_off_literals << "#{day_off[:count] } days off for #{day_off[:name]}"
+        end
+      end
+    end
+  end
 end
