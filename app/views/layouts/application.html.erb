@@ -61,40 +61,46 @@
 </nav>
 
 <div id="content_wrap">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 col-md-2 visible-md-block visible-lg-block">
-          <% menu_items_in_array.each do |menu| %>
-              <p>
-              <div><strong><%= menu[:name] %></strong></div>
-              <% menu[:sub_menus].each do |sub_menu| %>
-                  <div><%= link_to sub_menu[:name], sub_menu[:path] %></div>
-              <% end %>
-              </p>
-          <% end %>
-        </div>
-
-        <div class="col-xs-12 col-md-10">
-          <% if flash[:error].present? %>
-              <div class="row">
-                <div class="col-xs-12">
-                  <p class="bg-danger text-danger" style="padding: 15px;"><%= flash[:error] %></p>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-md-2 visible-md-block visible-lg-block">
+        <% menu_items_in_array.each do |menu| %>
+            <p>
+            <div><strong><%= menu[:name] %></strong></div>
+            <% menu[:sub_menus].each do |sub_menu| %>
+                <div>
+                  <% if request.fullpath == sub_menu[:path] %>
+                      <strong><%= link_to sub_menu[:name], sub_menu[:path] %></strong>
+                  <% else %>
+                  <%= link_to sub_menu[:name], sub_menu[:path] %>
+                  <% end %>
                 </div>
-              </div>
-          <% end %>
+            <% end %>
+            </p>
+        <% end %>
+      </div>
 
-          <% if flash[:success].present? %>
-              <div class="row">
-                <div class="col-xs-12">
-                  <p class="bg-success text-danger" style="padding: 15px;"><%= flash[:success] %></p>
-                </div>
+      <div class="col-xs-12 col-md-10">
+        <% if flash[:error].present? %>
+            <div class="row">
+              <div class="col-xs-12">
+                <p class="bg-danger text-danger" style="padding: 15px;"><%= flash[:error] %></p>
               </div>
-          <% end %>
+            </div>
+        <% end %>
 
-          <%= yield %>
-        </div>
+        <% if flash[:success].present? %>
+            <div class="row">
+              <div class="col-xs-12">
+                <p class="bg-success text-danger" style="padding: 15px;"><%= flash[:success] %></p>
+              </div>
+            </div>
+        <% end %>
+
+        <%= yield %>
       </div>
     </div>
+  </div>
 </div>
 
 <footer class="footer">
