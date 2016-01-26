@@ -1,3 +1,102 @@
+<% if @members.present? && @starting_date.present? && @ending_date.present? %>
+    <div class="page-header">
+      <h1>Sprint analysis</h1>
+    </div>
+
+    <h3>Sprint goals</h3>
+    <ul>
+      <% @sprint_targets.each do |goal| %>
+          <li><%= goal %></li>
+      <% end %>
+    </ul>
+
+    <br>
+
+    <h3>Sprint <%= @sprint_title %> description</h3>
+    <div>
+      <strong>Sprint duration</strong>:
+      <span><%= @starting_date.strftime("%A %d/%m/%Y") %> - <%= @ending_date.strftime("%A %d/%m/%Y") %></span>
+    </div>
+
+    <div>
+      <strong>Demo date</strong>:
+      <span><%= @demo_date.present? ? @demo_date.strftime("%A %d/%m/%Y") : 'No specific date' %></span>
+    </div>
+
+    <div>
+      <strong>Code review</strong>:
+      <span><%= @code_review_date.present? ? @code_review_date.strftime("%A %d/%m/%Y") : 'No specific date' %></span>
+    </div>
+
+    <div>
+      <strong>Release date</strong>:
+      <span><%= @release_date.strftime("%A %d/%m/%Y") %></span>
+    </div>
+
+    <div>
+      <strong>Captain</strong>:
+      <span><%= @captain.present? ? @captain : '-' %></span>
+    </div>
+
+    <div>
+      <strong>Vice Captain</strong>:
+      <span><%= @vice_captain.present? ? @vice_captain : '-' %></span>
+    </div>
+
+    <% if @issues.size == 0 %>
+        <div>
+          <strong>Issues in sprint</strong>:
+          <span>No issues specified</span>
+        </div>
+    <% else %>
+        <%
+           issues_total = @issues.inject(0) { |sum, issue| sum + issue[:count] }
+           issues_list = @issues.map { |issue| "#{issue[:count]} #{issue[:type]}" }
+        %>
+
+        <div>
+          <strong>Issues in sprint</strong>:
+          <span><%= "#{ issues_total.to_s } (#{issues_list.join(', ')})" %></span>
+        </div>
+    <% end %>
+
+    <div>
+      <strong>Total crew on sprint</strong>:
+      <span><%= @total_crew_literals.join(', ') %></span>
+    </div>
+
+    <div>
+      <strong>Total Working Man days</strong>:
+      <span><%= @total_working_man_days %></span>
+    </div>
+
+    <div>
+      <strong>Total Working Man hours</strong>:
+      <span><%= @total_working_man_days * 8 %></span>
+    </div>
+
+    <div>
+      <strong>Estimated velocity</strong>:
+      <span><%= @estimated_velocity %></span>
+    </div>
+
+    <div>
+      <strong>Estimated focus factor</strong>:
+      <span><%= @estimated_focus_factor %></span>
+    </div>
+
+    <div>
+      <strong>Estimated man hours</strong>:
+      <span><%= @total_working_man_days * 8 * @estimated_focus_factor %></span>
+    </div>
+    <div>
+      <strong>Day-offs during sprint</strong>:
+      <span><%= @total_days_off_literals.present? ? @total_days_off_literals.join(', ') : '-' %></span>
+    </div>
+<% end %>
+
+<br><br>
+
 <div class="page-header">
   <h1>Sprint calculator</h1>
 </div>
@@ -132,111 +231,12 @@
             <% member_key = "member_#{index}" %>
 
             <div class="form-group">
-              <label for="member_names" class="col-sm-3 control-label">Leaves for "<%= member %>" over this sprint (enter them in different lines or leave empty for no leaves)</label>
+              <label for="member_names" class="col-sm-3 control-label">Leaves for "<%= member %>" over this sprint (enter them in different lines or leave empty for no leaves. Eg. <%= Date.today.strftime('%d-%m-%Y') %>)</label>
               <div class="col-sm-8">
                 <%= text_area_tag :"#{member_key}", params["#{member_key}"], :rows => 3, :class => 'form-control' %>
               </div>
             </div>
         <% end %>
-
-        <% if @starting_date.present? && @ending_date.present? %>
-            <div class="page-header">
-              <h1>Sprint analysis</h1>
-            </div>
-
-            <h3>Sprint goals</h3>
-            <ul>
-              <% @sprint_targets.each do |goal| %>
-                  <li><%= goal %></li>
-              <% end %>
-            </ul>
-
-            <br>
-
-            <h3>Sprint <%= @sprint_title %> description</h3>
-            <div>
-              <strong>Sprint duration</strong>:
-              <span><%= @starting_date.strftime("%A %d/%m/%Y") %> - <%= @ending_date.strftime("%A %d/%m/%Y") %></span>
-            </div>
-
-            <div>
-              <strong>Demo date</strong>:
-              <span><%= @demo_date.present? ? @demo_date.strftime("%A %d/%m/%Y") : 'No specific date' %></span>
-            </div>
-
-            <div>
-              <strong>Code review</strong>:
-              <span><%= @code_review_date.present? ? @code_review_date.strftime("%A %d/%m/%Y") : 'No specific date' %></span>
-            </div>
-
-            <div>
-              <strong>Release date</strong>:
-              <span><%= @release_date.strftime("%A %d/%m/%Y") %></span>
-            </div>
-
-            <div>
-              <strong>Captain</strong>:
-              <span><%= @captain.present? ? @captain : '-' %></span>
-            </div>
-
-            <div>
-              <strong>Vice Captain</strong>:
-              <span><%= @vice_captain.present? ? @vice_captain : '-' %></span>
-            </div>
-
-            <% if @issues.size == 0 %>
-                <div>
-                  <strong>Issues in sprint</strong>:
-                  <span>No issues specified</span>
-                </div>
-            <% else %>
-                <%
-                   issues_total = @issues.inject(0) { |sum, issue| sum + issue[:count] }
-                   issues_list = @issues.map { |issue| "#{issue[:count]} #{issue[:type]}" }
-                %>
-
-                <div>
-                  <strong>Issues in sprint</strong>:
-                  <span><%= "#{ issues_total.to_s } (#{issues_list.join(', ')})" %></span>
-                </div>
-            <% end %>
-
-            <div>
-              <strong>Total crew on sprint</strong>:
-              <span><%= @total_crew_literals.join(', ') %></span>
-            </div>
-
-            <div>
-              <strong>Total Working Man days</strong>:
-              <span><%= @total_working_man_days %></span>
-            </div>
-
-            <div>
-              <strong>Total Working Man hours</strong>:
-              <span><%= @total_working_man_days * 8 %></span>
-            </div>
-
-            <div>
-              <strong>Estimated velocity</strong>:
-              <span><%= @estimated_velocity %></span>
-            </div>
-
-            <div>
-              <strong>Estimated focus factor</strong>:
-              <span><%= @estimated_focus_factor %></span>
-            </div>
-
-            <div>
-              <strong>Estimated man hours</strong>:
-              <span><%= @total_working_man_days * 8 * @estimated_focus_factor %></span>
-            </div>
-            <div>
-              <strong>Day-offs during sprint</strong>:
-              <span><%= @total_days_off_literals.present? ? @total_days_off_literals.join(', ') : '-' %></span>
-            </div>
-        <% end %>
-
-        <br><br>
     <% end %>
 
     <div class="form-group">
