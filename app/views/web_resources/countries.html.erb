@@ -97,12 +97,18 @@
       <h3>Translations for country selected</h3>
     </div>
 
-    <table class="table table-hover">
+    <table class="table table-hover table-responsive">
+      <% languages = I18nData.languages %>
+
       <% if @country.translations.present? %>
+          <tr>
+            <th>Translation</th>
+            <th>Language</th>
+          </tr>
           <% @country.translations.each do |translation| %>
               <tr>
-                <td><strong><%= translation[0].upcase %></strong></td>
-                <td><%= translation[1] %></td>
+                <td style="width: 50%">[<%= translation[0].upcase %>] - <%= languages[translation[0].upcase] %></td>
+                <td style="width: 50%"><%= translation[1] %></td>
               </tr>
           <% end %>
       <% end %>
