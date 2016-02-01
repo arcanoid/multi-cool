@@ -72,4 +72,16 @@ describe '/tools' do
         should route_to( :controller => 'tools',
                          :action => 'sql_beautifier')
   end
+
+  it 'GET /tools/ssh_generator it should route to tools#ssh_generator' do
+    { :get => '/tools/ssh_generator' }.
+        should route_to( :controller => 'tools',
+                         :action => 'ssh_generator')
+  end
+
+  it 'POST /tools/ssh_generator it should route to tools#ssh_generator' do
+    { :post => '/tools/ssh_generator' }.
+        should route_to( :controller => 'tools',
+                         :action => 'ssh_generator')
+  end
 end

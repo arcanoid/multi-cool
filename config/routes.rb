@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     post :xml_beautifier
     get :sql_beautifier
     post :sql_beautifier
+    get :ssh_generator
+    post :ssh_generator
   end
 
   resource :utilities, :only => [] do

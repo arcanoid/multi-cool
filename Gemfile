@@ -21,6 +21,7 @@ gem 'countries'
 gem 'json-compare'
 gem 'time_difference'
 gem 'browser'
+gem 'sshkey'
 
 group :development do
   gem 'better_errors'

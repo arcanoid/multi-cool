@@ -88,4 +88,13 @@ XSL
                   end
 
   end
+
+  def ssh_generator
+    @ssh_key = SSHKey.generate(
+        type: params[:type].present? ? params[:type] : 'RSA',
+        bits: (params[:bits].present? ? params[:bit] : 1024),
+        comment: params[:comment].presence,
+        passphrase: params[:passphrase].presence
+    )
+  end
 end
