@@ -5,6 +5,14 @@
 <%= form_tag base64_encoder_tools_url do %>
     <div class="row">
       <div class="col-xs-12">
+        <div class="text-right">
+          <a class="btn btn-default clipboard-button" data-clipboard-target="#full_text"><i class="fa fa-files-o"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
         <div class="form-group">
           <label for="full_text">Text to encode / decode</label>
           <%= text_area_tag :full_text, @final_text, :rows => 15, :class => 'form-control' %>
@@ -23,3 +31,7 @@
       </div>
     </div>
 <% end %>
+
+<script>
+    var clipboard = new Clipboard('.clipboard-button');
+</script>

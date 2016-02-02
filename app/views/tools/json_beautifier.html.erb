@@ -4,6 +4,14 @@
 
 <%= form_tag json_beautifier_tools_url do %>
     <div class="row">
+      <div class="col-xs-12">
+        <div class="text-right">
+          <a class="btn btn-default clipboard-button" data-clipboard-target="#formated_result"><i class="fa fa-files-o"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="form-group <%= 'has-error' if flash[:error] %>">
           <label for="initial_text">Text to beautify</label>
@@ -18,8 +26,12 @@
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label>Formatted result</label>
-          <pre><%= @final_text %></pre>
+          <pre id="formated_result"><%= @final_text %></pre>
         </div>
       </div>
     </div>
 <% end %>
+
+<script>
+    var clipboard = new Clipboard('.clipboard-button');
+</script>
