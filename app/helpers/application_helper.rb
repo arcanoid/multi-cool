@@ -15,12 +15,12 @@ module ApplicationHelper
             {
                 :name => 'Web resources and Utilites',
                 :sub_menus => [
-                    { :name => 'URI parser', :path => uri_parser_web_resources_url },
-                    { :name => 'Countries info', :path => countries_web_resources_url },
-                    { :name => 'JSON comparer', :path => json_comparer_web_resources_url },
-                    { :name => 'Date difference', :path => date_diff_web_resources_url },
-                    { :name => 'User agent identifier', :path => user_agent_identifier_web_resources_url },
-                    { :name => 'User agent info', :path => user_agent_info_web_resources_url }
+                    { :name => 'URI parser', :path => uri_parser_web_resources_path },
+                    { :name => 'Countries info', :path => countries_web_resources_path },
+                    { :name => 'JSON comparer', :path => json_comparer_web_resources_path },
+                    { :name => 'Date difference', :path => date_diff_web_resources_path },
+                    { :name => 'User agent identifier', :path => user_agent_identifier_web_resources_path },
+                    { :name => 'User agent info', :path => user_agent_info_web_resources_path }
                 ]
             },
             {
