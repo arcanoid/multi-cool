@@ -9,7 +9,8 @@ module ApplicationHelper
                     { :name => 'Hash generator', :path => hash_generator_tools_path },
                     { :name => 'Json Beautifier', :path => json_beautifier_tools_path },
                     { :name => 'XML Beautifier', :path => xml_beautifier_tools_path },
-                    { :name => 'SQL Beautifier', :path => sql_beautifier_tools_path }
+                    { :name => 'SQL Beautifier', :path => sql_beautifier_tools_path },
+                    { :name => 'SSH Generator', :path => ssh_generator_tools_path }
                 ]
             },
             {
