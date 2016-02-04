@@ -2,6 +2,14 @@
   <h1>JSON to XML</h1>
 </div>
 
+<div class="row">
+  <div class="col-xs-12">
+    <div class="text-right">
+      <a class="btn btn-default clipboard-button" data-clipboard-target="#full_text"><i class="fa fa-files-o"></i></a>
+    </div>
+  </div>
+</div>
+
 <%= form_tag xml_to_json_format_conversions_url do %>
     <div class="row">
       <div class="col-xs-12 col-md-6">
@@ -18,8 +26,12 @@
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label>Formatted result</label>
-          <pre><%= @final_text %></pre>
+          <pre id="full_text"><%= @final_text %></pre>
         </div>
       </div>
     </div>
 <% end %>
+
+<script>
+    var clipboard = new Clipboard('.clipboard-button');
+</script>
