@@ -7,9 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore idea configuration.
-/.idea
-
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -18,3 +15,9 @@
 /log/*
 !/log/.keep
 /tmp
+
+# IntelliJ / Rubymine files
+.idea/
+*.iml
+.generators
+.rakeTasks
