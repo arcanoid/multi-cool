@@ -41,12 +41,11 @@ class UtilitiesController < ApplicationController
       urls = params[:full_text].split(/\r\n/)
 
       urls.each do |url|
-
         if url.present?
           directory_name = "#{Rails.root}/app/assets/images/screens/#{DateTime.now.strftime('%Y-%m-%d')}"
           FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
 
-          full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '')}.png"
+          full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '').try(:slice, 0, 250)}.png"
 
           driver.get url
           driver.save_screenshot full_file_name
