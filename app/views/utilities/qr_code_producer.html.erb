@@ -30,22 +30,24 @@
 <% if @images.present? %>
     <h2>Existing codes</h2>
 
-    <div class="row">
-      <% @images.each do |image_url| %>
-          <div class="col-xs-6 col-md-3">
-            <div class="thumbnail">
-              <div class="caption">
-                <a href="<%= image_url.gsub("app/assets/images/", "#{root_url}assets/") %>" target="_blank">
-                  <%= image_tag image_url.gsub("app/assets/images/", "") %>
-                </a>
+    <% @images.in_groups_of(4, false) do |group| %>
+        <div class="row">
+          <% group.each do |image_url| %>
+              <div class="col-xs-6 col-md-3">
+                <div class="thumbnail">
+                  <div class="caption">
+                    <a href="<%= image_url.gsub("app/assets/images/", "#{root_url}assets/") %>" target="_blank">
+                      <%= image_tag image_url.gsub("app/assets/images/", "") %>
+                    </a>
 
-                <% image_info_array = image_url.split('/') %>
-                <div><%= image_info_array.last.gsub('.png', '') %></div>
-                <div>Taken at: <%= Date.parse(image_info_array[image_info_array.size - 2]).strftime('%a %d %b %Y')  %></div>
+                    <% image_info_array = image_url.split('/') %>
+                    <div><%= image_info_array.last.gsub('.png', '') %></div>
+                    <div>Taken at: <%= Date.parse(image_info_array[image_info_array.size - 2]).strftime('%a %d %b %Y')  %></div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-      <% end %>
-    </div>
+          <% end %>
+        </div>
+    <% end %>
 <% end %>
 
