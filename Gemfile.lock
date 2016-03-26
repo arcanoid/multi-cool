@@ -110,7 +110,7 @@ GEM
       activesupport (= 4.2.4)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (10.4.2)
+    rake (11.1.1)
     random_facts (1.0.0)
     rqrcode (0.7.0)
       chunky_png
