@@ -22,6 +22,7 @@ gem 'json-compare'
 gem 'time_difference'
 gem 'browser'
 gem 'sshkey'
+gem 'ruby-graphviz'
 
 group :development do
   gem 'better_errors'

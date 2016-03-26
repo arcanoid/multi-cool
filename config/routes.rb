@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     post :rss_feed_validator
     get :sprint_calculator
     post :sprint_calculator
+    get :rails_logs_visualizer
+    post :rails_logs_visualizer
   end
 
   resource :data_generation, :only => [] do

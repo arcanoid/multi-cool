@@ -131,6 +131,7 @@ GEM
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    ruby-graphviz (1.2.2)
     ruby-units (1.4.5)
     rubyzip (1.1.7)
     sass (3.4.18)
@@ -185,6 +186,7 @@ DEPENDENCIES
   random_facts
   rqrcode
   rspec-rails
+  ruby-graphviz
   ruby-units
   sass-rails (~> 5.0)
   selenium-webdriver

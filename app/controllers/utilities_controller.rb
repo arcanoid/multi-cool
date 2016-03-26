@@ -217,4 +217,63 @@ class UtilitiesController < ApplicationController
       end
     end
   end
+
+  def rails_logs_visualizer
+    @data = { :nodes => [], :edges => [] }
+
+    if params[:full_text].present?
+      index = 0
+      g = GraphViz::new( :G, :type => :digraph )
+
+      params[:full_text].split('Started ').each do |action|
+        if action.present? && action != ""
+          action_parsed = /(?<action>.*) for/.match(action)[1]
+          rendered_partials = []
+
+          unless /.*\"\/assets.*/.match(action_parsed)
+            action.split("\r\n").each do |log_line|
+              partial_in_line = /Rendered (?<partial>(\S)*)/.match(log_line)
+              if partial_in_line.present?
+                rendered_partials << partial_in_line[1]
+              end
+            end
+
+            controller_processing_request = /Processing by (?<controller>.*) as/.match(action)[1]
+
+            if @data[:nodes].size > 0 && (@data[:nodes].map { |node| node[:label] }.include? action_parsed)
+              @data[:nodes].map { |node| node[:size] += 1 if node[:label] == action_parsed }
+            else
+              @data[:nodes] << {
+                  :id => "action#{index}",
+                  :label => action_parsed,
+                  :controller => controller_processing_request,
+                  :rendered_partials => rendered_partials.group_by { |x| x },
+                  :size => 1
+              }
+
+              index = index + 1
+            end
+          end
+        end
+      end
+
+      if @data[:nodes].present?
+        @data[:nodes].each do |node|
+          node[:graph_node] = g.add_nodes(node[:label], :label => "<<b>#{node[:label]}</b><br/><i>#{node[:controller]}</i>>")
+
+          node[:rendered_partials].each do |partial, partials_array|
+            partial_node = g.add_nodes(partial, :shape => :note)
+
+            g.add_edges( node[:graph_node], partial_node, :label => "<<i>renders<br/>(#{partials_array.size} times)</i>>")
+          end
+        end
+
+        directory_name = "#{Rails.root}/app/assets/images/graphs/#{DateTime.now.strftime('%Y-%m-%d')}"
+        FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
+        g.output(:png => "#{directory_name}/#{DateTime.now.strftime('%H%M%S%L')}.png" )
+      end
+    end
+
+    @images = Dir.glob("app/assets/images/graphs/*/*.png")
+  end
 end

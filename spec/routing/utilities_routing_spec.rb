@@ -60,4 +60,16 @@ describe '/utilities' do
         should route_to( :controller => 'utilities',
                          :action => 'sprint_calculator')
   end
+
+  it 'GET /utilities/rails_logs_visualizer it should route to utilities#rails_logs_visualizer' do
+    { :get => '/utilities/rails_logs_visualizer' }.
+        should route_to( :controller => 'utilities',
+                         :action => 'rails_logs_visualizer')
+  end
+
+  it 'POST /utilities/rails_logs_visualizer it should route to utilities#rails_logs_visualizer' do
+    { :post => '/utilities/rails_logs_visualizer' }.
+        should route_to( :controller => 'utilities',
+                         :action => 'rails_logs_visualizer')
+  end
 end
