@@ -28,11 +28,11 @@
                   <div class="caption">
                     <a href="<%= image_url.gsub("app/assets/images/", "#{root_url}assets/") %>" target="_blank">
                       <%= image_tag image_url.gsub("app/assets/images/", "") %>
-                    </a>
 
-                    <% image_info_array = image_url.split('/') %>
-                    <div><%= image_info_array.last.gsub('.png', '') %></div>
-                    <div>Taken at: <%= Date.parse(image_info_array[image_info_array.size - 2]).strftime('%a %d %b %Y')  %></div>
+                      <% image_info_array = image_url.split('/') %>
+                      <div><%= image_info_array.last.gsub('.png', '') %></div>
+                      <div>Taken at: <%= Date.parse(image_info_array[image_info_array.size - 2]).strftime('%a %d %b %Y')  %></div>
+                    </a>
                   </div>
                 </div>
               </div>

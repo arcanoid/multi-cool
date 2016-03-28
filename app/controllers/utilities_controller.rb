@@ -231,11 +231,13 @@ class UtilitiesController < ApplicationController
           action_parsed = /(?<action>.*) for/.match(action)[1]
           rendered_partials = []
           service_requests = []
+          compiled_assets = []
 
           unless /.*\"\/assets.*/.match(action_parsed)
             action.split("\r\n").each do |log_line|
               partial_in_line = /Rendered (?<partial>(\S)*)/.match(log_line)
               service_request_in_line = /\[httplog\] Sending: (?<partial>.*)/.match(log_line)
+              compiled_asset_in_line = /Compiled (?<asset>(\S)*)/.match(log_line)
 
               if partial_in_line.present? && params[:rendered_partials] == 'true'
                 rendered_partials << partial_in_line[1]
@@ -243,6 +245,10 @@ class UtilitiesController < ApplicationController
 
               if service_request_in_line.present? && params[:service_requests] == 'true'
                 service_requests << service_request_in_line[1]
+              end
+
+              if compiled_asset_in_line.present? && params[:compiled_assets] == 'true'
+                compiled_assets << compiled_asset_in_line[1]
               end
             end
 
@@ -256,7 +262,8 @@ class UtilitiesController < ApplicationController
                   :label => action_parsed,
                   :controller => controller_processing_request,
                   :rendered_partials => rendered_partials.group_by { |x| x },
-                  :service_requests => service_requests.group_by { |x| x },
+                  :service_requests => service_requests,
+                  :compiled_assets => compiled_assets.group_by { |x| x },
                   :size => 1
               }
 
@@ -268,7 +275,7 @@ class UtilitiesController < ApplicationController
 
       if data[:nodes].present?
         data[:nodes].each do |node|
-          node[:graph_node] = g.add_nodes(node[:label], :label => "<<b>#{node[:label]}</b><br/><i>#{node[:controller]}</i>>")
+          node[:graph_node] = g.add_nodes(node[:label], :label => "<<b>#{node[:label].gsub('&', '%26')}</b><br/><i>#{node[:controller]}</i>>")
 
           node[:rendered_partials].each do |partial, partials_array|
             partial_node = g.add_nodes(partial, :shape => :component)
@@ -276,10 +283,26 @@ class UtilitiesController < ApplicationController
             g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)</i>>")
           end
 
-          node[:service_requests].each do |service, services_array|
-            service_node = g.add_nodes(service, :shape => :note)
+          node[:compiled_assets].each do |asset, assets_array|
+            asset_node = g.add_nodes(asset, :shape => :folder)
 
+            g.add_edges( node[:graph_node], asset_node, :label => "<<i>Compiles asset<br/>(#{assets_array.size} times)</i>>")
+          end
+
+          node[:service_requests].
+              map { |service| URI(service.split(' ')[1]).host }.
+              group_by { |x| x }.
+              each do |service, services_array|
+
+            service_node = g.add_nodes(service, :shape => :note)
             g.add_edges( node[:graph_node], service_node, :label => "<<i>Requests<br/>(#{services_array.size} times)</i>>")
+          end
+
+          node[:service_requests].group_by { |x| x }.each do |service, services_array|
+            service_split = service.split(' ')
+            full_service_node = g.add_nodes("#{service_split[0]} #{[URI(service.split(' ')[1]).path, URI(service.split(' ')[1]).query.presence].reject { |x| x.blank? }.join('?')}", :shape => :note)
+
+            g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)</i>>")
           end
         end
 
