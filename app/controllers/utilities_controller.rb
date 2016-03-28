@@ -237,11 +237,11 @@ class UtilitiesController < ApplicationController
               partial_in_line = /Rendered (?<partial>(\S)*)/.match(log_line)
               service_request_in_line = /\[httplog\] Sending: (?<partial>.*)/.match(log_line)
 
-              if partial_in_line.present?
+              if partial_in_line.present? && params[:rendered_partials] == 'true'
                 rendered_partials << partial_in_line[1]
               end
 
-              if service_request_in_line.present?
+              if service_request_in_line.present? && params[:service_requests] == 'true'
                 service_requests << service_request_in_line[1]
               end
             end
