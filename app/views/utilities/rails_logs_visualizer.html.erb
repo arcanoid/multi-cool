@@ -6,6 +6,11 @@
           <%= text_area_tag :full_text, @final_text, :rows => 19, :class => 'form-control' %>
         </div>
 
+        <div class="form-group">
+          <label for="graph_name">Graph name</label>
+          <%= text_field_tag :graph_name, @graph_name, :class => 'form-control' %>
+        </div>
+
         <div class="checkbox">
           <label>
             <%= check_box_tag :rendered_partials, 'true', true %>Include rendered partials

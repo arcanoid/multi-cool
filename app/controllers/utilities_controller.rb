@@ -335,10 +335,11 @@ class UtilitiesController < ApplicationController
 
         directory_name = "#{Rails.root}/app/assets/images/graphs/#{DateTime.now.strftime('%Y-%m-%d')}"
         FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
-        g.output(:png => "#{directory_name}/#{DateTime.now.strftime('%H%M%S%L')}.png" )
+        g.output(:png => "#{directory_name}/#{params[:graph_name].present? ? params[:graph_name] : "graph_#{DateTime.now.strftime('%H%M%S%L')}" }.png" )
       end
     end
 
     @images = Dir.glob("app/assets/images/graphs/*/*.png")
+    @graph_name = "graph_#{DateTime.now.strftime('%H%M%S%L')}"
   end
 end
