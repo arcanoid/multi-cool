@@ -24,6 +24,12 @@
           </label>
         </div>
 
+        <div class="checkbox">
+          <label>
+            <%= check_box_tag :sql_visualization, 'true', true %>Include sql queries
+          </label>
+        </div>
+
         <div class="form-group">
           <%= submit_tag 'Visualize', :class => 'btn btn-primary' %>
         </div>

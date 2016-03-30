@@ -232,12 +232,17 @@ class UtilitiesController < ApplicationController
           rendered_partials = []
           service_requests = []
           compiled_assets = []
+          sql_insertions = []
+          sql_selections = []
 
           unless /.*\"\/assets.*/.match(action_parsed)
             action.split("\r\n").each do |log_line|
               partial_in_line = /Rendered (?<partial>(\S)*)/.match(log_line)
               service_request_in_line = /\[httplog\] Sending: (?<partial>.*)/.match(log_line)
               compiled_asset_in_line = /Compiled (?<asset>(\S)*)/.match(log_line)
+              sql_insertion_in_line = /SQL.* INSERT INTO (?<asset>(\S)*)/.match(log_line)
+              sql_insertion_in_line = /SQL.* INSERT INTO (?<table>(\S)*)/.match(log_line)
+              sql_select_in_line = /SELECT .* FROM (?<table>(\S)*)/.match(log_line)
 
               if partial_in_line.present? && params[:rendered_partials] == 'true'
                 rendered_partials << partial_in_line[1]
@@ -249,6 +254,14 @@ class UtilitiesController < ApplicationController
 
               if compiled_asset_in_line.present? && params[:compiled_assets] == 'true'
                 compiled_assets << compiled_asset_in_line[1]
+              end
+
+              if sql_insertion_in_line.present? && params[:sql_visualization] == 'true'
+                sql_insertions << sql_insertion_in_line[1]
+              end
+
+              if sql_select_in_line.present? && params[:sql_visualization] == 'true'
+                sql_selections << sql_select_in_line[1]
               end
             end
 
@@ -264,6 +277,8 @@ class UtilitiesController < ApplicationController
                   :rendered_partials => rendered_partials.group_by { |x| x },
                   :service_requests => service_requests,
                   :compiled_assets => compiled_assets.group_by { |x| x },
+                  :sql_insertions => sql_insertions.group_by { |x| x },
+                  :sql_selections => sql_selections.group_by { |x| x },
                   :size => 1
               }
 
@@ -287,6 +302,18 @@ class UtilitiesController < ApplicationController
             asset_node = g.add_nodes(asset, :shape => :folder)
 
             g.add_edges( node[:graph_node], asset_node, :label => "<<i>Compiles asset<br/>(#{assets_array.size} times)</i>>")
+          end
+
+          node[:sql_insertions].each do |array_name, names_array|
+            array_node = g.add_nodes(array_name, :shape => :box3d)
+
+            g.add_edges( node[:graph_node], array_node, :label => "<<i>Inserts into<br/>(#{names_array.size} times)</i>>")
+          end
+
+          node[:sql_selections].each do |array_name, names_array|
+            array_node = g.add_nodes(array_name, :shape => :box3d)
+
+            g.add_edges( node[:graph_node], array_node, :label => "<<i>Selects from<br/>(#{names_array.size} times)</i>>")
           end
 
           node[:service_requests].
