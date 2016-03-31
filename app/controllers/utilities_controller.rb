@@ -303,10 +303,17 @@ class UtilitiesController < ApplicationController
         data[:nodes].each do |node|
           node[:graph_node] = g.add_nodes(node[:label], :label => "<<b>#{node[:label].gsub('&', '%26')}</b><br/><i>#{node[:controller]}</i>>")
 
+          maximum_rendered_time = node[:rendered_partials].map { |partial, partials_array| partials_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.max
+          maximum_service_time = node[:service_requests].group_by { |x| x[:service] }.map { |service, services_array| (services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2) }.max
+
           node[:rendered_partials].each do |partial, partials_array|
             partial_node = g.add_nodes(partial, :shape => :component)
-
-            g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in #{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
+            total_time = partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)
+            if maximum_rendered_time == total_time
+              g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in <b>#{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red' )
+            else
+              g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in #{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
+            end
           end
 
           node[:compiled_assets].each do |asset, assets_array|
@@ -339,8 +346,13 @@ class UtilitiesController < ApplicationController
           node[:service_requests].group_by { |x| x[:service] }.each do |service, services_array|
             service_split = service.split(' ')
             full_service_node = g.add_nodes("#{service_split[0]} #{[URI(service.split(' ')[1]).path, URI(service.split(' ')[1]).query.presence].reject { |x| x.blank? }.join('?')}", :shape => :note)
+            total_time = (services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)
 
-            g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in #{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</i>>")
+            if total_time == maximum_service_time
+              g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in <b>#{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</b></i>>", :color => 'red')
+            else
+              g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in #{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</i>>")
+            end
           end
         end
 
