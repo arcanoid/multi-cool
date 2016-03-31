@@ -231,37 +231,42 @@ class UtilitiesController < ApplicationController
           action_parsed = /(?<action>.*) for/.match(action)[1]
           rendered_partials = []
           service_requests = []
+          service_times = []
           compiled_assets = []
           sql_insertions = []
           sql_selections = []
 
           unless /.*\"\/assets.*/.match(action_parsed)
             action.split("\r\n").each do |log_line|
-              partial_in_line = /Rendered (?<partial>(\S)*)/.match(log_line)
-              service_request_in_line = /\[httplog\] Sending: (?<partial>.*)/.match(log_line)
+              partial_in_line = /Rendered (?<partial>(\S)*) \((?<time>(\S)*)ms/.match(log_line)
+              service_request_in_line = /\[httplog\] Sending: (?<service>.*)/.match(log_line)
+              service_time_in_line = /\[httplog\] Benchmark: (?<time>\S*)/.match(log_line)
               compiled_asset_in_line = /Compiled (?<asset>(\S)*)/.match(log_line)
-              sql_insertion_in_line = /SQL.* INSERT INTO (?<asset>(\S)*)/.match(log_line)
               sql_insertion_in_line = /SQL.* INSERT INTO (?<table>(\S)*)/.match(log_line)
               sql_select_in_line = /SELECT .* FROM (?<table>(\S)*)/.match(log_line)
 
               if partial_in_line.present? && params[:rendered_partials] == 'true'
-                rendered_partials << partial_in_line[1]
+                rendered_partials << { :partial => partial_in_line[:partial], :time => partial_in_line[:time].to_f }
+              end
+
+              if service_time_in_line.present? && params[:service_requests] == 'true'
+                service_times << service_time_in_line[:time].to_f
               end
 
               if service_request_in_line.present? && params[:service_requests] == 'true'
-                service_requests << service_request_in_line[1]
+                service_requests << service_request_in_line[:service]
               end
 
               if compiled_asset_in_line.present? && params[:compiled_assets] == 'true'
-                compiled_assets << compiled_asset_in_line[1]
+                compiled_assets << compiled_asset_in_line[:asset]
               end
 
               if sql_insertion_in_line.present? && params[:sql_visualization] == 'true'
-                sql_insertions << sql_insertion_in_line[1]
+                sql_insertions << sql_insertion_in_line[:table]
               end
 
               if sql_select_in_line.present? && params[:sql_visualization] == 'true'
-                sql_selections << sql_select_in_line[1]
+                sql_selections << sql_select_in_line[:table]
               end
             end
 
@@ -270,12 +275,18 @@ class UtilitiesController < ApplicationController
             if data[:nodes].size > 0 && (data[:nodes].map { |node| node[:label] }.include? action_parsed)
               data[:nodes].map { |node| node[:size] += 1 if node[:label] == action_parsed }
             else
+              services = []
+
+              service_requests.each_with_index do |service, index|
+                services << { :service => service, :time => service_times[index] }
+              end
+
               data[:nodes] << {
                   :id => "action#{index}",
                   :label => action_parsed,
                   :controller => controller_processing_request,
-                  :rendered_partials => rendered_partials.group_by { |x| x },
-                  :service_requests => service_requests,
+                  :rendered_partials => rendered_partials.group_by { |x| x[:partial] },
+                  :service_requests => services,
                   :compiled_assets => compiled_assets.group_by { |x| x },
                   :sql_insertions => sql_insertions.group_by { |x| x },
                   :sql_selections => sql_selections.group_by { |x| x },
@@ -295,7 +306,7 @@ class UtilitiesController < ApplicationController
           node[:rendered_partials].each do |partial, partials_array|
             partial_node = g.add_nodes(partial, :shape => :component)
 
-            g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)</i>>")
+            g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in #{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
           end
 
           node[:compiled_assets].each do |asset, assets_array|
@@ -317,19 +328,19 @@ class UtilitiesController < ApplicationController
           end
 
           node[:service_requests].
-              map { |service| URI(service.split(' ')[1]).host }.
-              group_by { |x| x }.
+              map { |service| {:service => URI(service[:service].split(' ')[1]).host, :time => service[:time]} }.
+              group_by { |x| x[:service] }.
               each do |service, services_array|
 
             service_node = g.add_nodes(service, :shape => :note)
-            g.add_edges( node[:graph_node], service_node, :label => "<<i>Requests<br/>(#{services_array.size} times)</i>>")
+            g.add_edges( node[:graph_node], service_node, :label => "<<i>Requests<br/>(#{services_array.size} times)<br/>in #{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</i>>")
           end
 
-          node[:service_requests].group_by { |x| x }.each do |service, services_array|
+          node[:service_requests].group_by { |x| x[:service] }.each do |service, services_array|
             service_split = service.split(' ')
             full_service_node = g.add_nodes("#{service_split[0]} #{[URI(service.split(' ')[1]).path, URI(service.split(' ')[1]).query.presence].reject { |x| x.blank? }.join('?')}", :shape => :note)
 
-            g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)</i>>")
+            g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in #{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</i>>")
           end
         end
 
