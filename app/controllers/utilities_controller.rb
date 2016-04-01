@@ -234,15 +234,17 @@ class UtilitiesController < ApplicationController
           compiled_assets = []
           sql_insertions = []
           sql_selections = []
+          sql_updates = []
 
           unless /.*\"\/assets.*/.match(action_parsed)
             action.split("\r\n").each do |log_line|
               partial_in_line = /Rendered (?<partial>(\S)*) \((?<time>(\S)*)ms/.match(log_line)
               service_request_in_line = /\[httplog\] Sending: (?<service>.*)/.match(log_line)
               service_time_in_line = /\[httplog\] Benchmark: (?<time>\S*)/.match(log_line)
-              compiled_asset_in_line = /Compiled (?<asset>(\S)*)/.match(log_line)
-              sql_insertion_in_line = /SQL.* INSERT INTO (?<table>(\S)*)/.match(log_line)
-              sql_select_in_line = /SELECT .* FROM (?<table>(\S)*)/.match(log_line)
+              compiled_asset_in_line = /Compiled (?<asset>(\S)*).*\((?<time>\S*)ms\)/.match(log_line)
+              sql_insertion_in_line = /SQL.*\((?<time>\S*)ms\).*INSERT INTO (?<table>(\S)*)/.match(log_line)
+              sql_select_in_line = /\((?<time>\S*)ms\).*SELECT .* FROM (?<table>(\S)*)/.match(log_line)
+              sql_update_in_line = /\((?<time>\S*)ms\).*UPDATE (?<table>(\S)*)/.match(log_line)
 
               if partial_in_line.present? && params[:rendered_partials] == 'true'
                 rendered_partials << { :partial => partial_in_line[:partial], :time => partial_in_line[:time].to_f }
@@ -257,15 +259,19 @@ class UtilitiesController < ApplicationController
               end
 
               if compiled_asset_in_line.present? && params[:compiled_assets] == 'true'
-                compiled_assets << compiled_asset_in_line[:asset]
+                compiled_assets << { :asset => compiled_asset_in_line[:asset], :time => compiled_asset_in_line[:time].to_f }
               end
 
               if sql_insertion_in_line.present? && params[:sql_visualization] == 'true'
-                sql_insertions << sql_insertion_in_line[:table]
+                sql_insertions <<  { :table => sql_insertion_in_line[:table], :time => sql_insertion_in_line[:time].to_f }
               end
 
               if sql_select_in_line.present? && params[:sql_visualization] == 'true'
-                sql_selections << sql_select_in_line[:table]
+                sql_selections << { :table => sql_select_in_line[:table], :time => sql_select_in_line[:time].to_f }
+              end
+
+              if sql_update_in_line.present? && params[:sql_visualization] == 'true'
+                sql_updates << { :table => sql_update_in_line[:table], :time => sql_update_in_line[:time].to_f }
               end
             end
 
@@ -285,9 +291,10 @@ class UtilitiesController < ApplicationController
                   :controller => controller_processing_request,
                   :rendered_partials => rendered_partials.group_by { |x| x[:partial] },
                   :service_requests => services,
-                  :compiled_assets => compiled_assets.group_by { |x| x },
-                  :sql_insertions => sql_insertions.group_by { |x| x },
-                  :sql_selections => sql_selections.group_by { |x| x }
+                  :compiled_assets => compiled_assets.group_by { |x| x[:asset] },
+                  :sql_insertions => sql_insertions.group_by { |x| x[:table] },
+                  :sql_selections => sql_selections.group_by { |x| x[:table] },
+                  :sql_updates => sql_updates.group_by { |x| x[:table] }
               }
             end
           end
@@ -299,6 +306,10 @@ class UtilitiesController < ApplicationController
           node[:graph_node] = g.add_nodes(node[:label], :label => "<<b>#{node[:label].gsub('&', '%26')}</b><br/><i>#{node[:controller]}</i>>")
 
           maximum_rendered_time = node[:rendered_partials].map { |partial, partials_array| partials_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.max
+          maximum_sql_insertion_time = node[:sql_insertions].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.max
+          maximum_asset_compilation_time = node[:compiled_assets].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.max
+          maximum_sql_selection_time = node[:sql_selections].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.max
+          maximum_sql_update_time = node[:sql_updates].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.max
           maximum_service_time = node[:service_requests].group_by { |x| x[:service] }.map { |service, services_array| (services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2) }.max
 
           node[:rendered_partials].each do |partial, partials_array|
@@ -313,20 +324,42 @@ class UtilitiesController < ApplicationController
 
           node[:compiled_assets].each do |asset, assets_array|
             asset_node = g.add_nodes(asset, :shape => :folder)
-
-            g.add_edges( node[:graph_node], asset_node, :label => "<<i>Compiles asset<br/>(#{assets_array.size} times)</i>>")
+            total_time = assets_array.inject(0){|sum,x| sum + x[:time] }.round(2)
+            if maximum_asset_compilation_time == total_time
+              g.add_edges( node[:graph_node], asset_node, :label => "<<i>Compiles asset<br/>(#{assets_array.size} times)<br/>in <b>#{assets_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            else
+              g.add_edges( node[:graph_node], asset_node, :label => "<<i>Compiles asset<br/>(#{assets_array.size} times)<br/>in #{assets_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
+            end
           end
 
           node[:sql_insertions].each do |array_name, names_array|
             array_node = g.add_nodes(array_name, :shape => :box3d)
-
-            g.add_edges( node[:graph_node], array_node, :label => "<<i>Inserts into<br/>(#{names_array.size} times)</i>>")
+            total_time = names_array.inject(0){|sum,x| sum + x[:time] }.round(2)
+            if maximum_sql_insertion_time == total_time
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Inserts into<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            else
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Inserts into<br/>(#{names_array.size} times)<br/>in #{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
+            end
           end
 
           node[:sql_selections].each do |array_name, names_array|
             array_node = g.add_nodes(array_name, :shape => :box3d)
+            total_time = names_array.inject(0){|sum,x| sum + x[:time] }.round(2)
+            if maximum_sql_selection_time == total_time
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Selects from<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            else
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Selects from<br/>(#{names_array.size} times)<br/>in #{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
+            end
+          end
 
-            g.add_edges( node[:graph_node], array_node, :label => "<<i>Selects from<br/>(#{names_array.size} times)</i>>")
+          node[:sql_updates].each do |array_name, names_array|
+            array_node = g.add_nodes(array_name, :shape => :box3d)
+            total_time = names_array.inject(0){|sum,x| sum + x[:time] }.round(2)
+            if maximum_sql_update_time == total_time
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Updates<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            else
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Updates<br/>(#{names_array.size} times)<br/>in #{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
+            end
           end
 
           node[:service_requests].
