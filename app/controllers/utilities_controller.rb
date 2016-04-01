@@ -219,16 +219,15 @@ class UtilitiesController < ApplicationController
   end
 
   def rails_logs_visualizer
-    data = { :nodes => [], :edges => [] }
+    data = { :nodes => [] }
 
     if params[:full_text].present?
-      index = 0
       g = GraphViz::new( :G, :type => :digraph )
       g[:rankdir] ='LR'
 
       params[:full_text].split('Started ').each do |action|
         if action.present? && action != ""
-          action_parsed = /(?<action>.*) for/.match(action)[1]
+          action_parsed = /(?<action>.*) for/.match(action)[:action]
           rendered_partials = []
           service_requests = []
           service_times = []
@@ -270,7 +269,7 @@ class UtilitiesController < ApplicationController
               end
             end
 
-            controller_processing_request = /Processing by (?<controller>.*) as/.match(action)[1]
+            controller_processing_request = /Processing by (?<controller>.*) as/.match(action)[:controller]
 
             if data[:nodes].size > 0 && (data[:nodes].map { |node| node[:label] }.include? action_parsed)
               data[:nodes].map { |node| node[:size] += 1 if node[:label] == action_parsed }
@@ -282,18 +281,14 @@ class UtilitiesController < ApplicationController
               end
 
               data[:nodes] << {
-                  :id => "action#{index}",
                   :label => action_parsed,
                   :controller => controller_processing_request,
                   :rendered_partials => rendered_partials.group_by { |x| x[:partial] },
                   :service_requests => services,
                   :compiled_assets => compiled_assets.group_by { |x| x },
                   :sql_insertions => sql_insertions.group_by { |x| x },
-                  :sql_selections => sql_selections.group_by { |x| x },
-                  :size => 1
+                  :sql_selections => sql_selections.group_by { |x| x }
               }
-
-              index = index + 1
             end
           end
         end
@@ -310,7 +305,7 @@ class UtilitiesController < ApplicationController
             partial_node = g.add_nodes(partial, :shape => :component)
             total_time = partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)
             if maximum_rendered_time == total_time
-              g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in <b>#{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red' )
+              g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in <b>#{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
             else
               g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in #{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
             end
@@ -349,7 +344,7 @@ class UtilitiesController < ApplicationController
             total_time = (services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)
 
             if total_time == maximum_service_time
-              g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in <b>#{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</b></i>>", :color => 'red')
+              g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in <b>#{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
             else
               g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in #{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</i>>")
             end
