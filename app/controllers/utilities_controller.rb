@@ -276,6 +276,7 @@ class UtilitiesController < ApplicationController
             end
 
             controller_processing_request = /Processing by (?<controller>.*) as/.match(action)[:controller]
+            redirect_to_url = /Redirected to (?<redirect_url>(\S)*)/.match(action)
 
             if data[:nodes].size > 0 && (data[:nodes].map { |node| node[:label] }.include? action_parsed)
               data[:nodes].map { |node| node[:size] += 1 if node[:label] == action_parsed }
@@ -289,6 +290,7 @@ class UtilitiesController < ApplicationController
               data[:nodes] << {
                   :label => action_parsed,
                   :controller => controller_processing_request,
+                  :redirect => (URI(redirect_to_url[:redirect_url]) if redirect_to_url.present? ),
                   :rendered_partials => rendered_partials.group_by { |x| x[:partial] },
                   :service_requests => services,
                   :compiled_assets => compiled_assets.group_by { |x| x[:asset] },
@@ -320,6 +322,10 @@ class UtilitiesController < ApplicationController
             else
               g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in #{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
             end
+          end
+
+          if node[:redirect].present?
+            g.add_edges( node[:graph_node], "GET \"#{node[:redirect].path}\"", :label => "<<i>Redirects to</i>>")
           end
 
           node[:compiled_assets].each do |asset, assets_array|
