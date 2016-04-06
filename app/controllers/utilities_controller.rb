@@ -238,7 +238,7 @@ class UtilitiesController < ApplicationController
 
           unless /.*\"\/assets.*/.match(action_parsed)
             action.split("\r\n").each do |log_line|
-              partial_in_line = /Rendered (?<partial>(\S)*) \((?<time>(\S)*)ms/.match(log_line)
+              partial_in_line = /Rendered (?<partial>(\S)*).*\((?<time>(\S)*)ms/.match(log_line)
               service_request_in_line = /\[httplog\] Sending: (?<service>.*)/.match(log_line)
               service_time_in_line = /\[httplog\] Benchmark: (?<time>\S*)/.match(log_line)
               compiled_asset_in_line = /Compiled (?<asset>(\S)*).*\((?<time>\S*)ms\)/.match(log_line)
