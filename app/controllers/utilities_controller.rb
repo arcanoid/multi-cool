@@ -288,6 +288,7 @@ class UtilitiesController < ApplicationController
               end
 
               data[:nodes] << {
+                  :size => 1,
                   :label => action_parsed,
                   :controller => controller_processing_request,
                   :redirect => (URI(redirect_to_url[:redirect_url]) if redirect_to_url.present? ),
@@ -313,12 +314,20 @@ class UtilitiesController < ApplicationController
           maximum_sql_selection_time = node[:sql_selections].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.max
           maximum_sql_update_time = node[:sql_updates].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.max
           maximum_service_time = node[:service_requests].group_by { |x| x[:service] }.map { |service, services_array| (services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2) }.max
+          minimum_rendered_time = node[:rendered_partials].map { |partial, partials_array| partials_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.min
+          minimum_sql_insertion_time = node[:sql_insertions].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.min
+          minimum_asset_compilation_time = node[:compiled_assets].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.min
+          minimum_sql_selection_time = node[:sql_selections].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.min
+          minimum_sql_update_time = node[:sql_updates].map { |array_name, names_array| names_array.inject(0){|sum,x| sum + x[:time] }.round(2) }.min
+          minimum_service_time = node[:service_requests].group_by { |x| x[:service] }.map { |service, services_array| (services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2) }.min
 
           node[:rendered_partials].each do |partial, partials_array|
             partial_node = g.add_nodes(partial, :shape => :component)
             total_time = partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)
             if maximum_rendered_time == total_time
               g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in <b>#{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            elsif minimum_rendered_time == total_time
+              g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in <b>#{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'darkgreen', :fontcolor => 'darkgreen')
             else
               g.add_edges( node[:graph_node], partial_node, :label => "<<i>Renders<br/>(#{partials_array.size} times)<br/>in #{partials_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
             end
@@ -333,6 +342,8 @@ class UtilitiesController < ApplicationController
             total_time = assets_array.inject(0){|sum,x| sum + x[:time] }.round(2)
             if maximum_asset_compilation_time == total_time
               g.add_edges( node[:graph_node], asset_node, :label => "<<i>Compiles asset<br/>(#{assets_array.size} times)<br/>in <b>#{assets_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            elsif minimum_asset_compilation_time == total_time
+              g.add_edges( node[:graph_node], asset_node, :label => "<<i>Compiles asset<br/>(#{assets_array.size} times)<br/>in <b>#{assets_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'darkgreen', :fontcolor => 'darkgreen')
             else
               g.add_edges( node[:graph_node], asset_node, :label => "<<i>Compiles asset<br/>(#{assets_array.size} times)<br/>in #{assets_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
             end
@@ -343,6 +354,8 @@ class UtilitiesController < ApplicationController
             total_time = names_array.inject(0){|sum,x| sum + x[:time] }.round(2)
             if maximum_sql_insertion_time == total_time
               g.add_edges( node[:graph_node], array_node, :label => "<<i>Inserts into<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            elsif minimum_sql_insertion_time == total_time
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Inserts into<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'darkgreen', :fontcolor => 'darkgreen')
             else
               g.add_edges( node[:graph_node], array_node, :label => "<<i>Inserts into<br/>(#{names_array.size} times)<br/>in #{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
             end
@@ -353,6 +366,8 @@ class UtilitiesController < ApplicationController
             total_time = names_array.inject(0){|sum,x| sum + x[:time] }.round(2)
             if maximum_sql_selection_time == total_time
               g.add_edges( node[:graph_node], array_node, :label => "<<i>Selects from<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            elsif minimum_sql_selection_time == total_time
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Selects from<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'darkgreen', :fontcolor => 'darkgreen')
             else
               g.add_edges( node[:graph_node], array_node, :label => "<<i>Selects from<br/>(#{names_array.size} times)<br/>in #{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
             end
@@ -363,6 +378,8 @@ class UtilitiesController < ApplicationController
             total_time = names_array.inject(0){|sum,x| sum + x[:time] }.round(2)
             if maximum_sql_update_time == total_time
               g.add_edges( node[:graph_node], array_node, :label => "<<i>Updates<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            elsif minimum_sql_update_time == total_time
+              g.add_edges( node[:graph_node], array_node, :label => "<<i>Updates<br/>(#{names_array.size} times)<br/>in <b>#{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</b></i>>", :color => 'darkgreen', :fontcolor => 'darkgreen')
             else
               g.add_edges( node[:graph_node], array_node, :label => "<<i>Updates<br/>(#{names_array.size} times)<br/>in #{names_array.inject(0){|sum,x| sum + x[:time] }.round(2)}ms</i>>")
             end
@@ -384,6 +401,8 @@ class UtilitiesController < ApplicationController
 
             if total_time == maximum_service_time
               g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in <b>#{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</b></i>>", :color => 'red', :fontcolor => 'red')
+            elsif total_time == minimum_service_time
+              g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in <b>#{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</b></i>>", :color => 'darkgreen', :fontcolor => 'darkgreen')
             else
               g.add_edges( URI(service.split(' ')[1]).host, full_service_node, :label => "<<i>Includes requests to<br/>(#{services_array.size} times)<br/>in #{(services_array.inject(0){|sum,x| sum + x[:time] } * 1000).round(2)}ms</i>>")
             end
