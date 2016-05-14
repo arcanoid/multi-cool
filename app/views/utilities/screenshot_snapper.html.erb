@@ -11,6 +11,27 @@
         </div>
 
         <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'display_sizes[]', '1280x1024', true, :id => 'display_sizes_desktop' %>
+              Desktop (1280x1024)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'display_sizes[]', '768x1024', false, :id => 'display_sizes_tablet' %>
+              Tablet (768x1024)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'display_sizes[]', '375x667', false, :id => 'display_sizes_mobile' %>
+              Mobile (375x667)
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
           <%= submit_tag 'Snap it!', :class => 'btn btn-primary' %>
         </div>
       </div>

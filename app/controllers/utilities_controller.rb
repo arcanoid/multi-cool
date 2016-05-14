@@ -45,10 +45,13 @@ class UtilitiesController < ApplicationController
           directory_name = "#{Rails.root}/app/assets/images/screens/#{DateTime.now.strftime('%Y-%m-%d')}"
           FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
 
-          full_file_name = "#{directory_name}/#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '').try(:slice, 0, 250)}.png"
+          (params[:display_sizes] || ['1280x1024']).each do |display_size|
+            full_file_name = "#{directory_name}/#{display_size}_#{url.gsub('.', '').gsub('http://', '').gsub('/', '_').gsub(/\W/, '').try(:slice, 0, 250)}.png"
 
-          driver.get url
-          driver.save_screenshot full_file_name
+            driver.manage.window.resize_to(*(display_size.split('x')))
+            driver.get url
+            driver.save_screenshot full_file_name
+          end
         end
       end
 
