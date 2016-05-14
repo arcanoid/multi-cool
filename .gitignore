@@ -24,3 +24,9 @@
 
 # Screenshots shouldn't be commited
 app/assets/images/screens/
+
+# QR codes shouldn't be commited
+app/assets/images/qr_codes
+
+# Graphs shouldn't be commited
+app/assets/images/graphs
