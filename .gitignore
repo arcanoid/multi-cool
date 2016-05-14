@@ -21,3 +21,7 @@
 *.iml
 .generators
 .rakeTasks
+
+# Screenshots shouldn't be commited
+
+app/assets/images/screens/
