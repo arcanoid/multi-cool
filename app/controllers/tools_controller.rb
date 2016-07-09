@@ -37,6 +37,18 @@ class ToolsController < ApplicationController
     end
   end
 
+  def json_to_ruby_class
+    text = params[:initial_text].present? ? params[:initial_text] : '{"desc": {"someKey": "someValue", "anotherKey" : "value"}, "main_item": {"stats": {"a": 8, "b": 12, "c": 10}}}'
+
+    begin
+      @initial_text = text
+      @final_text = JsonToRubyClass.produce_models(JSON.parse(text))
+    rescue JSON::ParserError => e
+      flash[:error] = 'Wrong format'
+      redirect_to json_to_ruby_class_tools_url
+    end
+  end
+
   def sql_beautifier
     require "anbt-sql-formatter/formatter"
 

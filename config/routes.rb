@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     post :base64_encoder
     get :json_beautifier
     post :json_beautifier
+    get :json_to_ruby_class
+    post :json_to_ruby_class
     get :xml_beautifier
     post :xml_beautifier
     get :sql_beautifier

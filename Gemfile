@@ -23,6 +23,7 @@ gem 'time_difference'
 gem 'browser'
 gem 'sshkey'
 gem 'ruby-graphviz'
+gem 'json_to_ruby_class'
 
 group :development do
   gem 'better_errors'

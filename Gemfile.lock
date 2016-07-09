@@ -73,6 +73,7 @@ GEM
     i18n_data (0.7.0)
     json (1.8.3)
     json-compare (0.1.8)
+    json_to_ruby_class (0.1.1)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -179,6 +180,7 @@ DEPENDENCIES
   feedvalidator
   forgery
   json-compare
+  json_to_ruby_class
   nokogiri
   rails (= 4.2.4)
   random_facts

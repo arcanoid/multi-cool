@@ -8,6 +8,7 @@ module ApplicationHelper
                     { :name => 'Base64 Encoder', :path => base64_encoder_tools_path },
                     { :name => 'Hash generator', :path => hash_generator_tools_path },
                     { :name => 'Json Beautifier', :path => json_beautifier_tools_path },
+                    { :name => 'Json to Ruby class converter', :path => json_to_ruby_class_tools_path },
                     { :name => 'XML Beautifier', :path => xml_beautifier_tools_path },
                     { :name => 'SQL Beautifier', :path => sql_beautifier_tools_path },
                     { :name => 'SSH Generator', :path => ssh_generator_tools_path }
