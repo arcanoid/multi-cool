@@ -109,4 +109,11 @@ XSL
         passphrase: params[:passphrase].presence
     )
   end
+
+  def text_analysis
+    text = params[:initial_text].present? ? params[:initial_text] : 'The quick brown fox jumps over the lazy dog'
+
+    @initial_text = text
+    @analysis_hash = TextAnalysis.analyze_text(text)
+  end
 end

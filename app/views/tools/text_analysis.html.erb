@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h1>Text Analysis</h1>
+</div>
+
+<p>
+  All data and functionality here, are thanks to <strong><a href="https://github.com/arcanoid/text_analysis" target="_blank">this gem</a></strong>.
+  <br><br>
+</p>
+
+<%= form_tag text_analysis_tools_url do %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="initial_text">Text to analyze</label>
+          <%= text_area_tag :initial_text, @initial_text, :rows => 15, :class => "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Analyze', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<table class="table table-hover">
+  <tr>
+    <td><strong>Total characters</strong></td>
+    <td><%= @analysis_hash[:total_characters] %></td>
+  </tr>
+
+  <tr>
+    <td><strong>Total characters (without whitespaces)</strong></td>
+    <td><%= @analysis_hash[:total_characters_without_whitespaces] %></td>
+  </tr>
+
+  <tr>
+    <td><strong>Total words</strong></td>
+    <td><%= @analysis_hash[:total_words] %></td>
+  </tr>
+</table>

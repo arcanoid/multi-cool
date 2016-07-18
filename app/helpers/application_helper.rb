@@ -11,7 +11,8 @@ module ApplicationHelper
                     { :name => 'Json to Ruby class converter', :path => json_to_ruby_class_tools_path },
                     { :name => 'XML Beautifier', :path => xml_beautifier_tools_path },
                     { :name => 'SQL Beautifier', :path => sql_beautifier_tools_path },
-                    { :name => 'SSH Generator', :path => ssh_generator_tools_path }
+                    { :name => 'SSH Generator', :path => ssh_generator_tools_path },
+                    { :name => 'Text analysis', :path => text_analysis_tools_path }
                 ]
             },
             {

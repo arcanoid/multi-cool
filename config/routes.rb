@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     post :sql_beautifier
     get :ssh_generator
     post :ssh_generator
+    get :text_analysis
+    post :text_analysis
   end
 
   resource :utilities, :only => [] do
