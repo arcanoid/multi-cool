@@ -25,16 +25,49 @@
 <table class="table table-hover">
   <tr>
     <td><strong>Total characters</strong></td>
-    <td><%= @analysis_hash[:total_characters] %></td>
+    <td><%= @analysis_hash.total_characters %></td>
   </tr>
 
   <tr>
     <td><strong>Total characters (without whitespaces)</strong></td>
-    <td><%= @analysis_hash[:total_characters_without_whitespaces] %></td>
+    <td><%= @analysis_hash.total_characters_without_whitespaces %></td>
   </tr>
 
   <tr>
     <td><strong>Total words</strong></td>
-    <td><%= @analysis_hash[:total_words] %></td>
+    <td><%= @analysis_hash.total_words %></td>
+  </tr>
+
+  <tr>
+    <td><strong>Stop words found</strong></td>
+    <td><%= @analysis_hash.stop_words_found.join(', ') %></td>
   </tr>
 </table>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Most common words</div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <% @analysis_hash.most_common_words.each do |stop_word| %>
+          <tr>
+            <td><strong><%= stop_word[:word] %></strong></td>
+            <td><%= stop_word[:occurences] %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Most common non-stop words</div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <% @analysis_hash.most_common_non_stop_words.each do |stop_word| %>
+          <tr>
+            <td><strong><%= stop_word[:word] %></strong></td>
+            <td><%= stop_word[:occurences] %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
