@@ -76,7 +76,8 @@ GEM
     i18n_data (0.7.0)
     json (1.8.3)
     json-compare (0.1.8)
-    json_to_ruby_class (0.1.2)
+    json_to_ruby_class (0.2.0)
+      activesupport
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)

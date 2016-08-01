@@ -24,13 +24,22 @@
         </div>
 
         <div class="form-group">
+          <%= label_tag :class_type_ruby, 'Ruby' %>
+          <%= radio_button_tag :class_type, 'ruby', (@type == 'ruby') %>
+          <%= label_tag 'class_type_c#', 'C#' %>
+          <%= radio_button_tag :class_type, 'c#', (@type == 'c#') %>
+          <%= label_tag 'class_type_vb', 'VB.Net' %>
+          <%= radio_button_tag :class_type, 'vb', (@type == 'vb') %>
+        </div>
+
+        <div class="form-group">
           <%= submit_tag 'Generate', :class => 'btn btn-primary' %>
         </div>
       </div>
 
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
-          <label>Ruby classes mapped</label>
+          <label>Classes mapped</label>
           <pre id="formated_result"><%= @final_text %></pre>
         </div>
       </div>
