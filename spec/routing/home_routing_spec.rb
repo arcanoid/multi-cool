@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-describe '/' do
-  it 'GET / it should route to home_controller#index' do
-    { :get => '/' }.
-        should route_to( :controller => 'home',
-                         :action => 'index')
+describe 'home routes' do
+  it "GET / should route to 'home#index'" do
+    expect(:get => '/').
+      to route_to(:controller => 'home',
+          :action => 'index')
   end
+
 end

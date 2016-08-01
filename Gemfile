@@ -26,6 +26,7 @@ gem 'ruby-graphviz'
 gem 'json_to_ruby_class'
 gem 'text_analysis'
 gem 'thin'
+gem 'spec_producer'
 
 group :development do
   gem 'better_errors'
