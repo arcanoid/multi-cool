@@ -38,6 +38,13 @@ module ApplicationHelper
                 ]
             },
             {
+                :name => 'Format Converters',
+                :sub_menus => [
+                    { :name => 'XML to Json converter', :path => xml_to_json_format_conversions_path },
+                    { :name => 'Json to XML converter', :path => json_to_xml_format_conversions_path }
+                ]
+            },
+            {
                 :name => 'Unit Converters',
                 :sub_menus => [
                     { :name => 'Length converter', :path => length_conversion_conversions_path },
@@ -50,13 +57,6 @@ module ApplicationHelper
                     { :name => 'Energy converter', :path => energy_conversion_conversions_path },
                     { :name => 'Pressure converter', :path => pressure_conversion_conversions_path },
                     { :name => 'Power converter', :path => power_conversion_conversions_path }
-                ]
-            },
-            {
-                :name => 'Format Converters',
-                :sub_menus => [
-                    { :name => 'XML to Json converter', :path => xml_to_json_format_conversions_path },
-                    { :name => 'Json to XML converter', :path => json_to_xml_format_conversions_path }
                 ]
             },
             {
