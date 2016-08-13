@@ -12,7 +12,7 @@
       <div class="col-xs-12 col-md-8">
         <div class="form-group <%= 'has-error' if flash[:error] %>">
           <label for="cc_number">User agents list (line separated)</label>
-          <%= text_area_tag :user_agents, (@user_agents.map { |ua| ua.user_agent }.join("\n") if @user_agents.present?), :rows => 5, :class => 'form-control' %>
+          <%= text_area_tag :user_agents, (@user_agents.map { |user_agent| user_agent.ua }.join("\n") if @user_agents.present?), :rows => 5, :class => 'form-control' %>
         </div>
 
         <div class="form-group">
@@ -24,11 +24,10 @@
 
 <% if @user_agents.present? %>
     <%
-       bot_user_agents = @user_agents.select { |ua| ua.bot? }
-       search_engine_user_agents = @user_agents.select { |ua| ua.search_engine? }
-       mobile_user_agents = @user_agents.select { |ua| ua.mobile? }
-       tablet_user_agents = @user_agents.select { |ua| ua.tablet? }
-       other = @user_agents.reject { |ua| ua.bot? || ua.search_engine? || ua.mobile? || ua.tablet? }
+       bot_user_agents = @user_agents.select { |user_agent| user_agent.bot? }
+       mobile_user_agents = @user_agents.select { |user_agent| user_agent.device.mobile? }
+       tablet_user_agents = @user_agents.select { |user_agent| user_agent.device.tablet? }
+       other = @user_agents.reject { |user_agent| user_agent.bot? || user_agent.device.mobile? || user_agent.device.tablet? }
     %>
 
     <% if bot_user_agents.size > 0 %>
@@ -37,25 +36,23 @@
         </div>
 
         <table class="table table-hover">
-          <% bot_user_agents.each_with_index do |ua, index| %>
+          <% bot_user_agents.each_with_index do |user_agent, index| %>
               <tr>
-                <td><strong><%= index + 1 %></strong></td>
-                <td><%= ua.user_agent %></td>
+                <th></th>
+                <th>User agent</th>
+                <th>Bot name</th>
+                <th>Device</th>
+                <th>Platform</th>
+                <th>Search engine?</th>
               </tr>
-          <% end %>
-        </table>
-    <% end %>
 
-    <% if search_engine_user_agents.size > 0 %>
-        <div class="page-header">
-          <h3>User agents identified as search engines</h3>
-        </div>
-
-        <table class="table table-hover">
-          <% search_engine_user_agents.each_with_index do |ua, index| %>
               <tr>
                 <td><strong><%= index + 1 %></strong></td>
-                <td><%= ua.user_agent %></td>
+                <td><%= user_agent.ua %></td>
+                <td><%= user_agent.bot.name %></td>
+                <td><%= user_agent.device.name %></td>
+                <td><%= user_agent.platform.name %></td>
+                <td><%= user_agent.bot.search_engine? %></td>
               </tr>
           <% end %>
         </table>
@@ -67,10 +64,21 @@
         </div>
 
         <table class="table table-hover">
-          <% mobile_user_agents.each_with_index do |ua, index| %>
+          <% mobile_user_agents.each_with_index do |user_agent, index| %>
+              <tr>
+                <th></th>
+                <th>User agent</th>
+                <th>Detected properly?</th>
+                <th>Device</th>
+                <th>Platform</th>
+              </tr>
+
               <tr>
                 <td><strong><%= index + 1 %></strong></td>
-                <td><%= ua.user_agent %></td>
+                <td><%= user_agent.ua %></td>
+                <td><%= user_agent.known? %></td>
+                <td><%= user_agent.device.name %></td>
+                <td><%= user_agent.platform.name %></td>
               </tr>
           <% end %>
         </table>
@@ -82,10 +90,21 @@
         </div>
 
         <table class="table table-hover">
-          <% tablet_user_agents.each_with_index do |ua, index| %>
+          <% tablet_user_agents.each_with_index do |user_agent, index| %>
+              <tr>
+                <th></th>
+                <th>User agent</th>
+                <th>Detected properly?</th>
+                <th>Device</th>
+                <th>Platform</th>
+              </tr>
+
               <tr>
                 <td><strong><%= index + 1 %></strong></td>
-                <td><%= ua.user_agent %></td>
+                <td><%= user_agent.ua %></td>
+                <td><%= user_agent.known? %></td>
+                <td><%= user_agent.device.name %></td>
+                <td><%= user_agent.platform.name %></td>
               </tr>
           <% end %>
         </table>
@@ -97,10 +116,20 @@
         </div>
 
         <table class="table table-hover">
-          <% other.each_with_index do |ua, index| %>
+          <% other.each_with_index do |user_agent, index| %>
+              <tr>
+                <th></th>
+                <th>User agent</th>
+                <th>Detected properly?</th>
+                <th>Device</th>
+                <th>Platform</th>
+              </tr>
               <tr>
                 <td><strong><%= index + 1 %></strong></td>
-                <td><%= ua.user_agent %></td>
+                <td><%= user_agent.ua %></td>
+                <td><%= user_agent.known? %></td>
+                <td><%= user_agent.device.name %></td>
+                <td><%= user_agent.platform.name %></td>
               </tr>
           <% end %>
         </table>

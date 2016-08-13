@@ -67,7 +67,7 @@ class WebResourcesController < ApplicationController
       @user_agents = []
 
       user_agents_list.each do |ua|
-        @user_agents << Browser.new(:ua => ua, :accept_language => "en-us")
+        @user_agents << Browser.new(ua, :accept_language => "en-us")
       end
     rescue Exception => e
       flash[:error] = e
@@ -76,7 +76,7 @@ class WebResourcesController < ApplicationController
 
   def user_agent_info
     begin
-      @user_agent = Browser.new(:ua => (params[:user_agent].present? ? params[:user_agent] : request.user_agent), :accept_language => "en-us")
+      @user_agent = Browser.new((params[:user_agent].present? ? params[:user_agent] : request.user_agent), :accept_language => "en-us")
     rescue Exception => e
       flash[:error] = e
     end

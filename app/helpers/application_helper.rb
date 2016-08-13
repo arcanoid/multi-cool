@@ -86,18 +86,64 @@ module ApplicationHelper
 
         literals << 'Safari' if user_agent.safari?
         literals << 'Opera' if user_agent.opera?
+        literals << 'Opera Mini' if user_agent.opera_mini?
         literals << 'Chrome' if user_agent.chrome?
         literals << 'Firefox' if user_agent.firefox?
         literals << 'IE' if user_agent.ie?
+        literals << 'Yandex' if user_agent.yandex?
+        literals << 'Wechat' if user_agent.wechat?
+        literals << 'Weibo' if user_agent.weibo?
         literals << 'Edge MS Browser' if user_agent.edge?
-        literals << 'Chrome OS' if user_agent.chrome_os?
-        literals << 'Mobile device' if user_agent.mobile?
-        literals << 'Tablet device' if user_agent.tablet?
-        literals << 'Console' if user_agent.console?
-        literals << 'iOS' if user_agent.ios?
-        literals << 'ios\' app webview' if user_agent.ios_webview?
-        literals << 'Android' if user_agent.android?
-        literals << 'Blackberry' if user_agent.blackberry?
+
+        literals << 'Blackberry Playbook device' if user_agent.device.blackberry_playbook?
+        literals << 'Console device' if user_agent.device.console?
+        literals << 'iPad device' if user_agent.device.ipad?
+        literals << 'iPhone device' if user_agent.device.iphone?
+        literals << 'iPod Touch device' if user_agent.device.ipod_touch?
+        literals << 'Kindle device' if user_agent.device.kindle?
+        literals << 'Kindle Fire device' if user_agent.device.kindle_fire?
+        literals << 'Mobile device' if user_agent.device.mobile?
+        literals << 'Nintendo device' if user_agent.device.nintendo?
+        literals << 'Playstation device' if user_agent.device.playstation?
+        literals << 'PS3 device' if user_agent.device.ps3?
+        literals << 'PS4 device' if user_agent.device.ps4?
+        literals << 'PSP device' if user_agent.device.psp?
+        literals << 'Silk device' if user_agent.device.silk?
+        literals << 'Surface device' if user_agent.device.surface?
+        literals << 'Tablet device' if user_agent.device.tablet?
+        literals << 'TV device' if user_agent.device.tv?
+        literals << 'Vita device' if user_agent.device.vita?
+        literals << 'WII device' if user_agent.device.wii?
+        literals << 'WIIU device' if user_agent.device.wiiu?
+        literals << 'XBOX device' if user_agent.device.xbox?
+        literals << 'XBOX 360 device' if user_agent.device.xbox_360?
+        literals << 'XBOX One device' if user_agent.device.xbox_one?
+
+        literals << 'Adobe Air Platform' if user_agent.platform.adobe_air?
+        literals << 'Android Platform' if user_agent.platform.android?
+        literals << 'Blackberry Platform' if user_agent.platform.blackberry?
+        literals << 'ChromeOS Platform' if user_agent.platform.chrome_os?
+        literals << 'Firefox Platform' if user_agent.platform.firefox_os?
+        literals << 'iOS Platform' if user_agent.platform.ios?
+        literals << 'iOS App Platform' if user_agent.platform.ios_app?
+        literals << 'iOS Webview Platform' if user_agent.platform.ios_webview?
+        literals << 'Linux Platform' if user_agent.platform.linux?
+        literals << 'Mac Platform' if user_agent.platform.mac?
+        literals << 'Other Platform' if user_agent.platform.other?
+        literals << 'Windows 10 Platform' if user_agent.platform.windows10?
+        literals << 'Windows 7 Platform' if user_agent.platform.windows7?
+        literals << 'Windows 8 Platform' if user_agent.platform.windows8?
+        literals << 'Windows 8.1 Platform' if user_agent.platform.windows8_1?
+        literals << 'Windows Platform' if user_agent.platform.windows?
+        literals << 'Windows Mobile Platform' if user_agent.platform.windows_mobile?
+        literals << 'Windows Phone Platform' if user_agent.platform.windows_phone?
+        literals << 'Windows RT Platform' if user_agent.platform.windows_rt?
+        literals << 'Touchscreen Desktop Platform' if user_agent.platform.windows_touchscreen_desktop?
+        literals << 'Windows Vista Platform' if user_agent.platform.windows_vista?
+        literals << 'Windows wow64 Platform' if user_agent.platform.windows_wow64?
+        literals << 'Windows x64 Platform' if user_agent.platform.windows_x64?
+        literals << 'Windows x64 Inclusive Platform' if user_agent.platform.windows_x64_inclusive?
+        literals << 'Windows XP Platform' if user_agent.platform.windows_xp?
 
         literals.join(', ')
     end

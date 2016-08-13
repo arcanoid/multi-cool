@@ -12,7 +12,7 @@
       <div class="col-xs-12 col-md-8">
         <div class="form-group <%= 'has-error' if flash[:error] %>">
           <label for="cc_number">User agent</label>
-          <%= text_field_tag :user_agent, (@user_agent.user_agent if @user_agent.present?), :class => "form-control" %>
+          <%= text_field_tag :user_agent, (@user_agent.ua if @user_agent.present?), :class => "form-control" %>
         </div>
 
         <div class="form-group">
@@ -30,7 +30,7 @@
     <table class="table table-hover">
       <tr>
         <td><strong>User Agent</strong></td>
-        <td><%= @user_agent.user_agent %></td>
+        <td><%= @user_agent.ua %></td>
       </tr>
 
       <% if @user_agent.known? %>
@@ -72,7 +72,7 @@
 
       <tr>
         <td><strong>Is it identified as a search engine?</strong></td>
-        <td><%= @user_agent.search_engine? ? "Yup!" : "Nope!" %></td>
+        <td><%= @user_agent.bot.search_engine? ? "Yup!" : "Nope!" %></td>
       </tr>
     </table>
 <% end %>
