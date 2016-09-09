@@ -39,3 +39,11 @@ html {
     padding: 20px 0;
     background-color: #f5f5f5;
 }
+
+.navbar-brand {
+    margin-bottom: 3px;
+}
+
+.navbar-brand > img {
+    display: inline !important;
+}
