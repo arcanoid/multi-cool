@@ -70,13 +70,6 @@ module ApplicationHelper
                     { :name => 'Date and time generator', :path => date_and_time_sample_data_data_generation_path },
                     { :name => 'Text generator', :path => text_sample_data_data_generation_path }
                 ]
-            },
-            {
-                :name => 'Facts',
-                :sub_menus => [
-                    { :name => 'This day in history', :path => this_day_in_history_facts_path },
-                    { :name => 'Random facts', :path => random_facts_facts_path },
-                ]
             }
         ]
     end

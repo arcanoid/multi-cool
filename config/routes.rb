@@ -77,11 +77,6 @@ Rails.application.routes.draw do
     post :json_to_xml
   end
 
-  resource :facts, :only => [] do
-    get :random_facts
-    get :this_day_in_history
-  end
-
   resource :web_resources, :only => [] do
     get :uri_parser
     post :uri_parser
