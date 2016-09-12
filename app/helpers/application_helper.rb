@@ -41,7 +41,9 @@ module ApplicationHelper
                 :name => 'Format Converters',
                 :sub_menus => [
                     { :name => 'XML to Json converter', :path => xml_to_json_format_conversions_path },
-                    { :name => 'Json to XML converter', :path => json_to_xml_format_conversions_path }
+                    { :name => 'Hash to Json converter', :path => hash_to_json_format_conversions_path },
+                    { :name => 'Json to XML converter', :path => json_to_xml_format_conversions_path },
+                    { :name => 'Json to Hash converter', :path => json_to_hash_format_conversions_path }
                 ]
             },
             {

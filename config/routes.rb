@@ -75,6 +75,10 @@ Rails.application.routes.draw do
     post :xml_to_json
     get :json_to_xml
     post :json_to_xml
+    get :hash_to_json
+    post :hash_to_json
+    get :json_to_hash
+    post :json_to_hash
   end
 
   resource :web_resources, :only => [] do
