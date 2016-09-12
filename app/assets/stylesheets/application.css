@@ -42,6 +42,7 @@ html {
 
 .navbar-brand {
     margin-bottom: 3px;
+    padding: 10px 15px !important;
 }
 
 .navbar-brand > img {
