@@ -77,6 +77,8 @@ GEM
     json-compare (0.1.8)
     json_to_ruby_class (0.2.0)
       activesupport
+    jwt (1.5.4)
+    logs_visualizer (0.1.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -194,6 +196,8 @@ DEPENDENCIES
   forgery
   json-compare
   json_to_ruby_class
+  jwt
+  logs_visualizer
   nokogiri
   quiet_assets
   rails (= 4.2.7)
@@ -212,4 +216,4 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
 
 BUNDLED WITH
-   1.10.6
+   1.13.0
