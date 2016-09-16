@@ -26,7 +26,7 @@ gem 'text_analysis'
 gem 'thin'
 gem 'spec_producer'
 gem 'logs_visualizer'
-gem 'jwt'
+gem 'json_web_token'
 
 group :development do
   gem 'better_errors'

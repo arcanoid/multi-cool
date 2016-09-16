@@ -118,4 +118,21 @@ XSL
     @initial_text = text
     @analysis_hash = TextAnalysis.analyze_text(text)
   end
+
+  def json_web_token
+    @initial_text = params[:initial_text].present? ? params[:initial_text] : '{"desc" => "someKey"}'
+    @algorithm = params[:algorithm].present? ? params[:algorithm] : 'none'
+    @key = params[:key].present? ? params[:key] : 'gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr9C'
+
+    begin
+      @final_text = case params[:option]
+                      when 'sign' then JsonWebToken.sign(@initial_text, :key => @key, :alg => @algorithm)
+                      when 'verify' then JsonWebToken.verify(@initial_text, :key => @key, :alg => @algorithm)
+                    end
+
+    rescue Exception => e
+      flash[:error] = "Wrong format #{e}"
+      redirect_to json_web_token_tools_url
+    end
+  end
 end

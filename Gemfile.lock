@@ -77,7 +77,8 @@ GEM
     json-compare (0.1.8)
     json_to_ruby_class (0.2.0)
       activesupport
-    jwt (1.5.4)
+    json_web_token (0.3.1)
+      json (~> 1.8, >= 1.8.3)
     logs_visualizer (0.2.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -196,7 +197,7 @@ DEPENDENCIES
   forgery
   json-compare
   json_to_ruby_class
-  jwt
+  json_web_token
   logs_visualizer
   nokogiri
   quiet_assets

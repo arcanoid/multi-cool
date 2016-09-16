@@ -12,7 +12,8 @@ module ApplicationHelper
                     { :name => 'XML Beautifier', :path => xml_beautifier_tools_path },
                     { :name => 'SQL Beautifier', :path => sql_beautifier_tools_path },
                     { :name => 'SSH Generator', :path => ssh_generator_tools_path },
-                    { :name => 'Text analysis', :path => text_analysis_tools_path }
+                    { :name => 'Text analysis', :path => text_analysis_tools_path },
+                    { :name => 'JWT Encoder', :path => json_web_token_tools_path }
                 ]
             },
             {
