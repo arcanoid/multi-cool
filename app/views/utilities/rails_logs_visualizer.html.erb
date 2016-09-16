@@ -35,6 +35,12 @@
           </label>
         </div>
 
+        <div class="checkbox">
+          <label>
+            <%= check_box_tag :serializers, 'true', true %>Include serializers
+          </label>
+        </div>
+
         <div class="form-group">
           <%= submit_tag 'Visualize', :class => 'btn btn-primary' %>
         </div>
@@ -57,7 +63,6 @@
 
                       <% image_info_array = image_url.split('/') %>
                       <div><%= image_info_array.last.gsub('.png', '') %></div>
-                      <div>Taken at: <%= Date.parse(image_info_array[image_info_array.size - 2]).strftime('%a %d %b %Y')  %></div>
                     </a>
                   </div>
                 </div>
