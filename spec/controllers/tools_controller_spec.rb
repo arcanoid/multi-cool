@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ToolsController do
+describe ToolsController, :type => :controller do
   pending '#url_decoding_tool'
   pending '#hash_generator'
   pending '#json_beautifier'
@@ -10,4 +10,5 @@ describe ToolsController do
   pending '#base64_encoder'
   pending '#ssh_generator'
   pending '#text_analysis'
+  pending '#json_web_token'
 end

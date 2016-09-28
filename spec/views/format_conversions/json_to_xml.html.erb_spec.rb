@@ -1,6 +1,9 @@
 require 'rails_helper'
 
-describe 'format_conversions/json_to_xml.html.erb' do
+describe 'format_conversions/json_to_xml.html.erb', :type => :view do
+  let(:page) { Capybara::Node::Simple.new(rendered) }
+  subject { page }
+
   before do
     render
   end

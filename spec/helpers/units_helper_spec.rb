@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-describe UnitsHelper do
+describe UnitsHelper, :type => :helper do
   pending 'view helper tests'
 end

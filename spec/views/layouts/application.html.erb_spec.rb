@@ -1,6 +1,9 @@
 require 'rails_helper'
 
-describe 'layouts/application.html.erb' do
+describe 'layouts/application.html.erb', :type => :view do
+  let(:page) { Capybara::Node::Simple.new(rendered) }
+  subject { page }
+
   before do
     render
   end

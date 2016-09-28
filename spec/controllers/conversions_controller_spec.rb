@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ConversionsController do
+describe ConversionsController, :type => :controller do
   pending '#length_conversion'
   pending '#weight_conversion'
   pending '#time_conversion'

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe DataGenerationsController do
+describe DataGenerationsController, :type => :controller do
   pending '#sample_data'
   pending '#text_sample_data'
   pending '#geographical_sample_data'

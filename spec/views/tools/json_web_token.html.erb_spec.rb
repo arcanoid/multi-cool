@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'conversions/volume_conversion.html.erb', :type => :view do
+describe 'tools/json_web_token.html.erb', :type => :view do
   let(:page) { Capybara::Node::Simple.new(rendered) }
   subject { page }
 

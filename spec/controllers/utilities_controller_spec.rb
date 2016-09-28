@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe UtilitiesController do
+describe UtilitiesController, :type => :controller do
   pending '#credit_card_validator'
   pending '#screenshot_snapper'
   pending '#qr_code_producer'

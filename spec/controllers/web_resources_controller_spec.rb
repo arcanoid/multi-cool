@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe WebResourcesController do
+describe WebResourcesController, :type => :controller do
   pending '#uri_parser'
   pending '#countries'
   pending '#json_comparer'
