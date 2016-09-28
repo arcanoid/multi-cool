@@ -24,9 +24,9 @@ gem 'ruby-graphviz'
 gem 'json_to_ruby_class'
 gem 'text_analysis'
 gem 'thin'
-gem 'spec_producer'
 gem 'logs_visualizer'
 gem 'json_web_token'
+gem 'spec_producer'
 
 group :development do
   gem 'better_errors'
@@ -36,4 +36,10 @@ end
 
 group :test do
   gem 'rspec-rails'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'shoulda-matchers'
+  gem 'capybara'
 end
