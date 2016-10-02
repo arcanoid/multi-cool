@@ -30,3 +30,4 @@ app/assets/images/qr_codes
 
 # Graphs shouldn't be commited
 app/assets/images/graphs
+app/assets/images/gem_dependencies_graphs

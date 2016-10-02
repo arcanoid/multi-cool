@@ -239,4 +239,17 @@ class UtilitiesController < ApplicationController
     @images = Dir.glob("app/assets/images/graphs/*.png")
     @graph_name = "graph_#{DateTime.now.strftime('%H%M%S%L')}"
   end
+
+  def gem_dependencies_visualizer
+    if params[:full_text].present?
+      begin
+        GemDependenciesVisualizer.produce_gems_graph params[:full_text], params[:graph_name]
+      rescue Exception => e
+        flash[:error] = e
+      end
+    end
+
+    @images = Dir.glob("app/assets/images/gem_dependencies_graphs/*.png")
+    @graph_name = "graph_#{DateTime.now.strftime('%H%M%S%L')}"
+  end
 end

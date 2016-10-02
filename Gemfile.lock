@@ -82,6 +82,7 @@ GEM
     feedvalidator (0.2.0)
     ffi (1.9.14)
     forgery (0.6.0)
+    gem_dependencies_visualizer (0.1.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -214,6 +215,7 @@ DEPENDENCIES
   faker
   feedvalidator
   forgery
+  gem_dependencies_visualizer
   json-compare
   json_to_ruby_class
   json_web_token

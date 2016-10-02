@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     post :sprint_calculator
     get :rails_logs_visualizer
     post :rails_logs_visualizer
+    get :gem_dependencies_visualizer
+    post :gem_dependencies_visualizer
   end
 
   resource :data_generation, :only => [] do

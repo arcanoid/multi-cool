@@ -35,7 +35,8 @@ module ApplicationHelper
                     { :name => 'Credit Card validator', :path => credit_card_validator_utilities_path, :icon => 'fa-credit-card' },
                     { :name => 'RSS feed validator', :path => rss_feed_validator_utilities_path, :icon => 'fa-rss' },
                     { :name => 'Sprint Calculator', :path => sprint_calculator_utilities_path },
-                    { :name => 'Rails log visualizer', :path => rails_logs_visualizer_utilities_path }
+                    { :name => 'Rails log visualizer', :path => rails_logs_visualizer_utilities_path },
+                    { :name => 'Gem dependencies visualizer', :path => gem_dependencies_visualizer_utilities_path }
                 ]
             },
             {
