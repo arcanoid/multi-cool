@@ -241,9 +241,9 @@ class UtilitiesController < ApplicationController
   end
 
   def gem_dependencies_visualizer
-    if params[:full_text].present?
+    if params[:full_text].present? || params[:gemfile_lock].present?
       begin
-        GemDependenciesVisualizer.produce_gems_graph params[:full_text], params[:graph_name]
+        GemDependenciesVisualizer.produce_gems_graph params[:full_text], params[:gemfile_lock], params[:graph_name]
       rescue Exception => e
         flash[:error] = e
       end
