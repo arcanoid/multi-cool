@@ -46,7 +46,7 @@ class FormatConversionsController < ApplicationController
 
     begin
       @initial_text = text
-      @final_text = JSON.pretty_generate(JSON.parse(text.gsub('" => ', '": ')))
+      @final_text = JSON.pretty_generate(JSON.parse(text.gsub('" => ', '": ').gsub.gsub('"=>', '":')))
     rescue JSON::ParserError => e
       flash[:error] = 'Wrong format'
     rescue Exception => e
