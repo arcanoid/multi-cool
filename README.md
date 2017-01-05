@@ -14,3 +14,20 @@ Some of the tools include:
 * Screen shot snapper
 * QR code generator
 * etc
+
+### Example
+
+XML Beautifier
+
+![XML Beautifier](http://imgur.com/xKwtL1o)
+
+SQL Beautifier
+
+![SQL Beautifier](http://imgur.com/Anf7V6Q)
+
+JSON Beautifier
+
+![JSON Beautifier](http://imgur.com/CZPFpLj)
+
+Hash Generator
+![Hash Generator](http://imgur.com/gx8yHQF)
