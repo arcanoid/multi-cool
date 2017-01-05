@@ -19,15 +19,15 @@ Some of the tools include:
 
 XML Beautifier
 
-![XML Beautifier](http://imgur.com/xKwtL1o)
+![XML Beautifier](http://i.imgur.com/xKwtL1o.png)
 
 SQL Beautifier
 
-![SQL Beautifier](http://imgur.com/Anf7V6Q)
+![SQL Beautifier](http://i.imgur.com/Anf7V6Q.png)
 
 JSON Beautifier
 
-![JSON Beautifier](http://imgur.com/CZPFpLj)
+![JSON Beautifier](http://i.imgur.com/CZPFpLj.png)
 
 Hash Generator
-![Hash Generator](http://imgur.com/gx8yHQF)
+![Hash Generator](http://i.imgur.com/gx8yHQF.png)
