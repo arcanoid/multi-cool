@@ -48,3 +48,15 @@ html {
 .navbar-brand > img {
     display: inline !important;
 }
+
+.renderjson a              { text-decoration: none; }
+.renderjson .disclosure    { color: crimson;
+                             font-size: 150%; }
+.renderjson .syntax        { color: grey; }
+.renderjson .string        { color: green; }
+.renderjson .number        { color: #0086b3; }
+.renderjson .boolean       { color: #0086b3; }
+.renderjson .key           { color: #183691; }
+.renderjson .keyword       { color: #0086b3; }
+.renderjson .object.syntax { color: #333; }
+.renderjson .array.syntax  { color: #333; }

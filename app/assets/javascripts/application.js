@@ -11,3 +11,7 @@
 // about supported directives.
 //
 //= require_tree .
+//= require renderjson.js
+
+renderjson.set_icons('+', '-');
+renderjson.set_show_to_level("all");

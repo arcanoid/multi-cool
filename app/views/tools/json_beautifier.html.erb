@@ -26,6 +26,7 @@
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label>Formatted result</label>
+          <div id="formated_interactive_result"></div>
           <pre id="formated_result"><%= @final_text %></pre>
         </div>
       </div>
@@ -34,4 +35,8 @@
 
 <script>
     var clipboard = new Clipboard('.clipboard-button');
+
+     document.getElementById("formated_interactive_result").appendChild(
+        renderjson(JSON.parse($('#formated_result').html()))
+    );
 </script>
