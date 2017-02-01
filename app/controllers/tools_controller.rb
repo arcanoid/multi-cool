@@ -22,7 +22,6 @@ class ToolsController < ApplicationController
                        when 'RMD160' then Digest::RMD160.hexdigest(@initial_text)
                        else ''
                      end
-
   end
 
   def json_beautifier
@@ -32,8 +31,7 @@ class ToolsController < ApplicationController
       @initial_text = text
       @final_text = JSON.pretty_generate(JSON.parse(text))
     rescue JSON::ParserError => e
-      flash[:error] = 'Wrong format'
-      redirect_to json_beautifier_tools_url
+      flash[:error] = 'Wrong format'  
     end
   end
 
@@ -47,7 +45,6 @@ class ToolsController < ApplicationController
       @final_text = JsonToRubyClass.produce_models(JSON.parse(text), type)
     rescue JSON::ParserError => e
       flash[:error] = 'Wrong format'
-      redirect_to json_to_ruby_class_tools_url
     end
   end
 
@@ -100,7 +97,6 @@ XSL
                     when 'decode' then Base64.decode64(params[:full_text])
                     else ''
                   end
-
   end
 
   def ssh_generator
