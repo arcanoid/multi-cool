@@ -104,6 +104,24 @@ class UtilitiesController < ApplicationController
     end
   end
 
+  def html_validator
+    @text = params[:text]
+
+    if @text.present?
+      begin
+        doc = Nokogiri::HTML(@text) do |config|
+          config.strict
+        end
+     
+        if doc.errors.any?
+          @errors = doc.errors
+        end
+      rescue Exception => e
+        flash[:error] = e
+      end
+    end
+  end
+
   def sprint_calculator
     if params[:member_names].present?
       @members = params[:member_names].lines.map(&:chomp)

@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     post :credit_card_validator
     get :rss_feed_validator
     post :rss_feed_validator
+    get :html_validator
+    post :html_validator
     get :sprint_calculator
     post :sprint_calculator
     get :rails_logs_visualizer

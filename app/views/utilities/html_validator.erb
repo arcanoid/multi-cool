@@ -1,0 +1,52 @@
+<div class="page-header">
+  <h1>HTML validator</h1>
+</div>
+
+<%= form_tag html_validator_utilities_url do %>
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group <%= 'has-error' if flash[:error] %>">
+          <label for="cc_number">HTML</label>
+          <%= text_area_tag :text, @text, :rows => 15, :class => "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag 'Check', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label>Formatted result</label>
+          <div>
+            <%= @text.html_safe if @text.present? && !@errors.present? %>
+          </div>
+          <p class="help-block">
+            Actual result will probably vary based on the styling of the actual application. Styling framework used here is <a href="http://getbootstrap.com/css/">Bootstrap</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <% if @errors.present? %>
+        <div class="row">
+          <div class="col-xs-12"><h3><i class="fa fa-times-circle text-danger"></i> Errors Noticed</h3></div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12"><hr /></div>
+        </div>
+
+        <table class="table table-bordered table-hover">
+          <tr class="danger">
+            <th><strong>Error</strong></th>
+          </tr>
+
+          <% @errors.each do |error| %>
+              <tr class="danger">
+                <td><%= error %></td
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+<% end %>
