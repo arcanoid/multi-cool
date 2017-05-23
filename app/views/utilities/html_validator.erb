@@ -5,27 +5,55 @@
 <%= form_tag html_validator_utilities_url do %>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <div class="form-group <%= 'has-error' if flash[:error] %>">
+        <div class="form-group <%= 'has-error' if @errors.present? %>">
           <label for="cc_number">HTML</label>
-          <%= text_area_tag :text, @text, :rows => 15, :class => "form-control" %>
+          <%= text_area_tag :text, @text, :rows => 20, :class => "form-control" %>
         </div>
 
         <div class="form-group">
           <%= submit_tag 'Check', :class => 'btn btn-primary' %>
         </div>
       </div>
+      
+      <% if @text.present? && !@errors.present? %>
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group">
+              <label>Formatted result</label>
+              <div>
+                <%= @text.html_safe %>
+              </div>
 
-      <div class="col-xs-12 col-md-6">
-        <div class="form-group">
-          <label>Formatted result</label>
-          <div>
-            <%= @text.html_safe if @text.present? && !@errors.present? %>
+              <p class="bg-info" style="padding: 10px; margin-top: 30px">
+                Actual result will probably vary based on the styling of the actual application. Styling framework used here is <a href="http://getbootstrap.com/css/">Bootstrap</a>.
+              </p>
           </div>
-          <p class="help-block">
-            Actual result will probably vary based on the styling of the actual application. Styling framework used here is <a href="http://getbootstrap.com/css/">Bootstrap</a>.
-          </p>
         </div>
-      </div>
+      <% end %>
+
+      
+      <% if @text.present? && @errors.present? %>
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group">
+               <div class="row">
+                  <div class="col-xs-6"><label class="text-danger">Some errors were discovered in the text - Suggested alternative</label></div>
+
+                  <div class="col-xs-6">
+                    <div class="text-right">
+                      <a class="btn btn-default clipboard-button" data-clipboard-target="#full_text"><i class="fa fa-files-o"></i></a>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12">
+                    <pre id="full_text"><%= @doc.to_html(save_with: 0) %></pre>
+
+                    <p class="bg-info" style="padding: 10px; margin-top: 30px">
+                      Actual result will probably vary based on the styling of the actual application. Styling framework used here is <a href="http://getbootstrap.com/css/">Bootstrap</a>.
+                    </p>
+                  </div>          
+              </div>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <% if @errors.present? %>
@@ -35,18 +63,26 @@
 
         <div class="row">
           <div class="col-xs-12"><hr /></div>
-        </div>
 
-        <table class="table table-bordered table-hover">
-          <tr class="danger">
-            <th><strong>Error</strong></th>
-          </tr>
-
-          <% @errors.each do |error| %>
+          <div class="col-xs-12">
+            <table class="table table-bordered table-hover">
               <tr class="danger">
-                <td><%= error %></td
+                <th><strong>Error</strong></th>
+                <th><strong>Line</strong></th>
               </tr>
-          <% end %>
-        </table>
+
+              <% @errors.each do |error| %>
+                  <tr class="danger">
+                    <td><%= error %></td>
+                    <td><%= error.line %></td>
+                  </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
     <% end %>
 <% end %>
+
+<script>
+    var clipboard = new Clipboard('.clipboard-button');
+</script>

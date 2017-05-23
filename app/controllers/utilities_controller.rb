@@ -109,12 +109,14 @@ class UtilitiesController < ApplicationController
 
     if @text.present?
       begin
-        doc = Nokogiri::HTML(@text) do |config|
-          config.strict
+        if @text.match '<html>'
+          @doc = Nokogiri::HTML.parse(@text)
+        else
+          @doc = Nokogiri::HTML.fragment(@text)
         end
      
-        if doc.errors.any?
-          @errors = doc.errors
+        if @doc.errors.any?
+          @errors = @doc.errors
         end
       rescue Exception => e
         flash[:error] = e
