@@ -115,6 +115,19 @@ XSL
     @analysis_hash = TextAnalysis.analyze_text(text)
   end
 
+  def text_replacement
+    text = params[:initial_text].present? ? params[:initial_text] : 'The quick brown fox jumps over the lazy dog'
+    @initial_text = text
+    @final_text = text.dup
+
+    @replacement_rule_from = params[:replacement_rule_from].present? ? params[:replacement_rule_from] : 'ΑΒΕΖΗΙΚΜΝΟΡΤΥΧαβγδεζηθικλμνξοπρστυφχψωςΆΈΉΊΪΌΎΫΏάέήίϊόύϋώ'
+    @replacement_rule_to = params[:replacement_rule_to].present? ? params[:replacement_rule_to] : 'ABEZHIKMNOPTYXABΓΔEZHΘIKΛMNΞOΠPΣTYΦXΨΩΣAEHIIOYYΩAEHIIOYYΩ'
+
+    @replacement_rule_from.split('').each_with_index do |char,index|
+      @final_text.gsub!(char, @replacement_rule_to.split('')[index])
+    end
+  end
+
   def json_web_token
     @initial_text = params[:initial_text].present? ? params[:initial_text] : '{"desc" => "someKey"}'
     @algorithm = params[:algorithm].present? ? params[:algorithm] : 'none'

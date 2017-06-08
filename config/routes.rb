@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     post :ssh_generator
     get :text_analysis
     post :text_analysis
+    get :text_replacement
+    post :text_replacement
     get :json_web_token
     post :json_web_token
   end
