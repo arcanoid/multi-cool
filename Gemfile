@@ -28,6 +28,7 @@ gem 'logs_visualizer'
 gem 'json_web_token'
 gem 'spec_producer'
 gem 'gem_dependencies_visualizer'
+gem 'gsm_encoder'
 
 group :development do
   gem 'better_errors'

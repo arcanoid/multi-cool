@@ -42,7 +42,26 @@
     <td><strong>Stop words found</strong></td>
     <td><%= @analysis_hash.stop_words_found.join(', ') %></td>
   </tr>
+
+  <tr>
+    <td><strong>Not GSM compatible characters</strong></td>
+    <td><%= @not_gsm_compatible_characters.compact.uniq.join(', ') %></td>
+  </tr>
 </table>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Not compatible with GSM characters</div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <% @not_gsm_compatible_characters.group_by { |x| x }.each do |character_group| %>
+          <tr>
+            <td><strong><%= character_group[0] %></strong></td>
+            <td><%= character_group[1].size %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
 
 <div class="panel panel-default">
   <div class="panel-heading">Most common words</div>

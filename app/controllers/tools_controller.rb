@@ -113,6 +113,14 @@ XSL
 
     @initial_text = text
     @analysis_hash = TextAnalysis.analyze_text(text)
+
+    @not_gsm_compatible_characters = []
+
+    text.split('').each do |char|
+     unless GSMEncoder.can_encode? char
+      @not_gsm_compatible_characters << char
+     end
+    end
   end
 
   def text_replacement
