@@ -94,6 +94,7 @@ Rails.application.routes.draw do
     post :uri_parser
     get :countries
     post :countries
+    get '/countries/:id', to: 'web_resources#country'
     get :json_comparer
     post :json_comparer
     get :date_diff

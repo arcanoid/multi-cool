@@ -11,6 +11,17 @@ class WebResourcesController < ApplicationController
     if params[:id]
       @country = ISO3166::Country.new(params[:id])
     end
+
+    respond_to do |format|
+      format.json{ render :json => @all_countries }
+      format.html
+    end
+  end
+
+  def country
+    country = ISO3166::Country.new(params[:id])
+
+    render json: country
   end
 
   def json_comparer
