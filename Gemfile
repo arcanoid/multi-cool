@@ -26,7 +26,7 @@ gem 'text_analysis'
 gem 'thin'
 gem 'logs_visualizer'
 gem 'json_web_token'
-gem 'spec_producer'
+# gem 'spec_producer'
 gem 'gem_dependencies_visualizer'
 gem 'gsm_encoder'
 
@@ -41,7 +41,7 @@ group :test do
 end
 
 group :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'shoulda-matchers'
   gem 'capybara'
 end
