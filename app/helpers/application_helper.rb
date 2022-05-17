@@ -31,14 +31,14 @@ module ApplicationHelper
             {
                 :name => 'UI Utilities',
                 :sub_menus => [
-                    { :name => 'Screenshot Snapper', :path => screenshot_snapper_utilities_path, :icon => 'fa-photo' },
+                    # { :name => 'Screenshot Snapper', :path => screenshot_snapper_utilities_path, :icon => 'fa-photo' },
                     { :name => 'QR code producer', :path => qr_code_producer_utilities_path, :icon => 'fa-qrcode' },
                     { :name => 'Credit Card validator', :path => credit_card_validator_utilities_path, :icon => 'fa-credit-card' },
                     { :name => 'RSS feed validator', :path => rss_feed_validator_utilities_path, :icon => 'fa-rss' },
                     { :name => 'HTML validator', :path => html_validator_utilities_path },
                     { :name => 'Sprint Calculator', :path => sprint_calculator_utilities_path },
-                    { :name => 'Rails log visualizer', :path => rails_logs_visualizer_utilities_path },
-                    { :name => 'Gem dependencies visualizer', :path => gem_dependencies_visualizer_utilities_path }
+                    # { :name => 'Rails log visualizer', :path => rails_logs_visualizer_utilities_path },
+                    # { :name => 'Gem dependencies visualizer', :path => gem_dependencies_visualizer_utilities_path }
                 ]
             },
             {
