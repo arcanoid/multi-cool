@@ -14,7 +14,7 @@
           <label for="id">Countries list</label>
 
           <%= select_tag :id,
-                         options_for_select(@all_countries.map { |country| [country.name, country.alpha2] }, (@country.alpha2 if @country.present?)),
+                         options_for_select(@all_countries.map { |country| [country.iso_short_name, country.alpha2] }, (@country.alpha2 if @country.present?)),
                          :class => 'form-control' %>
         </div>
 
@@ -49,7 +49,7 @@
 
       <tr>
         <td><strong>Name</strong></td>
-        <td><%= @country.name %></td>
+        <td><%= @country.iso_short_name %></td>
       </tr>
 
       <tr>
@@ -79,17 +79,7 @@
 
       <tr>
         <td><strong>Currency code</strong></td>
-        <td><%= @country.currency.code %></td>
-      </tr>
-
-      <tr>
-        <td><strong>Currency name</strong></td>
-        <td><%= @country.currency.name %></td>
-      </tr>
-
-      <tr>
-        <td><strong>Currency symbol</strong></td>
-        <td><%= @country.currency.symbol %></td>
+        <td><%= @country.currency_code %></td>
       </tr>
     </table>
 
@@ -121,32 +111,32 @@
     <table class="table table-hover">
       <tr>
         <td><strong>Longitude</strong></td>
-        <td><%= @country.longitude %> (<%= @country.longitude_dec %>)</td>
+        <td><%= @country.geo['longitude'] %></td>
       </tr>
 
       <tr>
         <td><strong>Latitude</strong></td>
-        <td><%= @country.latitude %> (<%= @country.latitude_dec %>)</td>
+        <td><%= @country.geo['latitude'] %></td>
       </tr>
 
       <tr>
         <td><strong>Minimum longitude</strong></td>
-        <td><%= @country.min_longitude %></td>
+        <td><%= @country.geo['min_longitude'] %></td>
       </tr>
 
       <tr>
         <td><strong>Minimum latitude</strong></td>
-        <td><%= @country.min_latitude %></td>
+        <td><%= @country.geo['min_latitude'] %></td>
       </tr>
 
       <tr>
         <td><strong>Maximum longitude</strong></td>
-        <td><%= @country.max_longitude %></td>
+        <td><%= @country.geo['max_longitude'] %></td>
       </tr>
 
       <tr>
         <td><strong>Maximum latitude</strong></td>
-        <td><%= @country.max_latitude %></td>
+        <td><%= @country.geo['max_latitude'] %></td>
       </tr>
     </table>
 
@@ -198,35 +188,35 @@
           <% @country.subdivisions.each do |subdivision| %>
               <tr>
                 <td><strong><%= subdivision[0] %></strong></td>
-                <td><%= subdivision[1]['name'] %></td>
-                <td><%= subdivision[1]['names'] %></td>
+                <td><%= subdivision[1].name %></td>
+                <td><%= subdivision[1].unofficial_names %></td>
                 <td>
-                  <%= subdivision[1]['latitude'] %>
+                  <%= subdivision[1].geo['latitude'] %>
 
-                  <% if subdivision[1]['min_latitude'] %>
+                  <% if subdivision[1].geo['min_latitude'] %>
                       <div>
-                        <strong>Min:</strong> <%= subdivision[1]['min_latitude'] %>
+                        <strong>Min:</strong> <%= subdivision[1].geo['min_latitude'] %>
                       </div>
                   <% end %>
 
-                  <% if subdivision[1]['max_latitude'] %>
+                  <% if subdivision[1].geo['max_latitude'] %>
                       <div>
-                        <strong>Max:</strong> <%= subdivision[1]['max_latitude'] %>
+                        <strong>Max:</strong> <%= subdivision[1].geo['max_latitude'] %>
                       </div>
                   <% end %>
                 </td>
                 <td>
-                  <%= subdivision[1]['longitude'] %>
+                  <%= subdivision[1].geo['longitude'] %>
 
-                  <% if subdivision[1]['min_longitude'] %>
+                  <% if subdivision[1].geo['min_longitude'] %>
                       <div>
-                        <strong>Min:</strong> <%= subdivision[1]['min_longitude'] %>
+                        <strong>Min:</strong> <%= subdivision[1].geo['min_longitude'] %>
                       </div>
                   <% end %>
 
-                  <% if subdivision[1]['max_longitude'] %>
+                  <% if subdivision[1].geo['max_longitude'] %>
                       <div>
-                        <strong>Max:</strong> <%= subdivision[1]['max_longitude'] %>
+                        <strong>Max:</strong> <%= subdivision[1].geo['max_longitude'] %>
                       </div>
                   <% end %>
                 </td>
@@ -248,7 +238,7 @@
       <pre id="aplha_2_codes">
         <%= '<select>' %>
         <% @all_countries.each do |country| %>
-          <%= "<option value='#{ country.alpha2 }'>#{ country.name }</option>" %>
+          <%= "<option value='#{ country.alpha2 }'>#{ country.iso_short_name }</option>" %>
         <% end %>
         <%= '</select>' %>
       </pre>
@@ -266,7 +256,7 @@
       <pre id="alpha_3_codes">
         <%= '<select>' %>
         <% @all_countries.each do |country| %>
-          <%= "<option value='#{ country.alpha3 }'>#{ country.name }</option>" %>
+          <%= "<option value='#{ country.alpha3 }'>#{ country.iso_short_name }</option>" %>
         <% end %>
         <%= '</select>' %>
       </pre>
@@ -284,7 +274,7 @@
     </div>
 
       <pre id="json_codes">
-        <%= JSON.pretty_generate(@all_countries.map { |country| { :name => country.name,
+        <%= JSON.pretty_generate(@all_countries.map { |country| { :name => country.iso_short_name,
                                                                   :alpha2_code => country.alpha2,
                                                                   :alpha3_code => country.alpha3 } }.flatten) %>
       </pre>

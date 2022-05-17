@@ -160,8 +160,8 @@ class DataGenerationsController < ApplicationController
     @internet_data << { :type => 'MAC address', :value => Faker::Internet.mac_address }
     @internet_data << { :type => 'Username', :value => Forgery('internet').user_name }
     @internet_data << { :type => 'Password', :value => Faker::Internet.password }
-    @internet_data << { :type => 'Bitcoin address', :value => Faker::Bitcoin.address }
-    @internet_data << { :type => 'Bitcoin test address', :value => Faker::Bitcoin.testnet_address }
+    @internet_data << { :type => 'Bitcoin address', :value => Faker::Blockchain::Bitcoin.address }
+    @internet_data << { :type => 'Bitcoin test address', :value => Faker::Blockchain::Bitcoin.testnet_address }
   end
 
   def commerce_and_contact_sample_data
@@ -216,11 +216,11 @@ class DataGenerationsController < ApplicationController
     @date_data = []
 
     @time_data << { :type => 'Timezone', :value => Forgery('time').zone }
-    @time_data << { :type => 'Time @ night', :value => Faker::Time.between(2.days.ago, Time.now, :night) }
-    @time_data << { :type => 'Time @ morning', :value => Faker::Time.between(2.days.ago, Time.now, :morning) }
-    @time_data << { :type => 'Time @ afternoon', :value => Faker::Time.between(2.days.ago, Time.now, :afternoon) }
-    @time_data << { :type => 'Time @ evening', :value => Faker::Time.between(2.days.ago, Time.now, :evening) }
-    @time_data << { :type => 'Time @ midnight', :value => Faker::Time.between(2.days.ago, Time.now, :midnight) }
+    @time_data << { :type => 'Time @ night', :value => Faker::Time.between_dates(from: 2.days.ago, to: Time.now, period: :night) }
+    @time_data << { :type => 'Time @ morning', :value => Faker::Time.between_dates(from: 2.days.ago, to: Time.now, period: :morning) }
+    @time_data << { :type => 'Time @ afternoon', :value => Faker::Time.between_dates(from:2.days.ago, to: Time.now, period: :afternoon) }
+    @time_data << { :type => 'Time @ evening', :value => Faker::Time.between_dates(from: 2.days.ago, to: Time.now, period: :evening) }
+    @time_data << { :type => 'Time @ midnight', :value => Faker::Time.between_dates(from:2.days.ago, to: Time.now, period: :midnight) }
 
     @date_data << { :type => 'Date', :value => Forgery('date').date }
     @date_data << { :type => 'Day', :value => Forgery('date').day }
